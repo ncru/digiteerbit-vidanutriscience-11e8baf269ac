@@ -1,0 +1,43 @@
+<script>
+  var sliderSwitches = Array.prototype.slice.call(document.querySelectorAll('.js-switch-sliders'));
+
+  sliderSwitches.forEach(function(elem) {
+    var switchery = new Switchery(elem, {
+      secondaryColor: '#f0f1f1'
+    });
+
+    elem.onchange = function(e) {
+      var appender, id, json_string, parent, prepender, status, str;
+      prepender = '{"sliders": [';
+      appender = ']}';
+      json_string = '';
+      status = elem.checked ? 1 : 0;
+      parent = $(elem).parents('.switchboard-item');
+      id = parent.data('id').toString();
+      str = '{"id":"' + id + '", "value": {"status":"' + status + '"}}';
+      json_string = prepender + str + appender;
+      
+      $.ajax({
+        url: '/admin/sliders/update_slider_status',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          'json_string': json_string.toString()
+        },
+        success: function(data) {
+          console.log('Successfully updated slider status.');
+          if (elem.checked) {
+            parent.removeClass('disabled');
+            parent.children('.overlay').remove();
+          } else {
+            parent.addClass('disabled');
+            $("<div class='overlay'></div>").insertBefore(parent.children('.switch'));
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Failed to update slider status due to error: => ' + errorThrown);
+        }
+      });
+    };
+  });
+</script>

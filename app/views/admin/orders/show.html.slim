@@ -1,0 +1,53 @@
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#order-details.content-page.current data-title="Order Details"
+    .content
+      -if notice.present?
+        .alert.alert-main.alert-success.alert-newversion
+          =notice.html_safe
+      -elsif error.present?
+        .alert.alert-main.alert-danger.alert-newversion
+          =error.html_safe
+      .row.content-header
+        .col-xs-12
+          h1
+            | Order Details
+          a.btn.btn-success.pull-right.new.no-outline href="/admin/orders"
+            i.an.an-arrow-left-thin
+            | Back to Orders
+          span#order-request-id ID: #{@order.request_id}
+          -if @order.courier_id == 2 && @order.dhl_response_value.present?
+            span#order-request-id DHL AWB NUMBER: #{@order.dhl_response_value.awb_number}
+            span#order-request-id DHL REF. NUMBER: #{@order.dhl_response_value.confirmation}
+        .col-xs-6
+          .alert.alert-success style="min-height: 109px"
+            h1.order-details
+              | Status: 
+              span.label.label-default style="background-color: #{@order.order_status.color_code}"
+                =@order.order_status.name
+            br
+            h1.order-details 
+              | Payment Method:
+              -if @order.payment_method_id.to_i == 1
+                =image_tag('logo-paypal.png', class: 'payment-method')
+              -elsif @order.payment_method_id.to_i == 2
+                =image_tag('logo-vpc.png', class: 'payment-method')
+              -elsif @order.payment_method_id.to_i == 3
+                =image_tag('logo-paynamics.png', class: 'payment-method')
+              -elsif @order.payment_method_id.to_i == 0
+                | &nbsp;Cash On Delivery
+        .col-xs-6
+          .alert.alert-success
+            h1.order-details 
+              | Subtotal: 
+              span.pull-right <strong>#{@order.currency} #{format_number_with_precision(@order.amount, 2)}</strong
+            br
+            h1.order-details 
+              | Shipping: 
+              span.pull-right <strong>#{@order.currency} #{format_number_with_precision(@order.shipping_fee, 2)}</strong>
+            hr.mb5.mt5
+            h1.order-details 
+              | Total Amount: 
+              span.pull-right <strong>#{@order.currency} #{format_number_with_precision(@order.amount + @order.shipping_fee, 2)}</strong>
+      =render 'customer_details'
+      br
+      =render 'order_items'

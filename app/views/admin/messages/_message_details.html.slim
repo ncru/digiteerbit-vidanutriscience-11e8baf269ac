@@ -1,0 +1,36 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="name"
+      | Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the sender."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :name, :id=>"name", :class=>"form-control", :disabled=>true
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="email"
+      | Email
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The email address of the sender."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :email, :id=>"email", :class=>"form-control", :disabled=>true
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="mobile"
+      | Mobile
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The mobile number of the sender."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :mobile, :id=>"mobile", :class=>"form-control", :disabled=>true
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="subject"
+      | Subject
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The subject of the message."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :subject, :id=>"subject", :class=>"form-control", :disabled=>true
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="content"
+      | Message
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The sender's message."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_area :content, :id=>"content", :class=>"form-control no-resize", :rows=>10, :disabled=>true

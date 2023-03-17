@@ -1,0 +1,18 @@
+.last-logins.widget-box
+  h5 Latest Messages
+  .widget-content
+    ul.recent-items-list
+      -if @latest_messages.present?
+        -@latest_messages.each do |msg|
+          li
+            a href="/admin/messages/#{msg.id}"
+              time title="#{msg.created_at}" 
+                -if time_ago_in_words(msg.created_at) == 'less than a minute'
+                  | Just Now
+                -else
+                  =(time_ago_in_words(msg.created_at) +' ago').sub('about', '')
+              span.picture.avatar href="#" style="background-image: url(#{asset_path('mail-avatar.svg')})"
+              span.username =msg.email
+              span.content.truncate =msg.content
+      -else
+        | No Latest Messages.

@@ -1,0 +1,118 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Users
+      =link_to new_admin_user_path, id: "add-user", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-plus-thin
+        | New User
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can perform all user-related maintenance on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Name" data-columntosearch="1"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on User Name."
+          i.icon-question-sign &nbsp;
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Email" data-columntosearch="2"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on User Email."
+          i.icon-question-sign &nbsp;
+      .btn-group.btn-filter-wrapper
+        button.btn.btn-primary.btn-mini.dropdown-toggle aria-expanded="false" data-toggle="dropdown" 
+          span.dropdown-selected-filter.truncate title="All Roles" All Roles
+          span.caret
+        ul.dropdown-menu.search-filter
+          li
+            a.dropdown-selected-filter-item data-columntosearch="3" data-search=""  href="#" All Roles 
+            -@roles.each do |r|
+              a.dropdown-selected-filter-item data-columntosearch="3" data-search="#{r.id}"  href="#" =r.name
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#users-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer data-column="avatar" width="6%"
+        th.pointer.sortable.font-bold width="20%" 
+          | Name
+        th.pointer.sortable.font-bold width="20%" 
+          | Email
+        th.pointer.sortable.font-bold
+          | Role Id
+        th.pointer.sortable.font-bold width="17%" 
+          | Role
+        th.pointer.sortable.font-bold width="15%" 
+          | Last Login
+        th.pointer.sortable.font-bold width="15%" 
+          | # of Logins
+        th.pointer data-column="actions" width="7%"
+
+javascript:
+  $(document).ready(function() {
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Variables for Datatables initialization.
+    var tableId = "#users-list",
+        ajaxUrl = "/admin/datatables/retrieve_users",
+        defaultOrder = [[5, 'desc']],
+        columnDefs = [
+          { "orderable": false,
+            "name": "u.photo_file_name", 
+            "data": "photo_file_name", 
+            "targets": 0,
+            "render": function(data) {
+              return "<img class='picture avatar' src='"+data+"'></img>";
+            }
+          },
+          { "name": "concat(u.first_name, ' ', u.last_name)", "data": "fullname", "className": "truncate", "targets": 1 },
+          { "name": "u.email", "data": "email", "className": "truncate", "targets": 2 },
+          { "name": "u.role_id", "data": "role_id", "visible":false, "targets": 3 },
+          { "name": "r.name", "data": "role_name", "className": "truncate", "targets": 4 },
+          { "name": "u.last_sign_in_at", 
+            "data": "lastsigninat",
+            "className": "truncate",
+            "targets": 5,
+            "render": function(data, type, full) {
+              if (data) {
+                // If display or filter data is requested, format the date.
+                 if (type === 'display' || type === 'filter') {
+                   var d = new Date(data);
+                   return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                 }
+
+                 // Otherwise the data type requested (`type`) is type detection or
+                 // sorting data, for which we want to use the normal format, so just return
+                 // that, unaltered.
+                 return data;
+              } else {
+                return "-";
+              }
+            }
+          },
+          { "name": "u.sign_in_count", "data": "signincount", "className": "","targets": 6 },
+          { "orderable": false, 
+            "className": "actions",
+            "data": "id",
+            "targets": -1, 
+            "render": function(data) {
+              return "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='View Details'>"+
+                         "<a class='view-user no-outline' data-push='true' href='/admin/users/"+data+"'><i class='an an-sunglass'></i></a>"+
+                       "</li>"+
+                     "</ul>";
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

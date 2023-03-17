@@ -1,0 +1,18 @@
+.container-faq
+  #accordionFAQs.panel-group
+    -if @faqs.present?
+      -@faqs.each_with_index do |faq, i|
+        .panel.panel-default
+          .panel-heading
+            a data-parent="#accordionFAQs" data-toggle="collapse" href="#collapseQ#{i}" 
+              span.text-title.text-uppercase =faq.question
+              i.fa.fa-angle-down.pull-right
+              .clearfix
+          .panel-collapse.collapse.collapse-filter id="collapseQ#{i}"
+            .panel-content
+              span =faq.answer
+    -else
+      .panel.panel-default
+        .panel-heading
+          a data-parent="#accordionFAQs"
+            span.text-title.text-uppercase No available FAQs.

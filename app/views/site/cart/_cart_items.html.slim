@@ -1,0 +1,24 @@
+-if @cart.cart_items.size == 0
+  .empty-cart.text-center
+    span You have no items in your shopping bag.
+-else
+  .title.text-uppercase
+    | Your Shopping Bag (#{@cart.item_count})
+  ul.reset-ul
+    -@cart.cart_items.each do |cart_item|
+      li
+        =link_to "<i class='fa fa-times'></i>".html_safe, "#", { data: { type: "cart_item", id: cart_item.id }, class: "remove-item toggle-delete-modal" }
+        .img-holder style="background-image: url(#{cart_item.sku.photo})"
+        .cart-content
+          .name =cart_item.sku.product.name
+          small #{cart_item.sku.name} (#{cart_item.quantity}x)
+          .price.pull-right ₱#{format_number_with_precision(cart_item.sku.get_price, 2)}
+    .grand-total.clearfix
+      span.text-uppercase Total
+      span.pull-right
+        strong ₱#{format_number_with_precision(@cart.subtotal, 2)}
+  .row
+    .col-xs-6
+      a.btn.btn-lone.btn-blue.text-uppercase.btn-block href="/cart" Cart
+    .col-xs-6
+      a.btn.btn-lone.btn-green.text-uppercase.btn-block href="/checkout" Checkout

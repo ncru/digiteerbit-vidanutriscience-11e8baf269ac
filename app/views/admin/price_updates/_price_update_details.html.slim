@@ -1,0 +1,92 @@
+fieldset.details
+  .row
+    .col-xs-3
+      label.control-label for="price-type" 
+        | Price Type
+        span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Choose if this is for a regular/promo price update" 
+          i.icon-question-sign &nbsp;
+      =f.select(:price_type, options_for_select(@price_types,f.object.id), {}, {:id=>"price-type", :class =>"form-control chosen-select"})
+      span.error-msg.hidden  
+    .col-xs-3
+      label.control-label for="start_date" 
+        | Start Date
+        span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The start of effectivity date of price update for product(s)." 
+          i.icon-question-sign &nbsp;
+      =f.text_field :start_date, :class=>"form-control date required",:maxlength=>25,:value=>format_date(f.object.start_date)
+      span.error-msg.hidden
+    .col-xs-4
+      label.control-label for="end_date" 
+        | End Date
+        span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The end of effectivity date of price update for product(s)." 
+          i.icon-question-sign &nbsp;
+      .input-group
+        =f.text_field :end_date, :class=>"form-control required", :maxlength=>25
+        span.input-group-addon
+          .checkbox
+            label
+              input.checkbox-inline#uptoPresent type="checkbox"
+              | up?
+        span.error-msg.hidden
+        =f.hidden_field :has_no_end_date, id:"has_no_end_date", value: 0
+  br
+  .row.promo-fields-wrapper style="display: none;"
+    .col-xs-6
+      label.control-label for="promo_name" 
+        | Promo Name
+        span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Promo Name that will be displayed to the site page." 
+          i.icon-question-sign &nbsp;
+      =f.text_field :promo_name, :class=>"form-control"
+      span.error-msg.hidden
+    .col-xs-3
+      label.control-label for="promo-type" 
+        | Promo Type
+        span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Select if the promo type is by amount or by percentage." 
+          i.icon-question-sign &nbsp;
+      =f.select(:sale_type, options_for_select(@promo_types,f.object.id), {include_blank: '-- Select --'}, {:id=>"promo-type", :class =>"form-control chosen-select promo-type"})
+      span.error-msg.hidden  
+  hr
+  .row        
+    .col-lg-12.col-md-12.col-sm-12.col-xs.mb40
+      #error-msg-div.alert.alert-main.alert-danger.alert-newversion.hidden
+      =link_to_add_association '<i class="an an-plus-thin"></i> Add Product'.html_safe, f, :price_update_items, :class=>"btn btn-success add-product-btn", :data=>{"association-insertion-method" => "append", "association-insertion-node"=>".price-update-items"}
+      br
+      table.table.table-striped
+        thead
+          tr
+            th width="50%" Product Name
+            th width="14%" Price  
+            th.promo-hidden.hidden width="14%" 
+              span.th-text Sale Price
+            th.promo-hidden.hidden width="14%" New Price
+            th.remove width="8%"
+        tbody.price-update-items
+          =f.fields_for :price_update_items do |f|
+            =render "price_update_item_fields", :f=>f 
+  br
+  br
+javascript:
+  $(function() {
+    $("#price_update_start_date").change(function() {
+      var from_date = new Date($('#price_update_start_date').val());
+      var month = from_date.getMonth()+1;
+      var day = from_date.getDate()+1;
+      var year = from_date.getFullYear();
+      var date_from = year +"/"+month+"/"+day;
+      $('#price_update_end_date').val('');
+      $("#price_update_end_date").datetimepicker({
+        timepicker:false,
+        format:'M d, Y',
+        minDate: date_from
+      });
+    });
+  });
+  $(document).on("change", 'input#uptoPresent', function(event) {
+    event.preventDefault();
+    if ($(this).is(":checked")) {
+      $('#price_update_end_date').removeClass('required').attr('disabled', true).val('');
+      $('#has_no_end_date').val(1);
+    } else {
+      $('#price_update_end_date').addClass('required').attr('disabled', false);
+      $('#has_no_end_date').val(0);
+    }
+  });

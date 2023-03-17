@@ -1,0 +1,13 @@
+var form = $('#new_newsletter_subscriber');
+var button = $('.subscribe-newsletter');
+
+setTimeout((function() {
+  button.html('<i class="fa fa-check"></i> Thank You!').blur();
+}), 2000);
+
+setTimeout((function() {
+  // Reset the form.
+  form[0].reset();
+  // Reset the button.
+  button.removeClass('disabled').html('Subscribe').blur();
+}), 3000);

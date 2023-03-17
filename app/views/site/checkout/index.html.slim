@@ -1,0 +1,50 @@
+.page-checkout
+  .container
+    table.table-checkout
+      td.data-step-content
+        ul.breadcrumbs
+          li
+            a.done href="/cart" Cart
+          li
+            a.active href="#{request.url}" Customer Information
+        br
+        -if error.present?
+          .alert.alert-custom
+            li =error
+        .title.title-sm.clearfix
+          span Checkout: Customer Information
+          -if !customer_signed_in?
+            .pull-right
+              span Already have an account? 
+              a.link-text href="/" Login
+        br
+        .container-checkout-form
+          =render 'form'
+              
+      td.data-checkout-cart
+        #cart-container
+          =render 'cart'
+  .checkout-loader
+=render "modal"
+-if current_customer.shipping_country_code.present?
+  -content_for :page_script do 
+    javascript:
+      if ("#{@restricted_sku_ids.present?}" == "true"){
+        $(".submit-orders").attr("disabled", true);
+        var country_name = $("select#shipping-country-code").find('option:selected').text()
+        $("#restricted_modal").modal('show').find(".modal-body").find('.message').find('.country-name').text(country_name);
+        var sku_ids = "#{@restricted_sku_ids}";
+        JSON.parse(sku_ids).forEach(function(sku_id, index, array) {
+          $("#sku-"+sku_id).find('.not-available').removeClass("hidden");
+        });
+      }
+      //else{
+      //  $(".submit-orders").attr("disabled", false);
+      //  $("#cleared_items_modal").modal('show');
+      //}
+      
+      $('.shipping-address-wrapper .form-control').each(function(){
+        var $this = $(this) 
+        $this.attr('data-default', $this.val());
+      })
+    

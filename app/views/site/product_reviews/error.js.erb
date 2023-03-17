@@ -1,0 +1,12 @@
+var message_container = $('#message-container');
+var button = $('.submit-review');
+
+setTimeout((function() {
+  button.html('<i class="fa fa-close"></i> Review not sent. Please try again.').blur();
+}), 2000);
+
+setTimeout((function() {
+  $(".container-error").html("<%= j(render partial: 'site/partials/error_messages', locals: {model: @product_review}) %>");
+  
+  button.removeClass('disabled').html('Send Review').blur();
+}), 4000);

@@ -1,0 +1,36 @@
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#uploadedphotos.content-page.current data-title="Uploaded Photos"
+    -if @photos.present?
+      .content
+        .notice-container
+          -if notice.present?
+            .alert.alert-main.alert-success.alert-newversion
+              =notice.html_safe
+          -elsif error.present?
+            .alert.alert-main.alert-danger.alert-newversion
+              =error.html_safe
+        .row.content-header
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            h1 Uploaded Photos
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            p.explanation
+              | View all the photos you have uploaded.
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+            a.btn.refresh.pull-right href="/admin/photos" title=""
+              i.an.an-repeat-circle-big
+              | Refresh
+        .photo-list-main.block-img
+          -@photos.each do |p|
+            .col-md-4.mb20
+              input.hidden name="post_photos[]" value="#{p.photo_url}"
+              img.thumbnail.img-responsive src="#{p.photo_url}"
+              a.btn.btn-remove-sm.btn-danger.toggle-delete-modal data-href='/admin/photos/#{p.id}' data-type='photo'
+                i.an.an-cross-thin.mr0
+      =render 'delete_modal'
+    -else
+      .starter-template
+        .middle-box
+          h1 Uploaded Photos
+          .section-icon
+            i.an.an-upload-cloud
+          p No photos available from the server.

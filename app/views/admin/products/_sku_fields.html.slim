@@ -1,0 +1,83 @@
+.nested-fields data-sku-id="#{f.object.id}"
+  .row
+    .col-md-1
+      .form-group
+        label
+          | Status
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this SKU will be displayed in the site page or not. Only active SKUs will be displayed."
+            i.icon-question-sign &nbsp;
+        =f.check_box :status, :class=>"js-switch"
+    .col-md-1.pr5
+      .form-group
+        label
+          | New?
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this is a new SKU."
+            i.icon-question-sign &nbsp;
+        =f.check_box :new, :class=>"js-switch"
+    .col-md-2.pl15.pr5
+      .form-group
+        label
+          | Featured?
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this is a featured SKU. Featured SKUs are displayed in the Featured Items section of the site."
+            i.icon-question-sign &nbsp;
+        =f.check_box :featured, :class=>"js-switch"  
+    .col-md-2.pr5
+      .form-group
+        label
+          | Code
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Unique code for this SKU."
+            i.icon-question-sign &nbsp;
+        =f.text_field :code, :class=>"form-control required no-outline"
+        span.error-msg.hidden
+    .col-md-5.pl5.pr5
+      .form-group
+        label
+          | Name
+        =f.text_field :name, :class=>"form-control required no-outline"
+        span.error-msg.hidden
+    .col-md-1.pl5
+      .form-group
+        label &nbsp;
+        =link_to_remove_association '<i class="an an-trashcan-alt"></i>'.html_safe, f, :class=>"btn btn-danger btn-sm remove-sku"
+  .row
+    .col-md-3.pr5
+      .form-group
+        label
+          | Weight(Kg)
+        =f.text_field :weight, :class=>"form-control no-outline numeric-zero-allowed required"
+        span.error-msg.hidden
+    .col-md-3.pl5.pr5
+      .form-group
+        label
+          | Min. Quantity
+        =f.text_field :minimum_quantity, :class=>"form-control no-outline numeric-zero-allowed-no-decimal"
+        span.error-msg.hidden
+    .col-md-3.pl5.pr5
+      .form-group
+        label
+          | Price
+        =f.fields_for :price_update_items, f.object.price_update_items.build do |price|
+          =price.text_field :price, class: "form-control required numeric-no-decimal no-outline", value: f.object.get_price
+          =price.hidden_field :sku_id, value: f.object.id
+    .col-md-3.pl5
+      .form-group
+        label
+          | Stocks
+        -if f.object.new_record?
+          =f.fields_for :inventory_items, f.object.inventory_items.build do |inv|
+            =inv.text_field :quantity, class: "form-control required numeric-no-decimal no-outline"
+            =inv.hidden_field :action_id, value: 1
+        -else
+          input type="text" readonly="true" value="#{f.object.get_stocks}" class="form-control no-outline"
+  .row
+    .col-md-12
+      .form-group
+        label
+          | Tags
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="List down all the tags for this SKU. This is useful for search purposes."
+            i.icon-question-sign &nbsp;
+        =f.text_field :tags, :id=>"tags", :class=>"form-control", :placeholder=>"Key-in the tags for this SKU", :multiple=>true, :data=>{:role=>"tagsinput"}
+  hr.sku-divider
+  .row
+    .col-md-12
+      =render 'photo_sliders_skus',:f=>f

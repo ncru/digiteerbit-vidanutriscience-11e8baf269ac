@@ -1,0 +1,23 @@
+- unique_id = "#{f.object_name}[product_id]".gsub(/(\])?\[/, "_").chop
+tr.nested-fields id="#{unique_id}"
+  td
+    =f.select(:sku_id, options_from_collection_for_select(@skus,:id,:name, f.object.sku_id), {include_blank: '-- Select Product --'}, :id=>"sku_id", :class =>"form-control required sku-id chosen-select")
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;"
+  td
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+    input.form-control.text-center.total-stocks readonly="true"
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td 
+    =f.select(:action_id, options_for_select(@actions,f.object.id), {}, {:id=>"action-id", :class =>"form-control chosen-select required action-id"})
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td
+    =f.text_field :quantity, :class=>"form-control text-center required numeric-zero-allowed-no-decimal is-higher"
+    span.error-msg.hidden
+  /td
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+    =f.text_field :remarks, :class=>"form-control text-center", placeholder: "Optional"
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td 
+    a type="button" confirm="Are you sure?" class="btn btn-danger btn-sm remove_fields dynamic" style="height: 34px; padding: 8px 10px;" href="#" id="remove-inventory-btn"
+      i.an.an-trashcan-alt
+  

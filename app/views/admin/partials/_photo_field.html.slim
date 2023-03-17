@@ -1,0 +1,13 @@
+div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 fileinput #{f.object.photo.blank? ? 'fileinput-new' : 'fileinput-exists'}" data-provides="fileinput"  
+  .input-group.display-flex
+    span.form-control.uneditable-input.no-float.truncate data-trigger="fileinput"
+      i.fa.fa-file-image-o
+      span.fileinput-filename.truncate
+        =f.object.photo_file_name
+    span.form-control.input-group-addon.btn.btn-default.btn-file
+      span.fileinput-new Select file
+      span.fileinput-exists Change
+      =f.file_field :photo, :type=>"file"
+      =text_field_tag "current_id",f.object.id,:class=>"hidden current_id_field"
+      =text_field_tag "delete_attachment[]",'',:class=>"hidden delete_field"
+    a.form-control.input-group-addon.btn.btn-default.fileinput-exists data-dismiss="fileinput" href="#" Remove

@@ -1,0 +1,191 @@
+.content
+  .notice-container
+    =render 'notice'
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Orders
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can view the details of all the orders that have been placed here.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Reference #" data-columntosearch="1" style="width: 220px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Order Reference #."
+          i.icon-question-sign &nbsp;
+      /.btn-group.btn-filter-wrapper
+        button.btn.btn-primary.btn-mini.dropdown-toggle aria-expanded="false" data-toggle="dropdown" 
+          span.dropdown-selected-filter.truncate title="All" All Status
+          span.caret
+        ul.dropdown-menu.search-filter
+          li
+            a.dropdown-selected-filter-item data-columntosearch="7" data-search=""  href="#" All Status 
+            -@status.each do |s|
+              a.dropdown-selected-filter-item data-columntosearch="7" data-search="#{s.response_message}" href="#" =s.response_message
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+    #order-statuses.hidden data-order-statuses="#{@order_statuses.to_json}"
+        
+  table#orders-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="4%" 
+        th.pointer.sortable.font-bold width="28%" 
+          | Reference #
+        th.pointer.sortable.font-bold width="17%" 
+          | Date Ordered
+        th.pointer.sortable.font-bold width="17%" 
+          | Date Updated
+        th.pointer.font-bold width="12%"
+          | Amount
+        th.pointer.font-bold
+          | Order Status Id
+        th.pointer.sortable.font-bold.text-center width="22%" 
+          | Status
+        th.pointer.font-bold
+          | Color Code
+    
+=render 'order_status_modal'
+=render '/admin/dhl_modals/validate_shipment_modal'
+=render '/admin/dhl_modals/book_pickup_modal'
+=render '/admin/dhl_modals/modify_pickup_modal'
+=render '/admin/dhl_modals/cancel_pickup_modal'
+
+javascript:
+  $(document).ready(function() {
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          
+    var order_statuses = $("#order-statuses").data('order-statuses');
+
+    // Variables for Datatables initialization.
+    var tableId = "#orders-list",
+        ajaxUrl = "/admin/datatables/retrieve_orders",
+        defaultOrder = [[3, 'desc']],
+        columnDefs = [
+          {
+            "className": 'details-control',
+            "orderable": false,
+            "data": "o.id",
+            "defaultContent": '',
+            "targets": 0,
+            "render": function(data, type, full) {
+              return "<a class='accordionTitle' href='#'></a>"
+            }
+          },
+          { "orderable": false,
+            "name": "o.request_id", 
+            "data": "request_id", 
+            "className": "truncate",
+            "targets": 1,
+            "render": function(data, type, full) {
+              return "<a class='text-underline' title='"+data+"' href='/admin/orders/"+data+"'>"+data+"</a>";
+            }
+          },
+          { "name": "o.created_at", 
+            "data": "created_at",
+            "className": "truncate",
+            "targets": 2,
+            "render": function(data, type, full) {
+              if (data) {
+                // If display or filter data is requested, format the date.
+                 if (type === 'display' || type === 'filter') {
+                   var d = new Date(data);
+                   return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                 }
+
+                 // Otherwise the data type requested (`type`) is type detection or
+                 // sorting data, for which we want to use the normal format, so just return
+                 // that, unaltered.
+                 return data;
+              } else {
+                return "-";
+              }
+            }
+          },
+          { "name": "o.updated_at", 
+            "data": "updated_at",
+            "className": "truncate",
+            "targets": 3,
+            "render": function(data, type, full) {
+              if (data) {
+                // If display or filter data is requested, format the date.
+                 if (type === 'display' || type === 'filter') {
+                   var d = new Date(data);
+                   return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                 }
+
+                 // Otherwise the data type requested (`type`) is type detection or
+                 // sorting data, for which we want to use the normal format, so just return
+                 // that, unaltered.
+                 return data;
+              } else {
+                return "-";
+              }
+            }
+          },
+          { "name": "o.amount + o.shipping_fee", 
+            "data": "amount", 
+            "targets": 4,
+            "render": function(data, type, full) {
+              return "₱"+parseInt(data).toFixed(2)
+            }
+          },
+          { "name": "o.order_status_id", "data": "order_status_id", "visible":false, "targets": 5 },
+          { "orderable": false,
+            "name": "os.name",
+            "data": "name",
+            "className": "text-center",
+            "targets": 6,
+            "render": function(data, type, row) {
+              var statuses = "";
+              var check_dhl_status = false;
+              // Populate the statuses dropdown.
+              if (row.courier_id == 2) {
+                var service_id = parseInt(row.dhl_service_id);
+                switch (isNaN(service_id) || service_id) {
+                  case true:
+                    statuses += "<li><a class='toggle-dhl-status-modal' data-type='validate-shipment' data-service-id='0' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-href='/admin/dhl/validate-shipment/"+row.request_id+"'>Validate Shipment</a></li>";
+                    break;
+                  case 0:
+                    statuses += "<li><a class='toggle-dhl-status-modal' data-type='book-pickup' data-service-id='1' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-href='/admin/dhl/book-pickup/"+row.request_id+"'>Book Pickup</a></li>";
+                    break;
+                  case 1 || 2:
+                    // statuses += "<li><a class='toggle-dhl-status-modal' data-type='modify-pickup' data-service-id='2' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-href='/admin/dhl/modify-pickup/"+row.request_id+"'>Modify Pickup</a></li>";
+                    // statuses += "<li><a class='toggle-dhl-status-modal' data-type='cancel-pickup' data-service-id='3' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-href='/admin/dhl/cancel-pickup/"+row.request_id+"'>Cancel Pickup</a></li>";
+                    check_dhl_status = true;
+                    break;
+                  //case 3:
+                    // statuses += "<li><a class='toggle-dhl-status-modal' data-type='book-pickup' data-service-id='1' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-href='/admin/dhl/book-pickup/"+row.request_id+"'>Book Pickup</a></li>";
+                    // break;
+                }
+              }
+              else {
+                $.each(order_statuses, function(i, order_status) {
+                  if ((row.order_status_id != order_status.id && order_status.courier_id == -1 || order_status.courier_id == (row.courier_id || 1)) && parseInt(row.level) < parseInt(order_status.level)) {
+                      statuses += "<li><a class='toggle-status-modal' data-reference-id='"+row.request_id+"' data-current-status='"+data+"' data-id='"+order_status.id+"'  data-href='/admin/orders/"+row.id+"'>"+order_status.name+"</a></li>";
+                    }
+                });
+              }
+              
+              var spinner_class = check_dhl_status ? '' : 'hidden';
+              var to_be_checked_class = check_dhl_status ? 'to-be-checked-status' : '';
+              return '<div class="btn-group btn-filter-wrapper '+to_be_checked_class+'" data-toggle="tooltip" data-title="'+data+'" data-reference-id="'+row.request_id+'">' + 
+                '<button aria-expanded="false" class="btn btn-datatable-select dropdown-toggle" data-toggle="dropdown" style="background-color: '+row.color_code+';">' + 
+                  '<span class="dropdown-selected-filter order-status truncate">'+data+'</span>' + 
+                  '<span class="caret order-status"></span>' + 
+                  '<i class="fa fa-spinner fa-pulse fa-3x fa-fw status-spinner '+spinner_class+'"></i>' +
+                '</button>' + 
+                '<ul class="dropdown-menu dropdown-menu-right">' + 
+                  statuses + 
+                '</ul>' + 
+              '</div>';
+            }
+          },
+          { "name": "o.color_code", "data": "color_code", "visible":false, "targets": 7 },
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder, "#{asset_path('loading@2x.gif')}");
+  });
+  

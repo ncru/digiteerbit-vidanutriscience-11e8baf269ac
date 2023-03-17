@@ -1,0 +1,36 @@
+.nested-fields data-faq-id="#{f.object.id}"
+  .row
+    .col-xs-1
+      .form-group
+        label for="status"
+          | Status
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this FAQ will be displayed in the product details page or not. Only active FAQs will be displayed."
+            i.icon-question-sign &nbsp;
+        =f.check_box :status, class: "js-switch"
+    .col-xs-9
+      .form-group
+        label for="title"
+          | Title
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The title of this FAQ."
+            i.icon-question-sign &nbsp;
+        =f.text_field :title, class: "form-control required capitalize", placeholder: "FAQ Title"
+        span.error-msg.hidden
+    .col-xs-2
+      .form-group
+        label &nbsp;
+        =link_to_remove_association 'Delete'.html_safe, f, :class=>"btn btn-danger btn-sm btn-block remove-faq"
+    .col-xs-12
+      .form-group
+        label for="description"
+          | Question
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The FAQ question."
+            i.icon-question-sign &nbsp;
+        =f.text_area :question, class: "form-control required no-resize", rows: 2
+        span.error-msg.hidden
+      .form-group
+        label for="description"
+          | Answer
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The FAQ answer."
+            i.icon-question-sign &nbsp;
+        =f.text_area :answer, class: "form-control required no-resize", rows: 2
+        span.error-msg.hidden

@@ -1,0 +1,72 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Shipping Rates
+      =link_to new_admin_shipping_rate_path, id: "add-shipping-rate", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-plus-thin
+        | New Shipping Rate
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can perform all shipping rate related maintenance on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Name" data-columntosearch="0" style="width: 250px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Name."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#shipping-rates-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="60%" 
+          | Name
+        th.pointer.sortable.font-bold width="25%" 
+          | Status
+        th.pointer data-column="actions" width="15%"
+=render 'delete_modal'
+
+javascript:
+  $(document).ready(function() {
+    // Variables for Datatables initialization.
+    var tableId = "#shipping-rates-list",
+        ajaxUrl = "/admin/datatables/retreive_shipping_rates",
+        defaultOrder = [[0, 'asc']],
+        columnDefs = [
+          { "name": "sr.names", "data": "names", "targets": 0 },
+          { "name": "status", 
+            "data": "status", 
+            "targets": 1,
+            "render": function(data, type, full) {
+              return (data == 0) ? '<span class="label label-danger">Inactive</span>' : '<span class="label label-success">Active</span>';
+            }
+          },
+          { "orderable": false, 
+            "className": "actions",
+            "data": "id",
+            "targets": -1, 
+            "render": function(data, type, full) {
+              return "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Edit'>"+
+                         "<a class='edit-shipping rate no-outline' data-push='true' href='/admin/shipping-rates/"+data+"/edit'><i class='an an-pencil-thin-slant'></i></a>"+
+                       "</li>"+
+                     "</ul>"+
+                     "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Delete'>"+
+                         "<a class='toggle-delete-modal no-outline' data-href='/admin/shipping-rates/"+data+"' data-type='shipping_rate'><i class='an an-trashcan-alt'></i></a>"+
+                       "</li>"+
+                     "</ul>";
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

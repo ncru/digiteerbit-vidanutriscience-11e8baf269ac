@@ -1,0 +1,16 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this uom label will be displayed in the site page or not. Only active uom labels will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, :class=>"js-switch"
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="name" 
+      | Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the uom label that will be displayed on the site page." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :name, :id=>"name", :class=>"form-control required capitalize", :placeholder=>"Uom Label Name"
+      span.error-msg.hidden 

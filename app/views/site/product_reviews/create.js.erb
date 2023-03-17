@@ -1,0 +1,23 @@
+var review_container = $('#review-container');
+var review_form = $('#new_product_review');
+var submit_button = $('.submit-review');
+var modal = $('#modalReview');
+
+setTimeout((function() {
+  submit_button.html('<i class="fa fa-check"></i> Review Sent. Thank You!').blur();
+}), 2000);
+
+setTimeout((function() {
+  $('#product_review_rating').rating('update', 1);
+  review_form.find('textarea').val('');
+  submit_button.removeClass('disabled').html('Send Review').blur();
+  
+  // Refresh the Product Reviews list.
+  $(".container-reviews").html("<%= j(render 'site/shop/reviews') %>");
+  // Refresh the Star Rating details.
+  $(".container-rating").html("<%= j(render 'site/shop/rating') %>");
+  // Reinitialize the Star Rating elements.
+  $('.rating').rating();
+  
+  modal.modal('hide');
+}), 3000);

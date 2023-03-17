@@ -1,0 +1,116 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Products
+      =link_to new_admin_product_path, id: "add-product", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-plus-thin
+        | New Product
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can perform all product related maintenance on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Product Name" data-columntosearch="3" style="width: 220px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on product name."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#products-list.table.data-table.display style="table-layout:fixed"
+    thead
+      tr
+        th.pointer data-column="avatar" width="6%"
+        th.pointer.sortable.font-bold.hidden
+          | New Product
+        th.pointer.sortable.font-bold.hidden
+          | Featured
+        th.pointer.sortable.font-bold width="30%"
+          | Name
+        th.pointer.sortable.font-bold width="20%"
+          | Brand
+        th.pointer.sortable.font-bold width="20%"
+          | Category
+        th.pointer.sortable.font-bold width="9%"
+          | Status
+        th.pointer data-column="actions" width="15%"
+=render 'delete_modal'
+
+javascript:
+  $(document).ready(function() {
+    // Variables for Datatables initialization.
+    var tableId = "#products-list",
+        ajaxUrl = "/admin/datatables/retrieve_products",
+        defaultOrder = [[3, 'desc']],
+        columnDefs = [
+          { "orderable": false,
+            "name": "p.photo_url",
+            "data": "photo_url",
+            "className": "text-center",
+            "targets": 0,
+            "render": function(data, type, full) {
+              return "<img class='picture' src='"+data+"'></img>";
+            }
+          },
+          { "name": "p.new", "data": "is_new", "visible":false, "targets": 1 },
+          { "name": "p.featured", "data": "is_featured", "visible":false, "targets": 2 },
+          { "name": "p.name",
+            "data": "product_name",
+            "className": "truncate",
+            "targets": 3,
+            "render": function(data, type, row) {
+              var marginLeft = "";
+              var style = "";
+
+              if (row.is_new || row.is_featured) style = "position: relative; top: -14px;";
+              if (row.is_new) marginLeft = "ml5";
+
+              return "<span class='label custom-label new'>"+row.is_new+"</span>"+
+                     "<span class='label custom-label featured "+marginLeft+"'>"+row.is_featured+"</span>"+
+                     "<div class='truncate' style='"+style+"' title='"+data+"'>"+data+"</div>";
+            }
+          },
+          { "name": "b.name", "data": "brand_name", "targets": 4 },
+          { "name": "c.name",
+            "data": "category_name",
+            "className": "truncate",
+            "targets": 5,
+            "render": function(data, type, row) {
+              return "<div class='truncate' title='"+data+"'>"+data+"</div>";
+            }
+          },
+          { "name": "p.status",
+            "data": "status",
+            "targets": 6,
+            "render": function(data, type, full) {
+              return (data == 0) ? '<span class="label label-danger">Inactive</span>' : '<span class="label label-success">Active</span>';
+            }
+          },
+          { "orderable": false,
+            "className": "actions",
+            "data": "id",
+            "targets": -1,
+            "render": function(data, type, full) {
+              return "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Edit'>"+
+                         "<a class='edit-product no-outline' data-push='true' href='/admin/products/"+data+"/edit'><i class='an an-pencil-thin-slant'></i></a>"+
+                       "</li>"+
+                     "</ul>"+
+                     "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Delete'>"+
+                         "<a class='toggle-delete-modal no-outline' data-href='/admin/products/"+data+"' data-type='product'><i class='an an-trashcan-alt'></i></a>"+
+                       "</li>"+
+                     "</ul>";
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

@@ -1,0 +1,137 @@
+-site_title "My Account | Vida Nutriscience"
+
+=render 'welcome'
+    
+.page-registration.container-account
+  .container
+    .row
+      .col-md-3
+        =render 'links'
+        
+      .col-md-8.col-md-offset-1
+        =form_for @customer, url: my_account_path do |f|
+          -if notice.present?
+            .alert.alert-custom
+              li =notice
+          -if @customer.errors.any?
+            .alert.alert-custom
+              -@customer.errors.full_messages.each do |msg|
+                li =msg
+          .text-right
+            button.btn.btn-green.btn-lone.text-uppercase.save-details Save
+          br
+          br
+          .title.title-sm.text-uppercase Account Details 
+          br
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase First Name
+                =f.text_field :first_name, class: "form-control", placeholder: "First Name"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Email
+                =f.email_field :email, class: "form-control required", placeholder: "Email", disabled: true
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Middle Name
+                =f.text_field :middle_name, class: "form-control", placeholder: "Middle Name"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Mobile #
+                =f.text_field :mobile, class: "form-control", placeholder: "Mobile #"
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Last Name
+                =f.text_field :last_name, class: "form-control required", placeholder: "Last Name"
+                span.error-msg.hidden
+          br
+          small.note Enter information here only if you want to change your current password.
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Password
+                =f.password_field :password, class: "form-control", placeholder: "New Password"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Confirm Password
+                =f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password"
+                span.error-msg.hidden
+          br
+          br
+          .title.title-sm.text-uppercase Shipping Info 
+          br
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Address 1
+                =f.text_area :shipping_address1, class: "form-control required", placeholder: "Address Line 1- Unit # / Floor / Bldg. / Street"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Address 2
+                =f.text_area :shipping_address2, class: "form-control", placeholder: "Address Line 2 - Village / Barangay"
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase City
+                =f.text_field :shipping_city, class: "form-control required"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Province
+                =f.text_field :shipping_state, class: "form-control required"
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Zip Code
+                =f.text_field :shipping_zip_code, class: "form-control required"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Country
+                =f.select(:shipping_country_code, options_from_collection_for_select(@countries, :code, :name, f.object.shipping_country_code), {include_blank: '-- Select Country --'}, :id=>"country_code", :class =>"form-control required border-gray")
+                i.fa.fa-caret-down
+                span.error-msg.hidden
+          br
+          br
+        /
+          .title.title-sm.text-uppercase Billing Info 
+          br
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Address 1
+                textarea.form-control type="text"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Address 2
+                textarea.form-control type="text"
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase City
+                input.form-control type="text"
+                span.error-msg.hidden
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Province
+                input.form-control type="text"
+                span.error-msg.hidden
+          .row
+            .col-md-6
+              .form-group.form-group-alt
+                label.control-label.text-uppercase Country
+                input.form-control type="text"
+                span.error-msg.hidden

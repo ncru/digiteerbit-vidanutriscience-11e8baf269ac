@@ -1,0 +1,34 @@
+-if @cart.cart_items.size == 0
+  tr
+    td colspan="6"
+      .empty-cart.text-center
+        span You have no items in your shopping bag.
+-else
+  -@cart.cart_items.each do |cart_item|
+    tr.tr-items
+      td.data-image.text-center
+        =image_tag(cart_item.sku.photo)
+      
+      td.data-desc 
+        | #{cart_item.sku.product.name}
+        br
+        strong SKU: 
+        | #{cart_item.sku.name}
+      td.data-price.text-center
+        | ₱#{format_number_with_precision(cart_item.sku.get_price, 2)}
+      td.data-qty.text-center
+        .spinner
+          =number_field_tag 'sku-quantity', cart_item.quantity, class: "form-control", min: 1, max: cart_item.sku.get_stocks - @cart.count_sku(cart_item.sku.id), disabled: true
+          =link_to "<i class='fa fa-caret-up'></i>".html_safe, site_cart_items_path(id: cart_item.id, method: "add"), class: "btn up", remote: true, method: "patch"
+          =link_to "<i class='fa fa-caret-down'></i>".html_safe, site_cart_items_path(id: cart_item.id, method: "deduct"), class: "btn down", remote: true, method: "patch"
+          
+      td.data-total.text-center ₱#{format_number_with_precision(cart_item.subtotal, 2)}
+      td.data-remove.text-center
+        =link_to "<i class='fa fa-times'></i>".html_safe, "#", { data: { type: "cart_item", id: cart_item.id }, class: "remove-item toggle-delete-modal" }
+  tr.subtotal
+    td colspan="3"
+    td.text-center
+      strong.text-uppercase Total
+    td.text-center
+      strong ₱#{format_number_with_precision(@cart.subtotal, 2)}
+    td

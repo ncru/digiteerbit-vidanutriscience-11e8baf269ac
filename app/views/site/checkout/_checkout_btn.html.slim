@@ -1,0 +1,14 @@
+-if @cart.cart_items.present?
+  button.btn.btn-lone.btn-paypal-yellow.text-uppercase.submit--orders data-pmid="1"
+    | Checkout with  
+    =image_tag("logo-paypal.png")
+  .clearfix
+  br
+  /button.btn.btn-lone.btn-paypal-yellow.text-uppercase.submit-orders data-pmid="2"
+    | Checkout with  
+    =image_tag("logo-vpc.png")
+  .clearfix
+  /br
+  button.btn.btn-lone.btn-paynamics.text-uppercase.submit--orders data-pmid="3"
+    | Checkout with  
+    =image_tag("logo-paynamics.png")

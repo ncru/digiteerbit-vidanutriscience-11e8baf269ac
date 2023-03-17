@@ -1,0 +1,13 @@
+a.btn.btn-upload-photo-slider.open_gallery data-id="5"
+  i.an.an-image-alt-1
+  | Upload / Select Photo
+br
+br
+div id="photo-table-#{f.object.id}" class="row"
+  -if f.object.photos.present?
+    -f.object.photos.each_with_index do |photo,index|
+      .col-md-2 id="#{index}"
+        =f.hidden_field :photos, multiple: true, :value=>"#{photo}" 
+        img.thumbnail.thumbnail-sm.img-responsive src="#{photo}"
+        a.btn.btn-success.btn-remove-sm.toggle-delete-photoslider-modal data-type='photoslider' data-parentid="#{index}" data-parent-table-id="photo-table-#{f.object.id}" data-ref-id="5"
+          i.an.an-cross-thin

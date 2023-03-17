@@ -1,0 +1,19 @@
+.order-details-wrapper
+  .row.content-sub-header.mb5
+    .col-xs-12
+      h1.mb10
+        | Items Purchased 
+        strong
+          | (#{@order.order_items.sum(:quantity)} 
+          | #{if @order.order_items.sum(:quantity) > 1 then "items" else "item"})
+  -@order.order_items.each do |item|
+    .row
+      .col-xs-12
+        ul.item-profile
+          li
+            span.item-profile-img href="#" style="background-image: url('#{item.sku.photos.present? ? item.sku.photos[0] : asset_path("default-slider.jpg")}');"
+            h2 =item.sku.product.name
+            span.info
+              em SKU: <strong>#{item.sku.name}</strong>
+              em UNIT PRICE: <strong>#{format_number_with_precision(item.price, 2)}</strong>
+              em QTY: <strong>#{item.quantity}</strong>

@@ -1,0 +1,43 @@
+- title "Sign Up"
+.overlay
+section#register.sec-devise
+  .container
+    .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.devise-wrapper
+      .devise-container
+        .icon-holder.text-center
+          i.an.an-user-plus
+        h5.devise-header.text-center
+          span.text-bold.text-red-orange Create 
+          |your account
+        br
+        .row
+          = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            .col-lg-6.col-md-6.col-sm-12.col-xs-12.mb15.w-auto.disp-in-block
+              .alert-danger-box
+                p
+                  strong Warning!
+                  br
+                  -@user.errors.each do |attribute, error|
+                    =attribute
+                    |   
+                    =error
+                    br
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12.mb10
+              .login-email-input
+                i.an.an-mail-alt
+                =f.text_field :email, autofocus: false, placeholder: "Email", :class=>"form-control input-devise"
+              .login-password-input
+                - if @validateble
+                  i
+                    = @minimum_password_length
+                  br
+                i.an.an-padlock-locked-alt
+                =f.password_field :password, autocomplete: "off", placeholder: "Password", :class=>"form-control input-devise"
+              .login-password-input
+                i.an.an-padlock-locked-alt
+                =f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation", :class=>"form-control input-devise"
+
+              =f.submit "Sign Up", class: "btn btn-red-orange uppercase pull-right"
+              .clearfix
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12
+              =render "devise/shared/links"

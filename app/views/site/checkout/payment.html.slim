@@ -1,0 +1,72 @@
+
+.page-checkout
+  .container
+    table.table-checkout
+      td.data-step-content
+        ul.breadcrumbs
+          li
+            a.done href="/cart" Cart
+          li
+            a.done href="/checkout" Customer Information
+          li
+            a.ac href="#{request.url}" Payment
+        br
+        -if error.present?
+          .alert.alert-custom
+            li =error
+        .title.title-sm.clearfix
+          span Checkout: Payment Method
+        br
+        .container-checkout-form
+          .text-center
+            p#select-payment-method Select payment method
+          br
+          =form_for [:site, @order] do |f|
+            =hidden_field_tag 'wizard_page', 'payment'
+            .row.checkout-payment-method
+              .col-sm-4
+                label
+                  -if @order.shipping_country_code == 'PH' && Province.find(@order.shipping_state_id).name == "Metro Manila"
+                    =f.radio_button :payment_method_id, 0, class: 'field--radio'
+                    .box
+                      span 
+                        i.fa.fa-wallet
+                        br
+                        | Cash On Delivery
+                  - else 
+                    .box
+                      span 
+                        i.fa.fa-wallet
+                        br
+                        | COD (Not Available)
+              .col-sm-4
+                label
+                  =f.radio_button :payment_method_id, 1, class: 'field--radio'
+                  .box
+                    span
+                      center
+                        .mb-5
+                        =image_tag('logo-paypal.png', class: 'img-responsive', width: 120)
+              .col-sm-4
+                label
+                  =f.radio_button :payment_method_id, 3, class: 'field--radio'
+                  .box
+                    span.others
+                      center
+                        =image_tag('logo-paynamics.png', class: 'img-responsive', width: 120)
+                      small
+                        | (Visa, Mastercard, etc.)
+            br
+            .clearfix.checkout-buttons
+              =link_to checkout_path, class: 'link-text link-back-cart' do
+                i.fa.fa-angle-left
+                span Back to Customer Info
+              span.container-checkout-btn.pull-right
+                button.btn.btn-lone.btn-paypal-yellow.text-uppercase.submit-payment-method
+                  | Confirm Payment
+                .clearfix
+              
+      td.data-checkout-cart
+        #cart-container
+          =render 'order_summary'
+    

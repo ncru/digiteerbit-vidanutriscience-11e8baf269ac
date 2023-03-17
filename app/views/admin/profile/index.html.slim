@@ -1,0 +1,40 @@
+- title "Profile"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#profile.content-page data-title="Profile"
+    .content
+      .notice-container
+        -if notice.present?
+          .alert.alert-main.alert-success.alert-newversion
+            =notice.html_safe
+        -elsif error.present?
+          .alert.alert-main.alert-danger.alert-newversion
+            =error.html_safe
+      .row.content-header
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          h1 Profile
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          p.explanation
+            | You can view your profile details and update them in this module.
+      .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          ul.profile
+            li
+              -if !current_user.photo_file_name.nil?
+                span.profile-img href="#" style="background-image: url(#{current_user.photo.url})"
+              -else
+                span.profile-img href="#" style="background-image: url(#{asset_path('avatar.svg')})"
+              h2 =current_user.full_name
+              span.info
+                em
+                  i.an.an-mail
+                  =current_user.email
+                em
+                  i.an.an-padlock-locked-circle
+                  -if current_user.last_sign_in_at.present?
+                    -if time_ago_in_words(current_user.last_sign_in_at) == 'less than a minute'
+                      | Your last login was Just Now
+                    -else
+                      | Your last login was #{(time_ago_in_words(current_user.last_sign_in_at) +' ago').sub('about', '')}
+      .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          =render 'form'

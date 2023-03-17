@@ -1,0 +1,60 @@
+.container-filter
+  a.wrapper-sort href="#{request.url}" All
+  .br
+  #accordionFilter.panel-group
+    -if @categories.present?
+      -@categories.each_with_index do |category, index|
+        .panel.panel-default
+          .panel-heading
+            a.wrapper-sort data-parent="#accordionFilter" data-toggle="collapse" href="#collapse#{index}" 
+              | #{category.name}
+              i.fa.fa-angle-down.pull-right
+              .clearfix
+          div.panel-collapse.collapse.collapse-filter id="collapse#{index}"
+            -category.sub_divisions.each do |sub_category|
+              .wrapper-sort-clone
+                .check-group
+                  label
+                    input#subcategory-filter.filter-skus-controls type="checkbox" data-subcategory-id="#{sub_category.id}" data-type="sub_categories"
+                    .square
+                    i.fa.fa-check
+                    span =sub_category.name
+
+.container-sort
+  .sort-title.text-uppercase Sort By
+  .check-group
+    label
+      input#radio-1.filter-skus-controls type="radio" name="order_by" data-order-field="4" data-order="desc" data-type="order" checked="checked"
+      .square
+      i.fa.fa-check
+      span Price - High to Low
+  .check-group
+    label
+      input#radio-2.filter-skus-controls type="radio" name="order_by" data-order-field="4" data-order="asc" data-type="order"
+      .square
+      i.fa.fa-check
+      span Price - Low to High
+  /.check-group
+    label
+      input name="email1" type="radio"
+      .square
+      i.fa.fa-check
+      span Discount
+  /.check-group
+    label
+      input name="email1" type="radio"
+      .square
+      i.fa.fa-check
+      span Special Offers
+
+-if @brands.present?
+  .container-sort
+    .sort-title.text-uppercase Filter By Brand
+    -@brands.each do |brand|
+      .check-group
+        label
+          input#brand-filter.filter-skus-controls type="checkbox" data-brand-id="#{brand.id}" data-type="brands"
+          .square
+          i.fa.fa-check
+          span =brand.name
+br

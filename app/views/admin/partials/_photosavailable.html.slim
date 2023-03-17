@@ -1,0 +1,32 @@
+.modal-header.modal-primary.photosavailable
+  button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+  h4.modal-title Photos
+.modal-body
+  #error-msg-div-modal.alert.alert-danger.hidden
+  =form_for [:admin, @photo], :remote=>true, :html => {:multipart => true, :class => "main_form"}  do |f|
+    =f.text_field :photo_url, :class=>"form-control direct_upload_field hidden"
+  form.direct_uploader
+    span.btn.btn-success.fileinput-button#main_file_input_btn
+      i.an.an-upload-cloud
+      | Upload New Photo
+      input.file_input#main_file_input type="file" multiple="multiple"
+  #progress_bar.hidden
+    .bar.text-center
+      | Uploading..
+  br
+  .row.photo-list
+    -@photos.each do |p|
+      .col-md-2
+        .wrapper-photo
+          a.photo.thumbnail data-id="#{p.photo_url}" href="#"
+            =image_tag(p.photo_url,:class=>"img-responsive")
+  -if @photos.count >= 18
+    br
+    =form_tag "/admin/photos/load_more_photos",:method=>"get",:remote=>true,:id=>"load_more_form",:class=>"text-center"
+      input#page_count.hidden name="page" value="0"
+      a#load_more_btn.btn.btn-default.btn-xs
+        span.xs Load More Photos
+  =form_tag "/admin/photos/refresh_photos_list",:method=>"get",:remote=>true,:id=>"refresh_photo_list",:class=>"text-center"
+.modal-footer
+  a.btn.btn-primary.insert-img.disabled
+    | Add selected Photo

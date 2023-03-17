@@ -1,0 +1,44 @@
+- title "Price Updates"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#materials.content-page.current data-title="Price Updates"
+    -if @price_updates.present?
+      .content
+        .notice-container
+          -if notice.present?
+            .alert.alert-main.alert-success.alert-newversion
+              =notice.html_safe
+          -elsif error.present?
+            .alert.alert-main.alert-danger.alert-newversion
+              =error.html_safe
+        .row.content-header.mb20
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            h1 Price Updates
+            a#addPriceUpdates.btn.btn-success.pull-right.new.no-outline href="/admin/price-updates/new" 
+              i.an.an-plus-thin
+              | New Price Update
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12
+            p.explanation
+              | You can update the price of the products on this module.
+          .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+            .search-input-wrapper
+              i.an.an-search
+              input.search-input.form-control placeholder="Search for Product Name" data-columntosearch="1" style="width: 220px;"
+              span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Product Name."
+                i.icon-question-sign &nbsp;
+            a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+              i.an.an-repeat-circle-big
+              |  Refresh
+
+        ul.nav.nav-tabs.post-tab
+          li.active
+            a target="pricelist" href="#" 
+              span.tab-title Today's Price List
+          li
+            a target="pricehistory" href="#" 
+              span.tab-title Price History
+        #pricelist.tab-content
+          =render 'price_list'
+        #pricehistory.hidden.tab-content
+          =render 'price_history'
+    -else
+      =render 'starter_template'

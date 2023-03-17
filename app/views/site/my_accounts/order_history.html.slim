@@ -1,0 +1,60 @@
+-site_title "Order History | Vida Nutriscience"
+
+=render 'welcome'
+
+.page-registration
+  .container
+    .row
+      .col-md-3
+        =render 'links'
+        
+      .col-md-8.col-md-offset-1
+        .title.title-sm.text-center.text-uppercase.mb-30 Order History
+        table.table-order-history
+          -if current_customer.orders.present?
+            -current_customer.orders.each do |order|
+              tr.row-order-number
+                td
+                  label.text-uppercase Order Reference No.
+                  .data.item =order.request_id
+                td.text-right
+                  label.text-uppercase Ordered On
+                  .data =custom_format_date(order.created_at, '%d %b %Y')
+                td.text-right
+                  label.text-uppercase Shipping
+                  .data.item ₱#{format_number_with_precision(order.shipping_fee, 2)}
+                td.text-right
+                  label.text-uppercase Amount
+                  .data.item ₱#{format_number_with_precision(order.amount, 2)}
+                td.text-right
+                  label.text-uppercase Status
+                  .data.item.text-uppercase style="color: #{order.order_status.color_code}"
+                    =order.order_status.name
+              /! Order Items - #{order.request_id}
+              -order.order_items.each do |item|
+                tr.row-sub-items
+                  td
+                    label.text-uppercase Product
+                    .data.item =item.sku.product.name
+                  td.text-right
+                    label.text-uppercase SKU
+                    .data =item.sku.name
+                  td.text-right
+                    label.text-uppercase No of Items
+                    .data =item.quantity
+                  td.text-right
+                    label.text-uppercase Price
+                    .data.item ₱#{format_number_with_precision(item.price, 2)}
+                  td.text-right
+                    label.text-uppercase Total
+                    .data.item ₱#{format_number_with_precision(item.price*item.quantity, 2)}
+              /! End Order Items - #{order.request_id}                  
+              tr.row-separator
+                td colspan="5"
+          -else
+            tr.row-order-number
+              td.text-center
+                label.text-uppercase You have not made any purchases yet.
+            tr
+              td.text-center
+                a.btn.btn-gray.btn-lone.text-uppercase href="/shop" Shop Now

@@ -1,0 +1,125 @@
+// Create custom grid system
+@mixin new-grid-system($new-grid-columns, $new-grid-gutter-width)
+  $grid-columns: $new-grid-columns
+  $grid-gutter-width: $new-grid-gutter-width
+  $i: 1
+  $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}"
+  
+  .row
+    margin-left:  ($new-grid-gutter-width / -2)
+    margin-right: ($new-grid-gutter-width / -2)
+    +clearfix()
+      
+  @for $i from (1 + 1) through $new-grid-columns 
+    $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}"
+    
+  #{$list}
+    position: relative
+    // Prevent columns from collapsing when empty
+    min-height: 1px
+    // Inner gutter via padding
+    padding-left:  ($new-grid-gutter-width / 2)
+    padding-right: ($new-grid-gutter-width / 2)
+    
+  +make-grid(xs)
+    
+  @media (min-width: $screen-sm-min)
+    +make-grid(sm)
+
+  @media (min-width: $screen-md-min)
+    +make-grid(md)
+      
+  @media (min-width: $screen-lg-min)
+    +make-grid(lg)
+
+// Responsive utility (1 paramater only)
+=respond-to($media)
+  @if $media == xs
+    @media (max-width: 480px)
+      @content
+  @else if $media == smp
+    @media (min-width: 481px) and (max-width: 768px)
+      @content
+  @else if $media == sml
+    @media (min-width: 769px) and (max-width: 1024px)
+      @content
+  @else if $media == md
+    @media (min-width: 1025px) and (max-width: 1440px)
+      @content
+  @else if $media == lg
+    @media (min-width: 1441px)
+      @content
+  @else if $media == iphone-p
+    @media (max-width: 736px) and (orientation: portrait)
+      @content
+  @else if $media == iphone-l
+    @media (max-width: 736px) and (orientation: landscape)
+      @content
+  @else if $media == iphone
+    @media (max-width: 736px)
+      @content
+  @else if $media == ipad-p
+    @media (min-width: 737px) and (max-width: 1024px) and (orientation: portrait)
+      @content
+  @else if $media == ipad-l
+    @media (min-width: 737px) and (max-width: 1024px) and (orientation: landscape)
+      @content
+  @else if $media == ipad
+    @media (min-width: 737px) and (max-width: 1024px)
+      @content
+
+// Responsive utility (Multiple parameters)
+=respond-to-query($media...)
+  @each $mediatype in $media
+    +respond-to($mediatype)
+      @content
+
+// Align element vertically, must have fixed height for parent element.
+=vertical-align
+  position: relative
+  top: 50%
+  -webkit-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  transform: translateY(-50%)
+
+// (Black and white filter........)
+=filter($filter-type,$filter-amount)
+  -webkit-filter: $filter-type+unquote('(#{$filter-amount})')
+  -moz-filter: $filter-type+unquote('(#{$filter-amount})')
+  -ms-filter: $filter-type+unquote('(#{$filter-amount})')
+  -o-filter: $filter-type+unquote('(#{$filter-amount})')
+  filter: $filter-type+unquote('(#{$filter-amount})')
+
+=custom-animation($name, $sec)
+  transition: $name $sec cubic-bezier(0.000, 0.000, 0.580, 1.000)
+  -webkit-transition: $name $sec cubic-bezier(0.000, 0.000, 0.580, 1.000)
+  -moz-transition: $name $sec cubic-bezier(0.000, 0.000, 0.580, 1.000)
+
+=alternateWords($n_elements, $duration, $animation)
+  a
+    +animation(#{$animation} #{$n_elements * $duration}s linear infinite 0s)
+
+  @for $i from 2 through $n_elements
+    a:nth-child(#{$i})
+      +animation-delay(#{($i - 1) * $duration}s)
+  
+
+.row-height
+  +respond-to-query(sml, md, lg)
+    display: table
+    table-layout: fixed
+    height: 100%
+    width: 100%
+  .col-height
+    +respond-to-query(sml, md, lg)
+      display: table-cell
+      float: none !important
+      height: 100%
+      vertical-align: top
+
+
+=prefix($property, $value, $prefixes: ())
+  @each $prefix in $prefixes
+    #{'-' + $prefix + '-' + $property}: $value
+    
+  #{$property}: $value

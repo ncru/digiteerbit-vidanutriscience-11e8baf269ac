@@ -1,0 +1,20 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Company Details
+      =link_to edit_admin_company_detail_path(@company_detail), id: "edit-company-details", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-pencil-thin-slant
+        | Edit
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can specify the site's Company Details on this module.
+  =render 'company_details'
+
+=render '/admin/partials/generic_js'

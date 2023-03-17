@@ -1,0 +1,211 @@
+@media (max-width: 1199px)
+  .navbar-vida
+    .container
+      width: 100%
+
+@media (max-width: 1157px)
+  .navbar-vida
+    padding: 0
+
+@media (min-width: 998px) and (max-width: 1105px)
+  .navbar-vida
+    .link-user,
+    .wrapper-bag
+      padding: 20px 15px !important
+      line-height: 1 !important
+      span
+        display: none
+      .vd
+        margin: 0 !important
+        position: static !important
+
+    &.navbar-scroll
+      .link-user,
+      .wrapper-bag
+        padding: 9px 15px !important
+
+@media (max-width: 997px)
+  .navbar-vida
+    padding-right: 70px
+    &.navbar-scroll
+      padding-right: 50px
+
+      .mobile-menu-toggle
+        padding: 18px 0
+        +square(50px)
+
+    .link-user,
+    .wrapper-bag
+      span
+        display: inline !important
+      .vd
+        margin: 0
+  .mobile-menu-toggle
+    display: block !important
+    position: absolute
+    top: 0
+    right: 0
+
+  .menu-toggled
+    overflow: hidden
+    .menu
+      &:after
+
+      left: 0
+    .topbar-overlay
+      z-index: 99
+      +opacity(1)
+      visibility: visible
+
+  .menu
+    height: 100vh
+    overflow: auto
+    width: 350px
+    left: -350px
+    top: 0
+    position: fixed
+    background: #fff
+    z-index: 10000
+    padding: 15px
+    text-align: center
+    +new-grid-system(12, 15px)
+    li
+      text-align: center
+    li.close-list
+      display: block
+
+    .search
+      display: block  !important
+      margin-top: 30px
+      margin-left: 0
+      input
+        width: calc(100% - 53px)
+
+
+
+
+@media (max-width: 532px)
+  .navbar-vida
+    .wrapper-bag,
+    .link-user
+      padding: 19px 15px !important
+      line-height: 1 !important
+      span
+        display: none !important
+      .vd
+        margin: 0 !important
+        position: static !important
+
+    &.navbar-scroll
+      .link-user,
+      .wrapper-bag
+        padding: 9px 15px !important
+
+    .navbar-brand
+      margin-left: -15px
+      padding-left: 13px
+      padding-right: 13px
+
+
+.table-cart
+  thead
+    +respond-to-query(xs, smp, sml)
+      display: none
+
+  tbody
+    +respond-to-query(xs, smp, sml)
+      display: block
+  tr.subtotal
+    +respond-to-query(xs, smp, sml)
+      display: block
+
+    &:after
+      +respond-to-query(xs, smp, sml)
+        content: ''
+        clear: both
+        display: table
+
+    td
+      +respond-to-query(xs, smp, sml)
+        display: block
+        border-bottom: 0
+        float: left
+      &:nth-of-type(1)
+        +respond-to-query(xs, smp, sml)
+          display: none
+      &:nth-of-type(2)
+        +respond-to-query(xs, smp, sml)
+          width: 50%
+          text-align: left !important
+          padding: 15px 8px !important
+      &:nth-of-type(3)
+        +respond-to-query(xs, smp, sml)
+          width: 50%
+          text-align: right !important
+          padding: 15px 8px !important
+
+
+
+  .tr-items
+    +respond-to-query(xs, smp, sml)
+      position: relative
+      display: block
+      border-bottom: 2px solid #ddd
+
+    &:after
+      +respond-to-query(xs, smp, sml)
+        content: ''
+        clear: both
+        display: table
+    td
+      +respond-to-query(xs, smp, sml)
+        display: block
+        border-bottom: 0
+        float: left
+
+      &:nth-of-type(2)
+        +respond-to-query(xs, smp, sml)
+          width: calc(100% - 100px)
+          padding-bottom: 0
+          padding-top: 20px
+          padding-right: 30px
+
+      &:nth-of-type(3)
+        +respond-to-query(xs, smp, sml)
+          padding-top: 0
+          text-align: left !important
+          width: calc(100% - 100px)
+          padding-right: 30px
+
+      &:nth-of-type(4)
+        +respond-to-query(xs, smp, sml)
+          clear: both
+
+      &:nth-of-type(4)
+        +respond-to-query(xs, smp, sml)
+          width: 50%
+          text-align: left !important
+
+      &:nth-of-type(5)
+        +respond-to-query(xs, smp, sml)
+          width: 50%
+          text-align: right !important
+          padding: 23px 8px !important
+
+      &:nth-of-type(6)
+        +respond-to-query(xs, smp, sml)
+          padding: 15px 8px 0 !important
+          text-align: right !important
+          position: absolute
+          right: 0
+          top: 0
+          width: auto
+
+.btn-con
+  span.period
+    display: none
+    +respond-to-query(xs)
+      display: inline
+  span
+    +respond-to-query(xs)
+      display: none

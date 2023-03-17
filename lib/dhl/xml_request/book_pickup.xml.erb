@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:BookPURequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.dhl.com book-pickup-global-req.xsd" schemaVersion="1.0">
+    <Request>
+        <ServiceHeader>
+          <MessageTime><%= DateTime.now %></MessageTime>
+          <MessageReference><%= @request_id %></MessageReference>
+          <SiteID><%= @site_id %></SiteID>
+          <Password><%= @password %></Password>
+        </ServiceHeader>
+   </Request>
+   <RegionCode>AP</RegionCode>
+    <Requestor>
+        <AccountType>D</AccountType>
+        <AccountNumber><%= @shipper.account_number %></AccountNumber>
+        <!-- <RequestorContact>
+            <PersonName><%= @shipper.contact_person %></PersonName>
+            <Phone><%= @shipper.contact_no %></Phone>
+            <PhoneExtension>5053</PhoneExtension>
+        </RequestorContact> -->
+    </Requestor>
+    <Place>
+      <LocationType>B</LocationType>
+      <CompanyName><%= @shipper.company %></CompanyName>
+      <Address1><%= @shipper.address1 %></Address1>
+      <Address2><%= @shipper.address2 %></Address2>
+      <PackageLocation><%= @package_location %></PackageLocation>
+      <City><%= @shipper.city %></City>
+      <!-- <StateCode>MH</StateCode> -->
+      <!-- <DivisionName>California</DivisionName> -->
+      <CountryCode><%= @shipper.country_code %></CountryCode>
+      <PostalCode><%= @shipper.postal_code %></PostalCode>
+    </Place>
+    <Pickup>
+      <PickupDate><%= @ready_date %></PickupDate>
+      <ReadyByTime><%= @shipper.ready_time.strftime('%H:%M') %></ReadyByTime>
+      <CloseTime><%= @shipper.close_time.strftime('%H:%M') %></CloseTime>
+    </Pickup>
+    <PickupContact>
+        <PersonName><%= @shipper.contact_person %></PersonName>
+        <Phone><%= @shipper.contact_no %></Phone>
+        <!-- <PhoneExtension>5768</PhoneExtension> -->
+    </PickupContact>
+     <ShipmentDetails>
+        <AccountType>D</AccountType>
+        <!-- <AccountNumber>550000055</AccountNumber>
+        <BillToAccountNumber>123456789</BillToAccountNumber> -->
+        <AWBNumber><%= @dhl_params.awb_number %></AWBNumber>
+        <NumberOfPieces><%= @total_pieces %></NumberOfPieces>
+        <Weight><%= @total_weight %></Weight>
+        <WeightUnit>K</WeightUnit>
+        <GlobalProductCode><%= @dhl_params.product_code %></GlobalProductCode>
+        <DoorTo>DD</DoorTo>
+        <!-- <DimensionUnit>C</DimensionUnit>
+        <InsuredAmount>10.00</InsuredAmount>
+        <InsuredCurrencyCode>USD</InsuredCurrencyCode> -->
+        <Pieces>
+          <Weight><%= @total_weight %></Weight>
+        </Pieces>
+        <!-- <SpecialService>SS</SpecialService>
+        <SpecialService>TT</SpecialService> -->
+    </ShipmentDetails>
+</req:BookPURequest>

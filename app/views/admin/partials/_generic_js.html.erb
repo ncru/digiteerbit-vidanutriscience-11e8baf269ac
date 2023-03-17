@@ -1,0 +1,26 @@
+<script>
+  $(".date").datetimepicker({
+    timepicker:false,
+    format:'d-M-Y'
+  });
+
+  $('.summernote').summernote({
+    toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'strikethrough']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['misc', ['link', 'codeview']]
+    ]
+  });
+
+  $('.summernote-complete-toolbar').summernote({
+    onInit: function() {
+      $(this).siblings('.note-editor').find('.note-insert button').eq(3).replaceWith('<button type="button" class="btn btn-default btn-sm btn-small open_gallery" title="Add Photo" tabindex="-1" data-original-title="Add Photo" data-id="2"><i class="fa fa-file-image-o"></i></button>');
+      $('.note-help button').remove();
+    }
+  });
+
+  $(".chosen-select").chosen({
+    placeholder_text_multiple: "Select option(s)..."
+  });
+</script>

@@ -1,0 +1,15 @@
+.starter-template
+  .middle-box
+    -if params[:action] == "index"
+      h1 Product Reviews
+    -else
+      h1 =@product.name + " Reviews"
+    .section-icon
+      i.an.an-star
+    p
+      | No review has been received yet.
+    -if params[:action] == "show"
+      div
+        a.btn.btn-success.add-first-price-update.no-outline href="/admin/product-reviews"
+          i.an.an-previous
+          | Go Back

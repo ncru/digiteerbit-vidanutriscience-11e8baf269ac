@@ -1,0 +1,222 @@
+.default-transition
+  transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000)
+  -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000)
+  -moz-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000)
+
+.mobile-padding
+  +respond-to-query(xs, smp)
+    padding-left: 15px
+    padding-right: 15px
+
+.mb-5
+  margin-bottom: 5px
+
+.mb-10
+  margin-bottom: 10px
+
+.mb-30
+  margin-bottom: 30px
+
+.mb-50
+  margin-bottom: 50px
+
+.reset-grid
+  +new-grid-system(12, 30px)
+
+.btn-blue
+  background: $color-blue
+  border-color: $color-blue
+  color: #fff
+  &:hover,
+  &:focus
+    background: darken($color-blue, 6%)
+    border-color: darken($color-blue, 6%)
+    color: #fff
+
+.btn-green
+  background: $color-green
+  border-color: $color-green
+  color: #fff
+  &:hover,
+  &:focus
+    background: darken($color-green, 6%)
+    border-color: darken($color-green, 6%)
+    color: #fff
+
+.btn-gray
+  background: #f6f6f6
+  border-color: #f6f6f6
+  color: $color-text
+  &:hover,
+  &:focus
+    background: $color-text
+    border-color: $color-text
+    color: #fff
+    
+.btn-red
+  background: $color-red
+  border-color: $color-red
+  color: #fff
+  &:hover,
+  &:focus
+    background: darken($color-red, 6%)
+    border-color: darken($color-red, 6%)
+    color: #fff
+
+.btn-paypal
+  background: $color-green
+  color: $color-text
+  padding: 8px 30px !important
+  
+  img
+    height: 30px
+    margin-left: 5px
+  
+  &:hover,
+  &:focus
+    background: darken($color-green, 6%)
+    border-color: $color-blue
+    color: $color-blue
+
+.btn-paypal-yellow
+  background: #ffc520
+  padding: 10px 30px !important
+  color: $color-text
+  +respond-to-query(xs)
+    padding: 10px 15px !important
+  
+  img
+    height: 24px
+  
+  &:hover,
+  &:focus
+    color: $color-text
+    background: darken(#ffc520, 6%)
+    
+.btn-paynamics
+  background: #fff
+  border: 1px solid #ccc
+  padding: 10px 30px !important
+  color: $color-text
+  +respond-to-query(xs)
+    padding: 10px 15px !important
+    
+  img
+    height: 24px
+  
+  &:hover,
+  &:focus
+    color: $color-text
+    background: darken(#fff, 6%)
+
+.vbottom
+  .col-height
+    vertical-align: bottom
+
+
+.vmiddle
+  .col-height
+    vertical-align: middle
+
+.btn-lone
+  padding: 14px 30px
+
+.form-group-alt
+  label
+    @extend .header
+  .form-control
+    border-radius: 0
+    height: 40px
+    border-color: #ccc
+    +box-shadow(none)
+    &:focus
+      border-color: $color-green
+      +box-shadow(none)
+      outline: 0
+
+.color-yellow
+  color: #ffd500
+  
+.bg-green
+  background: $color-green
+  
+.bg-red
+  background: #ef2821
+
+.mr-15
+  margin-right: 15px
+
+.modal-center
+  text-align: center
+  padding: 0!important
+
+  &::before
+    content: ''
+    display: inline-block
+    height: 100%
+    vertical-align: middle
+    margin-right: -4px
+
+  .modal-dialog
+    display: inline-block
+    text-align: left
+    vertical-align: middle
+    
+  .modal-content
+    position: relative
+    border-radius: 0
+    border: 0
+    padding: 15px
+    +box-shadow(none)
+    
+    .close-modal
+      color: $color-text
+      font-size: 20px
+      font-weight: 300
+      position: absolute
+      top: 15px
+      right: 15px
+      cursor: pointer
+      +opacity(.5)
+      @extend .default-transition
+      
+      &:hover,
+      &:focus
+        text-decoration: none
+        +opacity(1)
+
+.mb-0
+  margin-bottom: 0 !important
+  
+.mt-0
+  margin-top: 0 !important
+  
+.link-text
+  color: $color-text
+  @extend .default-transition
+  
+  i
+    margin-right: 5px
+  
+  &:hover,
+  &:focus
+    color: $color-blue
+
+.link-back-cart
+  line-height: 47px
+  
+.note
+  color: #aaa
+  font-style: italic
+
+.line-through
+  text-decoration: line-through
+
+.color-red
+  color: $color-red
+
+.color-blue
+  color: $color-blue
+
+.icon
+  font-size: 40px

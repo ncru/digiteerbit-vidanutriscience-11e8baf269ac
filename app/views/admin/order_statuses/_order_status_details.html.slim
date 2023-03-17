@@ -1,0 +1,68 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this order status will be available for selection when updating an order's status or not. Only order statuses or will be available for selection." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, class: "js-switch"
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="courier_id" 
+      | Courier
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the order status." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:courier_id, options_for_select([["Xend", 1], ["DHL", 2], ["Both", -1]], f.object.courier_id), {include_blank: "-- Select Courier --"}, id: "courier_id", class: "form-control chosen-select required")  
+      span.error-msg.hidden
+  .form-group#dhl-services style="display: #{f.object.courier_id.to_i == 2 ? 'normal' : 'none'}"
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="dhl_service_id" 
+      | DHL Service
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the order status." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:dhl_service_id, options_for_select([["Validate Shipment", 0], ["Book Pickup", 1], ["Modify Pickup", 2], ["Cancel Pickup", 3]], f.object.dhl_service_id), {include_blank: "-- Select Courier --"}, id: "dhl_service_id", class: "form-control chosen-select")  
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="name" 
+      | Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the order status." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :name, id: "name", class: "form-control required", placeholder: "Order Status Name", readonly: f.object.courier_id.to_i == 2 ? true : false
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="color_code"
+      | Color Code
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The color to be assigned to this order status."
+        i.icon-question-sign &nbsp;
+    .col-lg-3.col-md-3.col-sm-4.col-xs-8
+      =f.color_field :color_code, id: "color_code", class: "form-control required"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="level"
+      | Level
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The level of this order status. This is useful for setting which order status will come first in the list."
+        i.icon-question-sign &nbsp;
+    .col-lg-3.col-md-3.col-sm-4.col-xs-8
+      =f.number_field :level, id: "level", class: "form-control"
+      span.error-msg.hidden
+
+javascript:
+    $(document).on("change", 'select#courier_id', function(event) {
+      event.preventDefault();
+      if (parseInt($(this).val()) == 2) {
+        $('#dhl-services').slideDown();
+        $('input#name').prop('readonly', true);
+      } 
+      else
+      {
+        $('#dhl-services').slideUp();
+        $('input#name').prop('readonly', false);
+      }
+    });
+    
+    $(document).on("change", 'select#dhl_service_id', function(event) {
+      event.preventDefault();
+      var statuses = ["Processing", "Ready For Pickup", "Ready For Pickup", "Cancelled Pickup"]
+      $('input#name').val(statuses[$(this).val()]);
+    });

@@ -1,0 +1,41 @@
+.nav-tabs 
+  li
+    a
+      border-radius: 0px
+
+.nav
+  &.nav-tabs
+    border-bottom: 1px solid #f1f1f1
+    margin-bottom: 20px
+    li
+      margin-left: 14px
+      margin-right: 14px
+      &:first-child
+        margin-left: 0
+      &.active
+        border: 0
+        a
+          border-bottom: 1px solid $black !important
+          border-color: transparent
+          border-width: 0
+      a
+        border: 0
+        padding-left: 0
+        padding-right: 0
+        &:hover
+          border-top: 0
+          border-left: 0
+          border-right: 0
+          background: 0
+
+.nav-tabs
+  margin: 0
+  padding: 0
+  li
+    margin: 0
+    padding: 0
+    margin-bottom: -1px
+    a, &.active a, &:focus a
+      background: 0
+      padding-left: 0
+      padding-right: 0

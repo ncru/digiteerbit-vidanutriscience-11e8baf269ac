@@ -1,0 +1,7 @@
+- title "Advertisements"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper.pos-static
+  section#advertisements.content-page.current data-title="Advertisements"
+    -if @advertisements.present?
+      =render 'content'
+    -else
+      =render 'starter_template'

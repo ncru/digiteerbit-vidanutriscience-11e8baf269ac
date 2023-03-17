@@ -1,0 +1,38 @@
+-site_title "Contact Us | Vida Nutriscience"
+
+#page-about
+  .bar.text-center Contact Us
+  .container
+    .row
+      .col-sm-6.col-sm-offset-3
+        .container-bar.container-contact
+          .container-error
+            =render 'site/partials/error_messages', model: @message
+          =form_for [:site, @message], remote: true do |f|
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Name
+              =f.text_field :name, class: 'form-control required'
+              span.error-msg.hidden
+              
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Email
+              =f.text_field :email, class: 'form-control emailadd required'
+              span.error-msg.hidden
+              
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Phone Number
+              =f.text_field :mobile, class: 'form-control'
+              span.error-msg.hidden
+              
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Subject
+              =f.text_field :subject, class: 'form-control required'
+              span.error-msg.hidden
+              
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Message
+              =f.text_area :content, class: 'form-control required'
+              span.error-msg.hidden
+              
+            .text-center
+              a.btn.btn-lone.btn-blue.text-uppercase.submit-msg Send Message

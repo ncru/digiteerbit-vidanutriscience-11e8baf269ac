@@ -1,0 +1,51 @@
+.page-registration
+  .container
+    .row
+      .col-sm-8.col-sm-offset-2
+        .wrapper-registration
+          .title.text-uppercase.title-sm.text-center Account Registration
+          = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            .row
+              .col-sm-8.col-sm-offset-2
+                -if resource.errors.any?
+                  .alert.alert-custom
+                    -resource.errors.full_messages.each do |msg|
+                      li =msg
+                -if notice.present?
+                  .alert.alert-custom
+                    li =notice
+                -if alert.present?
+                  .alert.alert-custom
+                    li =alert
+                .form-group.form-group-alt
+                  = f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "First Name"
+                  
+                .form-group.form-group-alt
+                  = f.text_field :last_name, class: "form-control", placeholder: "Last Name"
+                    
+                .form-group.form-group-alt
+                  = f.email_field :email, class: "form-control", placeholder: "Email"
+                  
+                .form-group.form-group-alt
+                  = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password (must be at least 8 characters long)"
+                  
+                .form-group.form-group-alt
+                  = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Confirm Password"
+                  
+                .note
+                  | By clicking Create Account, you agree to our 
+                  a href="/terms-and-conditions" target="_blank" Terms 
+                  | and that you have read our 
+                  a href="/privacy-policy" target="_blank" Privacy Policy
+                  | , including our Cookie Use. You may receive Email Notifications from Vida and can opt out at any time.
+            br  
+            br
+            .text-center
+              = f.button "Create Account", data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i> Creating your account</span>'}, class: "btn btn-green btn-lone text-uppercase"
+    .hr-register
+    .text-center
+      .title.text-uppercase.title-sm Returning Customer?
+      br
+      = link_to "Login", new_session_path(resource_name), class: "btn btn-blue btn-lone text-uppercase"
+              
+    

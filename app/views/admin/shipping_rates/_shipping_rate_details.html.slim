@@ -1,0 +1,199 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this shipping rate will be displayed in the site page or not. Only active shipping rates will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, :class=>"js-switch"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="country_names" 
+      | Countries
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Select all the countries for this shipping rate"
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:country_codes, options_from_collection_for_select(@countries, :code, :name, f.object.country_codes), {}, id: "country_codes", class: "form-control chosen-select", multiple: true, size: 5)
+      span.error-msg.hidden
+  /.form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="country_code" 
+      | Restricted Products
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Select all restricted products of this shipping rate's country." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :country_code, :id=>"restricted_products", :class=>"form-control required", :placeholder=>"Country Code"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="name" 
+      | Shipping Rates
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rates by weight for this shipping rate." 
+        i.icon-question-sign &nbsp;
+    .col-lg-9.col-md-9.col-sm-9.col-xs-9
+      .col-xs-3
+        .form-group.pr5
+          label
+            | 0.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 0.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg0p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 1Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 1kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg1p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 1.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 1.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg1p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pl5
+          label
+            | 2Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 2kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg2p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5
+          label
+            | 2.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 2.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg2p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 3Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 1kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg3p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 3.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 3.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg3p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pl5
+          label
+            | 4Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 4kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg4p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5
+          label
+            | 4.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 4.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg4p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg5p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 5.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 5.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg5p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pl5
+          label
+            | 6Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 6kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg6p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5
+          label
+            | 6.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 6.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg6p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 7Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 7kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg7p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 7.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 7.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg7p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pl5
+          label
+            | 8Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 8kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg8p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5
+          label
+            | 8.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 8.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg8p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 9Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 9kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg9p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 9.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 9.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg9p5, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5.pl5
+          label
+            | 10Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for 10kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg10p0, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+      .col-xs-3
+        .form-group.pr5
+          label
+            | Add-on/0.5Kg
+            span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping rate for add-on/0.5kg."
+              i.icon-question-sign &nbsp;
+          =f.text_field :kg_add_on, :class=>"form-control required numeric-zero-allowed zero-allowed no-outline"
+          span.error-msg.hidden
+          

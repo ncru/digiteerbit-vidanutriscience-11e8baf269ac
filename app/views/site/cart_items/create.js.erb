@@ -1,0 +1,9 @@
+<% if @cart_item.errors.any? %>
+  $("#error_modal").modal("show");
+  $("#error_modal").find('.modal-body').find('.message').html("<%= raw @cart_item.errors.full_messages[0] %>")
+<% else %>
+  $(".count-wrapper").html("<%= j(render 'site/cart/cart_item_count') %>");
+  $(".sku-data").html("<%= j(render 'site/shop/sku_data') %>");
+  $(".container-cart-items").html("<%= j(render 'site/cart/cart_items') %>");
+  $("body").addClass("cart-toggled");
+<% end %>

@@ -1,0 +1,32 @@
+-if @featured_skus.present?
+  #home-featured
+    .container
+      .title.text-center.mb-30.text-uppercase Featured Products
+      -@featured_skus.each_slice(2).with_index do |skus, index|
+        .row
+          -skus.each do |sku|
+            .col-sm-6
+              .wrapper-product.home-product style="background-image: url(#{sku.photo});"
+                .border-up
+                .border-down
+                .product-info
+                  .name =sku.product.name
+                  a.btn href="/shop/#{sku.product.slug}" View Item
+      .wrapper-subscribe
+        =form_for [:site, @newsletter_subscriber], remote: true do |f|
+          .row
+            .col-sm-6.col-md-4
+              h3 Subscribe to our daily Newsletter for promo and discounts.
+          .row
+            .col-sm-6.col-md-5
+              .row
+                .col-sm-8
+                  =f.text_field :email, class: 'input-subscribe', placeholder: 'Enter email'
+                  span.error-msg.hidden
+                  br
+                .col-sm-4
+                  button.btn.btn-blue.btn-lg.text-uppercase.subscribe-newsletter
+                    strong Subscribe
+                    
+                    
+                    

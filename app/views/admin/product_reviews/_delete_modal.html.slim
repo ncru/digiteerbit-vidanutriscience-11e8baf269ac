@@ -1,0 +1,10 @@
+.modal id="product_review_delete_modal"
+  .modal-dialog
+    .modal-content
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Delete Review
+      .modal-body
+        | Are you sure you want to delete the selected review? (This cannot be undone!)
+      .modal-footer.text-center
+        a.btn.btn-danger.confirm.delete-product_review data-method="delete" rel="nofollow" Yes, delete review

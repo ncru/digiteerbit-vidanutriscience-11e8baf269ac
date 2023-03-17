@@ -1,0 +1,5 @@
+-@photos.each do |p|
+  .col-md-2
+    .wrapper-photo
+      a.photo.thumbnail data-id="#{p.photo_url}" href="#"
+        =image_tag(p.photo_url, :class=>"img-responsive")

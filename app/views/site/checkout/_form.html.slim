@@ -1,0 +1,103 @@
+=form_for [:site, @order] do |f|
+  =hidden_field_tag 'wizard_page', 'customer_info'
+  .row
+    .col-md-6
+      .form-group.form-group-alt
+        =f.text_field :first_name, :class=>"form-control required", placeholder: "First Name", value: current_customer.first_name
+        span.error-msg.hidden
+    .col-md-6
+      .form-group.form-group-alt
+        =f.text_field :last_name, :class=>"form-control required", placeholder: "Last Name", value: current_customer.last_name
+        span.error-msg.hidden
+  .row
+    .col-md-6
+      .form-group.form-group-alt
+        =f.email_field :email, :class=>"form-control required emailadd", placeholder: "Email", value: current_customer.email, readonly: true
+        span.error-msg.hidden
+    .col-md-6
+      .form-group.form-group-alt
+        =f.email_field :mobile, :class=>"form-control required contact-number", placeholder: "Mobile No.", value: current_customer.mobile
+        span.error-msg.hidden
+  br
+  br
+  .title.title-sm.text-uppercase Shipping Address
+  br
+  - from_ph = (f.object.shipping_country_code == 'PH' || (f.object.shipping_country_code.blank? && current_customer.shipping_country_code == 'PH'))
+  .shipping-address-wrapper
+    .row
+      .col-md-6
+        .form-group.form-group-alt
+          =f.select(:shipping_country_code, options_for_select(@countries.map{ |c| [c.name, c.code, {'data-srid'=>c.id}] }, selected_key = (f.object.shipping_country_code.present? ? f.object.shipping_country_code : current_customer.shipping_country_code)), {include_blank: '-- Select Country --'}, :id=>"shipping-country-code", :class =>"form-control required dhl-req border-gray")
+          i.fa.fa-caret-down
+          span.error-msg.hidden
+    .form-group.form-group-alt
+      =f.text_field :shipping_address1, :class=>"form-control required", placeholder: "Address Line 1- Unit # / Floor / Bldg. / Street", value: (f.object.shipping_address1.present? ? f.object.shipping_address1 : current_customer.shipping_address1)
+      span.error-msg.hidden
+    .form-group.form-group-alt
+      =f.text_field :shipping_address2, :class=>"form-control required", placeholder: "Address Line 2 - Village / Barangay", value: (f.object.shipping_address2.present? ? f.object.shipping_address2 : current_customer.shipping_address2)
+      span.error-msg.hidden
+    .row
+      .col-md-5
+        .form-group.form-group-alt
+          =f.text_field :shipping_state, :class=>"form-control required #{'hidden' if from_ph}", placeholder: "Province"
+          = select_tag("order[shipping_state_id]",
+                            options_for_select((@shipping_states).map { |state| [state.name, state.id] }, f.object.shipping_state_id), include_blank: 'Select Province', id: 'shipping_state', class: "form-control #{'hidden' unless from_ph}", disabled: @shipping_states.blank?)
+          i.fa.fa-caret-down.ph class="#{'hidden' unless from_ph }" 
+          span.error-msg.hidden
+      .col-md-5
+        .form-group.form-group-alt
+          =f.text_field :shipping_city, :class=>"form-control required #{'hidden' if from_ph}", placeholder: "City"
+          =select_tag("order[shipping_city_id]", options_for_select((@shipping_cities).map { |state| [state.name, state.id] }, f.object.shipping_city_id), id: 'shipping_city', class: "form-control #{'hidden' unless from_ph}", include_blank: 'Select City', disabled: f.object.shipping_state_id.blank?) 
+          -if from_ph
+            i.fa.fa-caret-down.ph class="#{'hidden' unless from_ph }"
+          span.error-msg.hidden
+      .col-md-2
+        .form-group.form-group-alt
+          =f.text_field :shipping_zip_code, :class=>"form-control required dhl-req postal", placeholder: "Postal", value: current_customer.shipping_zip_code
+          span.error-msg.hidden
+    .row#courier-select class="#{from_ph ? 'hidden' : ''}"
+      .col-md-6
+        .form-group.form-group-alt
+          =f.select(:courier_id, options_for_select([["Xend", 1], ["DHL", 2]]), {include_blank: "-- Select Courier --"}, id: "courier-id", class: "form-control border-gray #{from_ph ? '' : 'required'}")
+          i.fa.fa-caret-down
+          span.error-msg.hidden
+      
+  /.check-group.radio
+    label
+      =f.check_box :promo_code_claimed, {:checked=>true, id: 'test'}, 1, 0
+      .square
+      i.fa.fa-circle
+      span My Billing Address is the same as my Shipping Address. 
+      
+  /#billing
+    br
+    .title.title-sm.text-uppercase Billing Address
+    br
+    .form-group.form-group-alt
+      =f.text_field :address1, :class=>"form-control", placeholder: "Address Line 1- Unit # / Floor / Bldg. / Street", value: current_customer.address1
+    .form-group.form-group-alt
+      =f.text_field :address2, :class=>"form-control", placeholder: "Address Line 2 - Village / Barangay", value: current_customer.address2
+    .row
+      .col-md-6
+        .form-group.form-group-alt
+          =f.text_field :city, :class=>"form-control", placeholder: "City", value: current_customer.city
+      .col-md-6
+        .form-group.form-group-alt
+          =f.text_field :state, :class=>"form-control", placeholder: "Province", value: current_customer.state
+    .row
+      .col-md-6
+        .form-group.form-group-alt
+          =f.text_field :zip_code, :class=>"form-control postal", placeholder: "Postal", value: current_customer.zip_code
+      .col-md-6
+        .form-group.form-group-alt
+          =f.text_field :country_code, :class=>"form-control", placeholder: "Country", value: current_customer.country_code
+
+  br
+  .clearfix.checkout-buttons
+    =link_to cart_path, class: 'link-text link-back-cart' do
+      i.fa.fa-angle-left
+      span Back to Cart
+    span.container-checkout-btn.pull-right
+      button.btn.btn-lone.btn-paypal-yellow.text-uppercase.submit-orders data-pmid="1"
+        | Proceed to Payment
+      .clearfix

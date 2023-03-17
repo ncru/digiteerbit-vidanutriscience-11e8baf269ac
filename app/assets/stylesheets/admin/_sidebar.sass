@@ -1,0 +1,53 @@
+#sidebar
+  font-size: 14px
+  a
+    color: rgba(0,0,0,0.86)
+    letter-spacing: .3px
+    font-size: 13px
+    i
+      position: relative
+      top: 4px
+      font-size: 16px
+      margin-right: 4px
+      width: 17px
+      display: inline-block
+  ul
+    margin: 0
+    padding: 0
+    padding-left: 2px
+    color: rgba(0,0,0,0.86)
+    li
+      padding: 0
+      margin: 0
+      list-style: none
+      margin-bottom: 14px
+      &.active
+        a
+          color: $red-orange
+          font-weight: $font-bold
+      a
+        text-decoration: none
+        outline: none
+    .an-arrow-right-thin
+      font-size: 11px
+      opacity: .5
+      position: relative
+      left: 3px
+      top: 1px
+  ul.submenu-list
+    margin-left: 20px
+    margin-top: -5px
+    margin-bottom: 10px
+    li
+      margin-bottom: 4px
+  ul.with-divider
+    li.divider
+      height: 1px
+      overflow: hidden
+      background-color: #f1f1f1
+  .sidebar-fixed
+    position: fixed
+
+.open
+  > a
+    outline: 0

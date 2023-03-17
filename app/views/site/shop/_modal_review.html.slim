@@ -1,0 +1,38 @@
+#modalReview.modal.fade.modal-center role="dialog" 
+  .modal-dialog.modal-lg
+    .modal-content.container-contact
+      a.close-modal data-dismiss="modal" type="button"  X
+      .title.mb-30.text-uppercase.title-sm.text-center Please share your experience about this item
+      br
+      .row
+        .col-md-12
+          .container-error
+            =render 'site/partials/error_messages', model: @product_review
+        .col-md-7
+          =form_for [:site, @product_review], remote: true do |f|
+            =f.hidden_field :customer_id, value: current_customer.id
+            =f.hidden_field :product_id, value: @product.id
+            .form-group
+              label.control-label.text-uppercase Rating
+              div
+                =f.text_field :rating, class: 'rating', value: 1, data: { 'empty-star': '<i class="fa fa-star-o"></i>', 'filled-star': '<i class="fa fa-star"></i>', 'step': 1, 'size': 'xs', 'show-clear': false }
+            .form-group.form-group-alt
+              label.control-label.text-uppercase Review
+              =f.text_area :review, class: 'form-control required', value: nil
+              span.error-msg.hidden
+            .text-center
+              a.btn.btn-lone.btn-blue.text-uppercase.submit-review Send Review
+          
+        .col-md-5
+          span.text-title.text-uppercase Do's
+          ul.mb-30
+            li Focus only on the product and its features.
+            li Base the review on your own personal  experience.
+            li Tell us “why” you feel a certain way about it.
+          span.text-title.text-uppercase Dont's
+          ul
+            li Share anything irrelevant to the product.
+            li Include fraudulent, false, misleading or deceptive information.
+            li Use profane, vulgar, obscene, defamatory, threatening, or discriminatory language.
+            li Share anyone’s personal information.
+            li Include unauthorized trademarked or copyrighted content.

@@ -1,0 +1,22 @@
+.recent-changes.widget-box
+  h5 Recent Changes
+  .widget-content
+    ul.recent-items-list
+      -if @recent_changes.present?
+        -@recent_changes.each do |rc|
+          li
+            .recent-changes-wrapper
+              time title="#{rc.created_at}" 
+                -if time_ago_in_words(rc.created_at) == 'less than a minute'
+                  | Just Now
+                -else
+                  =(time_ago_in_words(rc.created_at) +' ago').sub('about', '')
+              -if !rc.photo_file_name.nil?
+                span.picture.avatar style="background-image: url(#{User.find_by_email(rc.modified_by_email).photo.url})"
+              -else
+                span.picture.avatar href="#" style="background-image: url(#{asset_path('avatar.svg')})"
+              span.username =rc.modified_by_name
+              span.subject =rc.ip_address
+              span.content.truncate title="#{rc.event_description}" =rc.event_description
+      -else
+        | No Recent Changes.

@@ -1,0 +1,8 @@
+-if model.errors.any?
+  .alert.alert-custom
+    | Your #{model.class.name.underscore.humanize.downcase} failed to send because of the following:
+    .clearfix
+    br
+    ul
+      -model.errors.full_messages.each do |msg|
+        li =msg.html_safe

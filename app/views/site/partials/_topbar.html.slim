@@ -1,0 +1,54 @@
+nav.navbar.navbar-vida.navbar-fixed-top
+  .topbar-overlay
+  .container
+    a.mobile-menu-toggle href="/"
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    .even-container
+      .even-wrapper
+        a.navbar-brand href="/"
+          =image_tag("vida-nutriscience-logo-new.png")
+      .even-wrapper
+        ul.menu.reset-ul
+          li.close-list
+            a.link-close.close-menu.pull-right href="#"
+              i.fa.fa-times
+          li
+            a href="/shop"
+              span Shop
+          li
+            a href="/company-details"
+              span Company
+          li
+            a href="/contact-us"
+              span Contact Us
+          li.search
+            =form_tag "/search", method: :get
+              =text_field_tag 'q', nil, placeholder: "Gluta, Whitening Cream, Lotion, Slimming"
+              =button_tag data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i></span>'}, class: 'btn btn-green', name: '' do
+                i.fa.fa-search
+
+      .even-wrapper
+        ul.user-cart.reset-ul
+          li.user
+            -if customer_signed_in?
+              .dropdown
+                a.link-user.dropdown-toggle.clearfix data-toggle="dropdown"
+                  span.name.text-uppercase Hi, #{current_customer.first_name}
+                  i.vd.vd-user
+                ul.dropdown-menu.dropdown-menu-right.dropdown-account
+                  li
+                    =link_to "My Account", my_account_path, class: 'text-uppercase'
+                  li
+                    =link_to "Logout", destroy_customer_session_path, class: 'text-uppercase', data: {method: :delete}, rel: 'nofollow'
+            -else
+              =link_to new_customer_session_path, class: 'link-user text-uppercase clearfix' do
+                span Log In
+                i.vd.vd-user
+          li.cart
+            a.wrapper-bag.text-uppercase.clearfix#topbarCart
+              .count-wrapper
+                =render 'site/cart/cart_item_count'
+              i.vd.vd-shopping-bag
+              span My Bag

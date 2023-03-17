@@ -1,0 +1,18 @@
+.row.content-header
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12
+    h1 =title
+    a#save-terms.btn.btn-success.pull-right.save.toolbar.submit-summernote.no-outline href="#" 
+      i.an.an-diskette
+      | Save
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12
+    p.explanation
+      | You can specify the site's Terms on this module.
+=form_for [:admin, @term], :multipart => true do |f|
+  fieldset.form-horizontal.details
+    fieldset.form-horizontal
+      .form-group
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          =f.text_area :content, :class=>"form-control required summernote",:rows=>10, :placeholder=>"Please enter your Terms here..."
+          span.error-msg.hidden
+
+=render '/admin/partials/generic_js'

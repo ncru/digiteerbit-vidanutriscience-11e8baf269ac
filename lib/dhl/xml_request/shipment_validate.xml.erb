@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:ShipmentValidateRequestAP xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com
+ship-val-req_AP.xsd">
+	<Request>
+		<ServiceHeader>
+			<MessageTime><%= DateTime.now %></MessageTime>
+			<MessageReference><%= @request_id %></MessageReference>
+			<SiteID><%= @site_id %></SiteID>
+			<Password><%= @password %></Password>
+		</ServiceHeader>
+	</Request>
+	<LanguageCode>en</LanguageCode>
+	<PiecesEnabled>Y</PiecesEnabled>
+	<Billing>
+		<ShipperAccountNumber><%= @shipper.account_number %></ShipperAccountNumber>
+		<!-- S=Shipper, R=Recipient, T=Third Party -->
+		<ShippingPaymentType>S</ShippingPaymentType> 
+		<!-- <DutyPaymentType>R</DutyPaymentType> -->
+	</Billing>
+	<Consignee>
+		<CompanyName>Residence</CompanyName>
+		<AddressLine><%= @consignee.shipping_address1 %></AddressLine>
+		<AddressLine><%= @consignee.shipping_address2 %></AddressLine>
+		<City><%= @consignee.shipping_city %></City>
+		<!-- <DivisionCode>CA</DivisionCode> -->
+		<PostalCode><%= @consignee.shipping_zip_code %></PostalCode>
+		<CountryCode><%= @consignee.shipping_country_code %></CountryCode>
+		<CountryName><%= @consignee_country_name %></CountryName>
+		<Contact>
+			<PersonName><%= @consignee.first_name + " " + @consignee.last_name %></PersonName>
+			<PhoneNumber><%= @consignee.mobile %></PhoneNumber>
+			<!-- <PhoneExtension>45232</PhoneExtension>
+			<FaxNumber>11234325423</FaxNumber>
+			<Telex>454586</Telex>
+			<Email>
+				<From>zaidiaz_10@yahoo.com</From>
+				<To>zaidiaz_10@yahoo.com</To>
+				<cc>zaidiaz_10@yahoo.com</cc>
+				<Subject>Email subject</Subject>
+				<ReplyTo>zaidiaz_10@yahoo.com</ReplyTo>
+				<Body>email body</Body>
+			</Email> -->
+		</Contact>
+	</Consignee>
+	<Commodity>
+		<CommodityCode>1</CommodityCode>
+		<!-- <CommodityName>String</CommodityName> -->
+	</Commodity>
+	<Dutiable>
+		<!-- <DeclaredValue><%= sprintf('%.2f', @consignee.amount.to_f) %></DeclaredValue> -->
+		<DeclaredValue>0.00</DeclaredValue>
+		<DeclaredCurrency>PHP</DeclaredCurrency>
+		<!-- <ShipperEIN>Text</ShipperEIN> -->
+	</Dutiable>
+	<Reference>
+		<ReferenceID><%=@request_id %></ReferenceID>
+		<ReferenceType>St</ReferenceType>
+	</Reference>
+	<ShipmentDetails>
+		<NumberOfPieces><%= @total_pieces %></NumberOfPieces>
+		<CurrencyCode>PHP</CurrencyCode>
+		<Pieces>
+			<% pieces.each_with_index do |piece,i| %><%= piece.piece_id = i+1; piece.to_xml %><% end %>
+		</Pieces>
+		<PackageType><%= @package_type %></PackageType>
+		<Weight><%= @total_weight %></Weight>
+		<DimensionUnit>C</DimensionUnit>
+		<WeightUnit>K</WeightUnit>
+		<!--ProductCode>W</ProductCode-->
+		<GlobalProductCode><%= @product_code %></GlobalProductCode>
+		<LocalProductCode><%= @product_code %></LocalProductCode>
+		<DoorTo>DD</DoorTo>
+		<Date><%= Date.today %></Date>
+		<Contents>Vida Nutriscience Order Delivery</Contents>
+		<IsDutiable>N</IsDutiable>
+		<!--DimensionUnit>I</DimensionUnit-->
+		<!-- <InsuredAmount>3000.10</InsuredAmount> -->
+		<!--CurrencyCode>PHP</CurrencyCode-->
+	</ShipmentDetails>
+	<Shipper>
+		<ShipperID><%= @shipper.shipper_id %></ShipperID>
+		<CompanyName><%= @shipper.company %></CompanyName>
+		<AddressLine><%= @shipper.address1 %></AddressLine>
+		<AddressLine><%= @shipper.address2 %></AddressLine>
+		<City><%= @shipper.city %></City>
+		<!-- <DivisionCode>CA</DivisionCode> -->
+		<PostalCode><%= @shipper.postal_code %></PostalCode>
+		<CountryCode><%= @shipper.country_code %></CountryCode>
+		<CountryName><%= @shipper_country_name %></CountryName>
+		<Contact>
+			<PersonName><%= @shipper.contact_person %></PersonName>
+			<PhoneNumber><%= @shipper.contact_no %></PhoneNumber>
+		</Contact>
+	</Shipper>
+	<LabelImageFormat>PDF</LabelImageFormat>
+</req:ShipmentValidateRequestAP>

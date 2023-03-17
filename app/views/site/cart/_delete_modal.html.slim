@@ -1,0 +1,14 @@
+#cart_item_delete_modal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button" X
+        .title.text-uppercase.title-sm Remove Item
+      .modal-body.mb-15
+        span Are you sure you want to remove the selected item from your bag?
+      .modal-footer
+        .row
+          .col-md-12.text-right
+            =button_to site_cart_items_path, form: {id: 'delete-cart-item-form', class: 'delete-form'}, params: {'id': 0}, data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i> Removing item</span>'}, class: 'btn btn-lone btn-red text-uppercase delete-cart_item', method: :delete, remote: true, rel: "nofollow" do
+              | Yes, remove item from my bag
+            /=link_to "Yes, remove item from my bag", "#", class: "btn btn-lone btn-red text-uppercase delete-cart_item", method: :delete, remote: true, rel: "nofollow"

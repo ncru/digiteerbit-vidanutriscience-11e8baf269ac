@@ -1,0 +1,36 @@
+- title "Login"
+.overlay
+section#login.sec-devise
+  .container
+    .col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.devise-wrapper
+      .devise-container
+        .icon-holder.text-center
+        br
+        h5.devise-header.text-center
+          span.text-bold.text-red-orange Login 
+          |to your account
+        br
+        .row
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            -if alert.present?
+              .col-lg-6.col-md-6.col-sm-12.col-xs-12.mb15.w-auto.disp-in-block
+                .alert-danger-box
+                  p
+                    strong Warning!
+                    br
+                    =alert
+            .col-lg-8.col-md-8.col-sm-8.col-xs-12.mb10
+              .login-email-input
+                i.an.an-mail-alt
+                =f.text_field :email, autofocus: false, placeholder: "Email", :class=>"form-control input-devise"
+              .login-password-input
+                i.an.an-padlock-locked-alt
+                =f.password_field :password, autocomplete: "off", placeholder: "Password", :class=>"form-control input-devise"
+              - if devise_mapping.rememberable?
+                div.form-group.checkbox.text-right.mb5
+                  =f.check_box :remember_me
+                  =f.label :remember_me, :class=>"label-remember"
+              =f.submit "Log In", :class=>"btn btn-red-orange pull-right" 
+              .clearfix
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12
+              =render "devise/shared/links"

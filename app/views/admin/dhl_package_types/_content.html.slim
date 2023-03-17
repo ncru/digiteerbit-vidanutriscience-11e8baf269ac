@@ -1,0 +1,58 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 DHL Package Types
+      p.explanation
+        | You can see all available dhl package types on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Package Type Name" data-columntosearch="1"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on DHL Package Type Name."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#dhl-package-types-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="55%" 
+          | Name
+        th.pointer.sortable.font-bold width="20%" 
+          | Code
+        th.pointer data-column="actions" width="52"
+
+
+javascript:
+  $(document).ready(function() {
+    // Variables for Datatables initialization.
+    var tableId = "#dhl-package-types-list",
+        ajaxUrl = "/admin/datatables/retrieve_dhl_package_types",
+        defaultOrder = [[0, 'asc']],
+        columnDefs = [
+          { "name": "name", "data": "name", "targets": 0 },
+          { "name": "code", "data": "code", "targets": 1 },
+          { "name": "status", 
+            "data": "status", 
+            "className": "actions",
+            "targets": -1,
+            "render": function(data, type, row) {
+                var is_checked = data == 1 ? "checked" : "";
+                var title = data == 1 ? "Active" : "Inactive";
+                return '<form action="/admin/dhl-package-types/'+row.id+'?method=update_status" data-remote="true" method="patch" data-toggle="tooltip" data-placement="top" title="'+title+'">'+
+                          '<input type="checkbox" class="table-js-switch" '+is_checked+'>'+
+                          '<input type="hidden" name="dhl_package_type[status]" class="status">'+
+                       '</form>';
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

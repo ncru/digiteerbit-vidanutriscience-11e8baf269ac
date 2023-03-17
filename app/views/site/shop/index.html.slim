@@ -1,0 +1,20 @@
+-site_title "Shop | Vida Nutriscience"
+
+.bar.bar-shop.text-uppercase
+  .container
+    | Shop
+#category
+  .container
+    ul.breadcrumbs
+      li
+        a href="/" Home
+      li
+        a href="/shop" Shop
+    .row
+      .col-md-3
+        =render "site/partials/filters"
+      .col-md-9
+        .container-products
+          =render 'skus'
+              
+=render "site/home/brands"

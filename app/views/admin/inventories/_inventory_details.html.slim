@@ -1,0 +1,21 @@
+fieldset.details.mb20
+  =render "sku_data"
+  =f.hidden_field :user_id, value: current_user.id
+  .row        
+    .col-lg-12.col-md-12.col-sm-12.col-xs.mb40
+      #error-msg-div.alert.alert-main.alert-danger.alert-newversion.hidden
+      =link_to_add_association '<i class="an an-plus-thin"></i> Add Product'.html_safe, f, :inventory_items, :class=>"btn btn-success add-inventory-btn", :data=>{"association-insertion-method" => "append", "association-insertion-node"=>".inventory-items"}
+      br
+      table.table.table-striped
+        thead
+          tr
+            th width="39%" Product
+            th.text-center width="15%" Stocks  
+            th.text-center width="15%" Action
+            th.text-center width="15%" Quantity
+            th.remove width="6%"
+        tbody.inventory-items          
+          =f.fields_for :inventory_items, @inventory.inventory_items.build do |f|
+            =render "inventory_item_fields", :f=>f 
+br
+br

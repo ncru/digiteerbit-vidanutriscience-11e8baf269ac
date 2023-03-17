@@ -1,0 +1,20 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Shipping Details
+      =link_to edit_admin_shipping_detail_path(@shipping_detail), id: "edit-shipping-details", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-pencil-thin-slant
+        | Edit
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can specify the site's Shipping Details on this module.
+  =render 'shipping_details'
+
+=render '/admin/partials/generic_js'

@@ -1,0 +1,24 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this sub category will be displayed in the site page or not. Only active sub categories will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, class: "js-switch"
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="name" 
+      | Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of this sub category." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :name, id: "name", class: "form-control required", :placeholder=>"Sub Category Name"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="division_id" 
+      | Category
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The main category that will be assigned to this sub category." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:division_id, options_from_collection_for_select(@categories, :id, :name, f.object.division_id), {include_blank: '-- Select Category --'}, id: 'division_id', class: "form-control required chosen-select")
+      span.error-msg.hidden

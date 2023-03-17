@@ -1,0 +1,10 @@
+-if @product.product_reviews.present?
+  ul.list-review
+    -@product.product_reviews.each do |review|
+      li
+        .pic
+          i.fa.fa-user
+        .name.text-title.text-uppercase =review.customer.full_name
+        .rating-wrapper.mb-10
+          =text_field_tag 'rating', review.rating, class: 'hidden rating', data: { 'empty-star': '<i class="fa fa-star-o"></i>', 'filled-star': '<i class="fa fa-star"></i>', 'display-only': true, 'size': 'xss' }
+        p =review.review

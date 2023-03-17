@@ -1,0 +1,43 @@
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#user-details.content-page.current data-title="User Details"
+    .content
+      .row.content-header
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          h1 User Details
+          a.toggle-delete-modal.btn.btn-success.pull-right.new.no-outline data-href="/admin/users/#{@user.id}" data-type='user'
+            i.an.an-trashcan-alt
+            | Delete User
+      .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          ul.profile
+            li
+              -if !@user.photo_file_name.nil?
+                span.profile-img href="#" style="background-image: url(#{@user.photo.url})"
+              -else
+                span.profile-img href="#" style="background-image: url(#{asset_path('avatar.svg')})"
+              h2 =@user.full_name
+              span.info
+                em
+                  i.an.an-mail
+                  =@user.email
+                em
+                  i.an.an-padlock-locked-circle
+                  -if @user.last_sign_in_at.present?
+                    -if time_ago_in_words(@user.last_sign_in_at) == 'less than a minute'
+                      | Last login was Just Now
+                    -else
+                      | Last login was #{(time_ago_in_words(@user.last_sign_in_at) +' ago').sub('about', '')}
+                  -else
+                    | User has not logged-in yet.
+              span.info
+                em
+                  i.an.an-plus-thin
+                  | Created on #{custom_format_date(@user.created_at, '%B %d, %Y %I:%M %p')}.
+                em 
+                  i.an.an-login
+                  | Login Count: #{@user.sign_in_count}
+                
+      .row
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          =render 'form'
+    =render '/admin/users/delete_modal'

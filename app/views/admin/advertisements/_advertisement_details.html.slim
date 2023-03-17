@@ -1,0 +1,35 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this advertisement will be displayed in the site page or not. Only active advertisements will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, :class=>"js-switch"
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="photo_url" 
+      | Thumbnail
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The thumbnail to be used for this advertisement. The recommended minimum thumbnail resolution is 664x610 pixels."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      .input-group
+        span.input-group-btn
+          a.btn.btn-success.open_gallery data-id="1" Add photo
+        =f.text_field :photo_url, :class=>"form-control required thumbnail_url"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="name" 
+      | Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the advertisement that will be displayed on the site page." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :name, :id=>"name", :class=>"form-control required capitalize", :placeholder=>"Advertisement Name"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="description" 
+      | Description
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="A short information about this advertisement."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_area :description, :id=>"description", :class=>"form-control no-resize", :rows=>5
+      span.error-msg.hidden

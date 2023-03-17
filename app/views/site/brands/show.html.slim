@@ -1,0 +1,32 @@
+-site_title "Brands | Vida Nutriscience"
+
+-if @brand.banner_photo_url.present?
+  =image_tag(@brand.banner_photo_url.to_s, class: 'img-responsive')
+-else
+  .bar.bar-brand style="background-image: url(#{asset_path('bg-acnecare.png')})"
+    .container
+      .row
+        .col-xs-10.col-xs-offset-2
+          h3 =@brand.name
+          p =@brand.description
+  
+#brand
+  .container
+    ul.breadcrumbs
+      li
+        a href="/" Home
+      li
+        a href="/shop" Shop
+      li
+        a href="/#home-brand" Brands
+      li
+        a href="/brands/#{@brand.slug}" =@brand.name
+        
+    .row
+      .col-md-3
+        =render "site/partials/filters"
+      .col-md-9
+        .container-products
+          =render 'site/shop/skus'
+                      
+=render "site/home/brands"              

@@ -1,0 +1,72 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 UOM Labels
+      =link_to new_admin_uom_label_path, id: "add-uom-label", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-plus-thin
+        | New UOM Label
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can perform all uom label related maintenance on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Name" data-columntosearch="0" style="width: 250px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Name."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#uom-labels-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="60%" 
+          | Name
+        th.pointer.sortable.font-bold width="25%" 
+          | Status
+        th.pointer data-column="actions" width="15%"
+=render 'delete_modal'
+
+javascript:
+  $(document).ready(function() {
+    // Variables for Datatables initialization.
+    var tableId = "#uom-labels-list",
+        ajaxUrl = "/admin/datatables/retrieve_uom_labels",
+        defaultOrder = [[0, 'asc']],
+        columnDefs = [
+          { "name": "name", "data": "name", "className": "truncate", "targets": 0 },
+          { "name": "status", 
+            "data": "status", 
+            "targets": 1,
+            "render": function(data) {
+              return (data == 0) ? '<span class="label label-danger">Inactive</span>' : '<span class="label label-success">Active</span>';
+            }
+          },
+          { "orderable": false, 
+            "className": "actions",
+            "data": "id",
+            "targets": -1, 
+            "render": function(data) {
+              return "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Edit'>"+
+                         "<a class='edit-uom_label no-outline' data-push='true' href='/admin/maintenance/uom-labels/"+data+"/edit'><i class='an an-pencil-thin-slant'></i></a>"+
+                       "</li>"+
+                     "</ul>"+
+                     "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Delete'>"+
+                         "<a class='toggle-delete-modal no-outline' data-href='/admin/maintenance/uom-labels/"+data+"' data-type='uom_label'><i class='an an-trashcan-alt'></i></a>"+
+                       "</li>"+
+                     "</ul>";
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

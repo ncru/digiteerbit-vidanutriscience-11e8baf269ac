@@ -1,0 +1,21 @@
+.modal id="order_status_modal"
+  .modal-dialog
+    .modal-content
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Update Order Status
+      .modal-body
+        | Update the Status of Order # 
+        strong.reference-id 
+        |  from 
+        strong.from-status 
+        |  to 
+        strong.to-status 
+        | ?
+        
+      .modal-footer
+        =form_tag "", method: 'patch', id: 'order_status_form', remote: true do |f|
+          =hidden_field_tag "order[order_status_id]", nil, id: 'order_status_id'
+          .row
+            .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center
+              button.btn.btn-primary.submit-modal-btn type="submit" Proceed

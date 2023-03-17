@@ -1,0 +1,62 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    meta name="robots" content="index, follow"
+
+    / Site Title.
+    title
+      = content_for?(:title) ? yield(:title) : "Vida Nutriscience"
+      
+    = stylesheet_link_tag 'site', media: 'all', 'data-turbolinks-track': true
+
+    / Put favicon icon url here
+    = favicon_link_tag 'favicon.png', rel: 'shortcut icon', type: 'image/png'
+
+    = csrf_meta_tags
+    javascript:
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-130263820-1', 'auto');
+      ga('send', 'pageview');
+    
+    /! Facebook Pixel Code
+    javascript:
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '243021833708716');
+      fbq('track', 'PageView');
+    noscript
+      img height="1" src="https://www.facebook.com/tr?id=243021833708716&ev=PageView\n&noscript=1" width="1" /
+    /! End Facebook Pixel Code
+
+  
+  body data-turbolinks="#{controller_name == 'checkout' ? false : true}"
+    = render 'site/partials/topbar'
+    = render 'site/cart/cart'
+    =render "/site/cart/delete_modal"
+    .yield-container
+      = yield
+    = render 'site/partials/footer'
+    .toggle-overlay
+
+    = javascript_include_tag 'site', 'data-turbolinks-track': true
+    = yield :page_script
+    
+    javascript:
+      $(".mobile-menu-toggle, .menu-overlay").click(function(e){
+        e.preventDefault();
+        $("body").toggleClass("menu-toggled");
+      })
+      

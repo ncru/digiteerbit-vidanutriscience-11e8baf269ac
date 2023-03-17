@@ -1,0 +1,16 @@
+- title "New User"
+#active-id.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#users.content-page.current data-title="Users"
+    .content
+      .row.content-header.mb0
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          h1 New User
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          p.explanation Please complete the form below.
+      -if notice.present?
+        .alert.alert-main.alert-success.alert-newversion
+          =notice.html_safe
+      -elsif error.present?
+        .alert.alert-main.alert-danger.alert-newversion
+          =error.html_safe
+      =render 'form'

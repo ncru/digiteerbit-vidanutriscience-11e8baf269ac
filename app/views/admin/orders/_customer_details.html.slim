@@ -1,0 +1,39 @@
+.customer-details-wrapper
+  .row.content-sub-header
+    .col-xs-12
+      h1.mb10 Customer Information
+  .row
+    .col-xs-12
+      ul.profile
+        li
+          span.profile-img href="#" style="background-image: url('#{@order.customer.photo.url}')"
+          h2 =@order.customer.first_name + " " + @order.customer.last_name 
+          span.info
+            em
+              i.an.an-mail
+              <strong>#{@order.customer.email ||= '- N/A'}</strong>
+            //em
+              i.an.an-phone-alt
+              <strong>#{@order.phone ||= '- N/A'}</strong>
+            em
+              i.an.an-iphone-portrait
+              <strong>#{@order.customer.mobile ||= '- N/A'}</strong>
+  hr
+  .row.content-sub-header
+    .col-xs-12
+      h1.mb10 Recipient Information
+      span.pull-right
+        -if  @order.courier_id == 2 && @order.dhl_response_value.present?
+          a.btn.btn-default.toolbar href="/admin/dhl/label-image/#{@order.request_id}" target="_blank" Download DHL Label Image
+  .row
+    .col-xs-12
+      ul.profile
+        li
+          span.profile-img href="#" style="background-image: url(#{asset_path('avatar.svg')})"
+          h2 =@order.first_name + " " + @order.last_name 
+          span.info
+            em Shipping Address: <strong>#{@order.shipping_address}</strong>
+            em
+              i.an.an-iphone-portrait
+              <strong>#{@order.mobile ||= '- N/A'}</strong>
+  hr

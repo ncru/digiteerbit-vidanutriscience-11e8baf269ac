@@ -1,0 +1,30 @@
+- title "Password Reset"
+.overlay
+section#login.sec-devise
+  .container
+    .col-lg-6.col-lg-offset-3.col-md-6.col-md-offset-3.col-sm-6.col-sm-offset-3.devise-wrapper
+      .devise-container
+        .icon-holder.text-center
+        br
+        h5.devise-header.text-center
+          span.text-bold.text-red-orange Forgot 
+          |your password?
+        br
+        .row
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+            -if alert.present?
+              .col-lg-6.col-md-6.col-sm-12.col-xs-12.mb15.w-auto.disp-in-block
+                .alert-danger-box
+                  p
+                    strong Warning!
+                    br
+                    =alert
+            .col-lg-8.col-md-8.col-sm-8.col-xs-12.mb10
+              .login-email-input
+                i.an.an-mail-alt
+                =f.email_field :email, autofocus: false, placeholder: "Email", :class=>"form-control input-devise"
+
+              =f.submit "Send Password Reset Link", :class=>"btn btn-red-orange uppercase pull-right"
+                  .clearfix
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12
+              = render "devise/shared/links"

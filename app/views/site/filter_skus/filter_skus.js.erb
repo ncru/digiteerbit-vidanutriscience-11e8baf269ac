@@ -1,0 +1,4 @@
+$(".container-products").fadeOut(300, function() {
+  $(".container-products").html("<%= j (render 'site/shop/skus') %>");
+  $(".container-products").fadeIn(200);
+});

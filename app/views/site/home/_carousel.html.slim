@@ -1,0 +1,17 @@
+-if @sliders.present?
+  section.carousel
+    #carousel-main.carousel.slide data-ride="carousel"
+
+      .carousel-inner role="listbox"
+        -@sliders.each_with_index do |slider,index|
+          div class="item #{is_slider_active(index)}" style="background-image: url(#{slider.photo_url})"
+            .item-content
+              h3 =slider.title
+              p =slider.excerpt
+              -if slider.external_link.present?
+                .text-center
+                  a.btn.btn-lone.btn-blue.text-uppercase href="#{slider.external_link}" Learn More
+      -if @sliders.size > 1
+        ol.carousel-indicators
+          -@sliders.each_with_index do |slider, index|
+            li class="#{is_slider_active(index)}" data-slide-to="#{index}" data-target="#carousel-main"

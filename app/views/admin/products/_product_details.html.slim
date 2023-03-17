@@ -1,0 +1,121 @@
+fieldset.details
+  .row
+    .col-sm-6
+      .form-group
+        label for="status"
+          | Status
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="You can use this flag to hide all the SKUs under this product in the site page."
+            i.icon-question-sign &nbsp;
+        =f.check_box :status, class: "js-switch"
+      .form-group
+        label for="name"
+          | Name
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the product that will be displayed on the site page."
+            i.icon-question-sign &nbsp;
+        =f.text_field :name, class: "form-control required capitalize", :placeholder=>"Product Name"
+        span.error-msg.hidden
+      .form-group
+        label for="description"
+          | Short Description
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="A short description of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :description, class: "form-control required no-resize", rows: 5
+        span.error-msg.hidden
+      .form-group
+        label for="long_description"
+          | Long Description
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="A longer description of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :long_description, class: "form-control no-resize", rows: 5
+        span.error-msg.hidden
+      .form-group
+        label for="size"
+          | Size
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The size specs of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :size, class: "form-control no-resize", rows: 3
+        span.error-msg.hidden
+      .form-group
+        label for="dimensions"
+          | Product Dimensions
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The dimensions of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :dimensions, class: "form-control no-resize", rows: 3
+        span.error-msg.hidden
+      .form-group
+        label for="weight"
+          | Weight
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The weight specs of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :weight, class: "form-control no-resize", rows: 3
+        span.error-msg.hidden
+      .form-group
+        label for="ingredients"
+          | Ingredients
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The ingredients of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :ingredients, class: "form-control no-resize", rows: 3
+        span.error-msg.hidden
+    .col-sm-6
+      .form-group
+        label for="background_photo" 
+          | Background Photo
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The background photo to be used for the product details page. The recommended minimum resolution is 4257x1446 pixels."
+            i.icon-question-sign &nbsp;
+        .input-group
+          span.input-group-btn
+            a.btn.btn-success.open_gallery data-id="1" data-element-id="product_background_photo" Add photo
+          =f.text_field :background_photo, class: "form-control required thumbnail_url"
+        span.error-msg.hidden
+      .form-group
+        label for="photo" 
+          | Photo
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The main photo to be used for the product details page. The recommended minimum resolution is 1000x1000 pixels."
+            i.icon-question-sign &nbsp;
+        .input-group
+          span.input-group-btn
+            a.btn.btn-success.open_gallery data-id="1" data-element-id="product_photo" Add photo
+          =f.text_field :photo, class: "form-control required thumbnail_url"
+        span.error-msg.hidden
+      .form-group
+        label for="brand_id"
+          | Brand
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Brand of this product."
+            i.icon-question-sign &nbsp;
+        =f.select(:brand_id, options_from_collection_for_select(@brands, :id, :name, f.object.brand_id), {include_blank: "-- Select Brand --"}, id: "brand_id", class: "form-control required chosen-select")
+        span.error-msg.hidden
+      .form-group
+        label for="division_id"
+          | Category
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Category of this product."
+            i.icon-question-sign &nbsp;
+        =f.select(:division_id, options_from_collection_for_select(@categories, :id, :name, f.object.division_id), {include_blank: "-- Select Category --"}, id: "division_id", class: "form-control required chosen-select")
+        span.error-msg.hidden
+          span.error-msg.hidden
+      .form-group
+        label for="sub_division_ids"
+          | Sub Categories
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Sub Category of this product. You can select multiple sub categories. Please select a Category first to populate the options."
+            i.icon-question-sign &nbsp;
+        =f.select(:sub_division_ids, options_from_collection_for_select(@sub_categories, :id, :name, f.object.sub_division_ids), {}, id: "sub_division_ids", class: "form-control chosen-select", multiple: true, size: 5, disabled: @sub_categories.blank?)
+        span.error-msg.hidden
+      
+      .form-group
+        label for="country_names" 
+          | Restricted From Shipping (Select Countries)
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Select all the countries where this product is restricted from shipping."
+            i.icon-question-sign &nbsp;
+        =f.select(:restricted_country_codes, options_from_collection_for_select(@countries, :code, :name, f.object.restricted_country_codes), {}, id: "restricted_country_codes", class: "form-control chosen-select", multiple: true, size: 5)
+      .form-group
+        label for="tags"
+          | Tags
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="List down all the tags for this product. This is useful for search purposes."
+            i.icon-question-sign &nbsp;
+        =f.text_field :tags, id: "tags", class: "form-control", :placeholder=>"Key-in the tags for this product", multiple: true, :data=>{:role=>"tagsinput"}
+      .form-group
+        label for="long_description"
+          | Shipping and Return Policy
+          span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The shipping and return policy of the product."
+            i.icon-question-sign &nbsp;
+        =f.text_area :policy, class: "form-control no-resize", rows: 10
+        span.error-msg.hidden

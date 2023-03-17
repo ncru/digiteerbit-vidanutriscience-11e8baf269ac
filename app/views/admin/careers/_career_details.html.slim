@@ -1,0 +1,24 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this career will be displayed in the site page or not. Only active careers will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, :class=>"js-switch"
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="position" 
+      | Position
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The name of the career position that will be displayed on the site page." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :position, :id=>"position", :class=>"form-control required capitalize", :placeholder=>"Position Name"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-2.col-md-2.col-sm-2.col-xs-2 for="description" 
+      | Description
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The description of the position."
+        i.icon-question-sign &nbsp;
+    .col-lg-9.col-md-9.col-sm-9.col-xs-9
+      =f.text_area :description, :id=>"description", :class=>"form-control required summernote", :rows=>10
+      span.error-msg.hidden

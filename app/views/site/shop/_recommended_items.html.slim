@@ -1,0 +1,24 @@
+-if @recommended_items.present?
+  #category
+    .container
+      .title.mb-30.text-uppercase.title-sm.text-center Recommended Products
+      .container-products
+        .row
+          -@recommended_items.each do |item|
+            .col-sm-3
+              .wrapper-product.product-inner
+                / .product-status.sale.text-uppercase Sale
+                / .product-status.hot.text-uppercase Hot
+                / .product-status.new.text-uppercase New
+                .product-holder style="background-image: url(#{item.photo})"
+                .border-up
+                .border-down
+                .product-info
+                  .price 
+                    span class="#{'line-through' if item.price_type == 1}" ₱#{format_number_with_precision(item.price, 2)}
+                    -if item.price_type == 1
+                      span.color-red 
+                        |  / ₱#{format_number_with_precision(item.promo_price, 2)}
+                  .name =item.name
+                  .text-center
+                    a.btn href="/shop/#{item.slug}?sku=#{item.id}" View Item

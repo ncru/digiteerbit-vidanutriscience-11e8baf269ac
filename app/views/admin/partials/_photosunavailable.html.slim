@@ -1,0 +1,21 @@
+.modal-header.modal-primary.photosunavailable
+  button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+.starter-template.mb10p
+  .middle-box.pt0
+    h1 Photos
+    .section-icon
+      i.an.an-image-alt-1
+    p No photos available from the server.
+    div
+      #error-msg-div-modal.alert.alert-danger.hidden
+      =form_for [:admin, @photo] ,:remote=>true, :html => {:multipart => true, :class => "main_form"}  do |f|
+        =f.text_field :photo_url,:class=>"form-control direct_upload_field hidden"
+      form.direct_uploader
+        span.btn.btn-success.fileinput-button#main_file_input_btn
+          i.an.an-upload-cloud
+          | Upload New Photo
+          input.file_input#main_file_input type="file" multiple="multiple"
+      #progress_bar.hidden
+        .bar
+          | Uploading..
+      =form_tag "/admin/photos/refresh_photos_list", :method=>"get",:remote=>true,:id=>"refresh_photo_list",:class=>"text-center"

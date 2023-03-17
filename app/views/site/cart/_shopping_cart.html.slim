@@ -1,0 +1,24 @@
+-if @cart.cart_items.size == 0
+  p There are no items in your bag.
+-else
+  -@cart.cart_items.each do |cart_item|
+    .row data-item-id="#{cart_item.id}"
+      .col-md-3
+        .product-img
+          =image_tag("#{cart_item.sku.photo}", class: "img-responsive")
+      .col-md-7
+        .product-name =cart_item.sku.product.name
+        .sku-name
+          strong SKU:
+          |  #{cart_item.sku.name}
+        .unit-price
+          strong Unit Price:
+          |  ₱#{format_number_with_precision(cart_item.sku.price, 2)}
+        .input-group.qty-wrapper
+          =link_to "<i class='fa fa-minus'></i>".html_safe, site_cart_items_path(id: cart_item.id, method: "deduct"), class: "btn btn-default minus update-cart input-group-addon", remote: true, method: "patch"
+          =text_field_tag "sku-quantity", cart_item.quantity, class: "form-control text-center", disabled: true
+          =link_to "<i class='fa fa-plus'></i>".html_safe, site_cart_items_path(id: cart_item.id, method: "add"), class: "btn btn-default plus update-cart input-group-addon", remote: true, method: "patch"
+        .subtotal Subtotal: ₱#{format_number_with_precision(cart_item.subtotal, 2)}
+      .col-md-1
+        =link_to "<i class='fa fa-trash'></i>".html_safe, "#", { data: { type: "cart_item", href: site_cart_items_path(id: cart_item.id) }, class: "btn btn-lg toggle-delete-modal" }
+    hr

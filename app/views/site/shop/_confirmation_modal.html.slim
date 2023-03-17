@@ -1,0 +1,20 @@
+#confirmation_modal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button" X
+        .title.text-uppercase.title-sm Confirm Order
+      .modal-body.mb-15
+        .message 
+          | You are trying to purchase 
+          strong.attempted-qty
+          |  but we can only accommodate  
+          strong.available-qty
+          |  at this time.
+      .modal-footer
+        .row
+          .col-md-12.text-right
+            =button_tag '', type: 'button', class: 'btn btn-green btn-lone add-to-bag text-uppercase', id: 'proceed-add', data: {qty: 0}
+            
+            /=button_to site_cart_items_path, form: {id: 'add-to-bag-form', class: 'shop-form'}, params: {'cart_item[quantity]': 1, 'cart_item[sku_id]': @selected_sku.id}, data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i> Adding</span>'}, class: 'btn btn-green btn-lone add-to-bag text-uppercase', disabled: @selected_sku.out_of_stock?, remote: true do
+              | Add to Bag

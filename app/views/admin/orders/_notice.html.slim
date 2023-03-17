@@ -1,0 +1,6 @@
+-if notice.present?
+  .alert.alert-main.alert-success.alert-newversion
+    =notice.html_safe
+-elsif error.present?
+  .alert.alert-main.alert-danger.alert-newversion
+    =error.html_safe

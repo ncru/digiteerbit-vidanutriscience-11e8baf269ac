@@ -1,0 +1,17 @@
+var form = $('#new_message');
+var button = $('.submit-msg');
+
+setTimeout((function() {
+  button.html('<i class="fa fa-check"></i> Message Sent').blur();
+}), 2000);
+
+setTimeout((function() {
+  // Refresh the errors container to remove the alert..
+  $(".container-error").html("<%= j(render partial: 'site/partials/error_messages', locals: {model: @message}) %>");
+  // Reset the form.
+  form[0].reset();
+  // Reset the button.
+  button.removeClass('disabled').html('Send Message').blur();
+  // Scroll to top page.
+  $('html, body').animate({ scrollTop: 0 }, 500);
+}), 3000);

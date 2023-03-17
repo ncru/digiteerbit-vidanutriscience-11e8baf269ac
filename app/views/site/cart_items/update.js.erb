@@ -1,0 +1,7 @@
+<% if @cart_item.errors.any? %>
+  alert("<%= raw @cart_item.errors.full_messages[0] %>");
+<% else %>
+  $(".count-wrapper").html("<%= j(render 'site/cart/cart_item_count') %>");
+  $(".container-cart-items").html("<%= j(render 'site/cart/cart_items') %>");
+  $(".table-cart tbody").html("<%= j(render 'site/cart/cart_tbody') %>");
+<% end %>

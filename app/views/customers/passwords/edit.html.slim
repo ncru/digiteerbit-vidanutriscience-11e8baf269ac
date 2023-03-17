@@ -1,0 +1,37 @@
+.page-registration
+  .container
+    .row
+      .col-sm-8.col-sm-offset-2
+        .wrapper-registration
+          .title.text-uppercase.title-sm.text-center.mb-0 Change your password
+          br
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+            .row
+              .col-sm-8.col-sm-offset-2
+                -if resource.errors.any?
+                  .alert.alert-custom
+                    -resource.errors.full_messages.each do |msg|
+                      li =msg
+                -if notice.present?
+                  .alert.alert-custom
+                    li =notice
+                -if alert.present?
+                  .alert.alert-custom
+                    li =alert
+                = f.hidden_field :reset_password_token
+                .form-group.form-group-alt
+                  = f.password_field :password, autofocus: true, autocomplete: "off", class: "form-control", placeholder: "New password (must be at least 8 characters long)"
+                .form-group.form-group-alt
+                  = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Confirm password"
+            br  
+            .text-center
+              = f.button "Change my password", data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i> Updating your password</span>'}, class: "btn btn-green btn-lone text-uppercase"
+              br
+              br
+              br
+              = link_to "Back to login", new_session_path(resource_name), class: "link-forgot"
+    .hr-register
+    .text-center
+      .title.text-uppercase.title-sm New Customer?
+      br
+      = link_to "Create An Account", customer_registration_path, class: "btn btn-blue btn-lone text-uppercase"

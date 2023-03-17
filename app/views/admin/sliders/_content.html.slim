@@ -1,0 +1,20 @@
+.content
+  .notice-container
+    =render 'notice'
+  .row.content-header.mb20
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Sliders
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can manage the images being displayed in the Homepage Slider on this module. You can configure up to 6 slider images to be shown in the Homepage.
+
+#sliders-accordion.switchboard
+  =render 'sliders'
+  =render 'switcheryjs'
+
+.modal id="slider_modal"
+
+=render '/admin/partials/generic_js'
+=render '/admin/partials/cors_modal'
+=render '/admin/partials/cors_js'
+=render '/admin/partials/delete_photo_modal'

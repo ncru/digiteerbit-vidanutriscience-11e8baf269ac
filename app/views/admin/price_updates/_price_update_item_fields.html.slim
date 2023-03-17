@@ -1,0 +1,18 @@
+- unique_id = "#{f.object_name}[product_id]".gsub(/(\])?\[/, "_").chop
+tr.nested-fields id="#{unique_id}"
+  td
+    =f.select(:sku_id, options_from_collection_for_select(@product,:id,:name, f.object.sku_id), {include_blank: '-- Select Product --'}, :id=>"sku_id", :class =>"form-control required sku_id chosen-select")
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;"
+  td 
+    =f.text_field :price, :class=>"form-control text-center regular-price numeric required"
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td.promo-hidden.hidden 
+    =f.text_field :promo_price, :class=>"form-control text-center promo-price", :disabled=>"disabled"
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td.promo-hidden.hidden 
+    input type="text" class="form-control text-center new-price" readonly="true"
+    span.error-msg.hidden style="padding: 0 10px; font-size: 12px;" 
+  td 
+    a type="button" confirm="Are you sure?" class="btn btn-danger btn-sm remove_fields dynamic" style="height: 34px; padding: 8px 10px;" href="#" id="remove-product-btn"
+      i.an.an-trashcan-alt style="left: 4px"
+  

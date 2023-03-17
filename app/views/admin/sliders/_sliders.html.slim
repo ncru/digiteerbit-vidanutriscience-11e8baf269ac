@@ -1,0 +1,6 @@
+-@sliders.each_with_index do |slider, index|
+  a class="#{slider.title}-container switchboard-item col-xs-4 #{slider.is_disabled}" style="background-image: url('#{slider.photo_url}');" data-id="#{slider.id}" data-remote="true" href="/admin/sliders/#{slider.id}/edit"
+    -if !slider.status?
+      .overlay
+    .switch.switch-small.pull-right
+      =check_box_tag 'status', slider.status, slider.status?, class: 'js-switch-sliders'

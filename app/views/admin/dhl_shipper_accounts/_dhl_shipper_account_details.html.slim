@@ -1,0 +1,128 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="status" 
+      | Status
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this DHL shipper account will be displayed in the site page or not. Only active DHL shipper accounts will be displayed." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.check_box :status, :class=>"js-switch"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="account_number" 
+      | Account Number
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Account Number of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :account_number, :id=>"account_number", :class=>"form-control required", :placeholder=>"Account Number"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="shipper_id" 
+      | Shipper ID
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Shipper ID of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :shipper_id, :id=>"shipper_id", :class=>"form-control required", :placeholder=>"Shipper ID"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="company" 
+      | Company
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Company of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :company, :id=>"company", :class=>"form-control required", :placeholder=>"Company"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="address1" 
+      | Address Line 1
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Address Line 1 of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :address1, :id=>"address1", :class=>"form-control required", :placeholder=>"Address Line 1"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="address2" 
+      | Address Line 2
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Address Line 2 of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :address2, :id=>"address2", :class=>"form-control", :placeholder=>"Address Line 2"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="city" 
+      | City
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Address Line 1 of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :city, :id=>"city", :class=>"form-control required", :placeholder=>"City"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="postal_code" 
+      | Postal Code
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Postal Code of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :postal_code, :id=>"postal_code", :class=>"form-control required", :placeholder=>"Postal Code"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="country_code" 
+      | Country
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Country of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:country_code, options_from_collection_for_select(@countries, :code, :name, f.object.country_code), {include_blank: '-- Select Country --'}, id: 'country_code', class: "form-control required chosen-select")
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="contact_person" 
+      | Contact Person
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Contact Person of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :contact_person, :id=>"contact_person", :class=>"form-control required", :placeholder=>"Contact Person"
+      span.error-msg.hidden    
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="contact_no" 
+      | Contact No.
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Contact No. of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :contact_no, :id=>"contact_no", :class=>"form-control required", :placeholder=>"Contact No."
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="product_code" 
+      | Default Product
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The default Product of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:default_product_code, options_from_collection_for_select(@dhl_products, :code, :name, f.object.default_product_code), {include_blank: ' Default Product (Doc/Non Doc)'}, id: 'product_code', class: "form-control chosen-select")
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="package_type" 
+      | Default Package Type
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The default Package Type of the DHL shipper account that will be used to DHL API." 
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.select(:default_package_type, options_from_collection_for_select(@dhl_package_types, :code, :name, f.object.default_package_type), {include_blank: 'Default Package Type'}, id: 'package_type', class: "form-control chosen-select")
+      span.error-msg.hidden
+  h5 For Book Pickup
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="ready_time"
+      | Ready By Time
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The ready by time of the package."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :ready_time, :id=>"ready_time", :class=>"form-control timepicker", :placeholder=>"From", :value=>custom_format_date(f.object.ready_time, "%I:%M %p")
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="close_time"
+      | Office Close Time
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The close time of your office."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :close_time, :id=>"close_time", :class=>"form-control timepicker", :placeholder=>"From", :value=>custom_format_date(f.object.close_time, "%I:%M %p")
+  
+javascript:
+  $(function() {
+    $('.timepicker').datetimepicker({
+      format: 'g:i A',
+      datepicker: false,
+      timepicker: true,
+      step: 30
+    });
+  });  

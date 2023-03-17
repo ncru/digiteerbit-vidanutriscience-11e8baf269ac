@@ -1,0 +1,51 @@
+.modal id="dhl-modify-pickup-modal"
+  .modal-dialog
+    .modal-content
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Update Order Status
+      =form_tag "", method: 'post', id: 'order_dhl_status_form' do |f|
+        =hidden_field_tag "dhl_service_id", nil, class: 'dhl_service_id'
+        .modal-body
+          | Update the Status of Order # 
+          strong.reference-id 
+          |  from 
+          strong.from-status 
+          |  to 
+          strong.to-status On Pickup
+          |
+          =render "/admin/dhl_modals/reminder"  
+          h3.text-center  DHL - Modify Pickup
+          h5.mb5.mt5 Pickup Place
+          | #{@shipper.company}, #{@shipper.address1} #{@shipper.address2}, #{@shipper.city}, #{@shipper.postal_code}
+          .row 
+            .col-md-6
+              h5.mb5.mt10 Ready By Date
+              input.required.shipping_ready_date name="ready_date" class="form-control" readonly="true" placeholder="Ready By Date"
+              span.error-msg.hidden
+            .col-md-6
+              h5.mb5.mt10 Ready By Time
+              input value="#{@shipper.ready_time.strftime('%I:%M %p')}" class="form-control" readonly="true"
+          .row  
+            .col-md-8.col-md-offset-2
+              h5.text-center.mb5.mt10 Package Location
+              input.required name="package_location" placeholder="Ex. Front Desk" class="form-control"
+              span.error-msg.hidden
+        .modal-footer
+          
+            .row
+              .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center
+                button.btn.btn-primary.submit-dhl-modal-btn type="submit" 
+                  | Proceed
+                  i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw.hidden
+
+javascript:
+  var $min_date = "#{Date.today.strftime('%m/%d/%Y')}";
+  var $max_date = "#{(Date.today + 7.day).strftime('%m/%d/%Y')}";
+  $('.shipping_ready_date').datepicker({
+    beforeShowDay: $.datepicker.noWeekends,
+    changeYear: true,
+    dateFormat: 'yy-mm-dd',
+    minDate: '+0D',
+    maxDate: '+10D'
+  });

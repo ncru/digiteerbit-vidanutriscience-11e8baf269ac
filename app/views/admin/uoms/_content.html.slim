@@ -1,0 +1,84 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 UOMs
+      =link_to new_admin_uom_path, id: "add-uom", class: "btn btn-success pull-right new no-outline" do
+        i.an.an-plus-thin
+        | New UOM
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can perform all uom related maintenance on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Name" data-columntosearch="0" style="width: 200px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Name."
+          i.icon-question-sign &nbsp;
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Unit" data-columntosearch="1" style="width: 200px;"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Unit."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#uoms-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="25%" 
+          | Name
+        th.pointer.sortable.font-bold width="20%" 
+          | Unit
+        th.pointer.sortable.font-bold width="25%" 
+          | Label
+        th.pointer.sortable.font-bold width="15%" 
+          | Status
+        th.pointer data-column="actions" width="15%"
+=render 'delete_modal'
+
+javascript:
+  $(document).ready(function() {
+    // Variables for Datatables initialization.
+    var tableId = "#uoms-list",
+        ajaxUrl = "/admin/datatables/retrieve_uoms",
+        defaultOrder = [[0, 'asc']],
+        columnDefs = [
+          { "name": "uom.name", "data": "name", "className": "truncate", "targets": 0 },
+          { "name": "uom.unit", "data": "unit", "className": "truncate", "targets": 1 },
+          { "name": "uoml.name", "data": "label", "className": "truncate", "targets": 2 },
+          { "name": "uom.status", 
+            "data": "status", 
+            "targets": 3,
+            "render": function(data) {
+              return (data == 0) ? '<span class="label label-danger">Inactive</span>' : '<span class="label label-success">Active</span>';
+            }
+          },
+          { "orderable": false, 
+            "className": "actions",
+            "name": "uom.id",
+            "data": "id",
+            "targets": -1, 
+            "render": function(data) {
+              return "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Edit'>"+
+                         "<a class='edit-uom no-outline' data-push='true' href='/admin/maintenance/uoms/"+data+"/edit'><i class='an an-pencil-thin-slant'></i></a>"+
+                       "</li>"+
+                     "</ul>"+
+                     "<ul class='inline-list'>"+
+                       "<li data-toggle='tooltip' data-placement='top' title='Delete'>"+
+                         "<a class='toggle-delete-modal no-outline' data-href='/admin/maintenance/uoms/"+data+"' data-type='uom'><i class='an an-trashcan-alt'></i></a>"+
+                       "</li>"+
+                     "</ul>";
+            }
+          }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

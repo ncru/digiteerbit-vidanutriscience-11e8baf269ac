@@ -1,0 +1,22 @@
+$('.checkout-loader').fadeOut()
+$("#cart-container").fadeOut(300, function() {
+  $("#cart-container").html("<%= j (render 'cart') %>");
+  $("#cart-container").fadeIn(200, function(){
+    <% if @restricted_sku_ids.present? %>
+      $(".submit-orders").attr("disabled", true);
+      var country_name = $("select#shipping-country-code").find('option:selected').text()
+      $("#restricted_modal").modal('show').find(".modal-body").find('.message').find('.country-name').text(country_name);
+      var sku_ids = <%=@restricted_sku_ids%>;
+      sku_ids.forEach(function(sku_id, index, array) {
+        $("#sku-"+sku_id).find('.not-available').removeClass("hidden");
+      });
+    <% else %>
+      $(".submit-orders").attr("disabled", false);
+      <% if @dhl_error.blank? %> 
+        $("#cleared_items_modal").modal('show');
+      <% else %>
+      $('html, body').animate({ scrollTop: $('.shipping-error').first().offset().top - 81}, 500);
+      <% end %>
+    <% end %>
+  });
+});

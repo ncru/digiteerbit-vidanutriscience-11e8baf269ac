@@ -1,0 +1,14 @@
+<% if @cart.errors.any? %>
+  alert("Error encountered.")
+<% else %>
+  $(".count-wrapper").html("<%= j(render 'site/cart/cart_item_count') %>");
+  $(".sku-data").html("<%= j(render 'site/shop/sku_data') %>");
+  $(".container-cart-items").html("<%= j(render 'site/cart/cart_items') %>");
+  $(".table-cart tbody").html("<%= j(render 'site/cart/cart_tbody') %>");
+  
+  // For checkout page.
+  $(".container-checkout-btn").html("<%= j(render 'site/checkout/checkout_btn') %>");
+  $(".data-checkout-cart").html("<%= j(render 'site/checkout/cart') %>");
+  
+  $("#cart_item_delete_modal").modal("hide");
+<% end %>

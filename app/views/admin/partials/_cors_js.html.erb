@@ -1,0 +1,103 @@
+<script>
+  $(function() {
+    var file_input = $('#main_file_input');
+    var submit_btn = $('#main_file_input_btn');
+    var progress_bar = $('.bar');
+
+    file_input.fileupload({
+      fileInput:        file_input,
+      url:              '<%= @s3_direct_post.url %>',
+      type:             'POST',
+      autoUpload:       true,
+      formData:         <%= @s3_direct_post.fields.to_json.html_safe %>,
+      paramName:        'file',
+      dataType:         'XML',
+      replaceFileInput: false,
+      progressall: function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        progress_bar.html('Uploading ' + progress + '%');
+        progress_bar.css('width', progress + '%');
+      },
+      add: function (e, data) {
+        var postCategory = $("body").find("div.inner-heading > h4.title").text();
+
+        // Do this only if in the Posts > News Section.
+        if (postCategory === 'News') {
+          var inputFileElement = data.fileInput[0];
+          var files = inputFileElement.files;
+
+          if (files && files[0]) {
+            var reader = new FileReader();
+            var image  = new Image();
+            var file = files[0];
+
+            reader.readAsDataURL(file);
+            reader.onload = function(_file) {
+              image.src = _file.target.result;
+              image.onload = function() {
+                var w = this.width,
+                    h = this.height;
+
+                if (w == 276 && h == 276) {
+                  if (!$("#error-msg-div-modal").hasClass('hidden')) {
+                    $("#error-msg-div-modal").addClass('hidden');
+                  }
+
+                  data.submit();
+                } else {
+                  var msg = "The image you selected has a dimension of " + w + "px by " +
+                    h + "px. Please select an image with 276px by 276px dimension only."
+                  $("#error-msg-div-modal").text(msg);
+                  $("#error-msg-div-modal").removeClass('hidden');
+                }
+              };
+              image.onerror= function() {
+                  alert('Invalid file type: '+ file.type);
+              };
+            };
+          }
+        } else {
+          // If not Posts > News Section, then just proceed to Submitting the data.
+          data.submit();
+        }
+      },
+      start: function (e) {
+        //disables the button
+        submit_btn.addClass("disabled");
+        //resets the progress bar
+        progress_bar.css('width', 0+'%');
+        progress_bar.parent().removeClass("hidden");
+      },
+      done: function(e, data) {
+        // extract key and generate URL from response
+        var key   = $(data.jqXHR.responseXML).find("Key").text();
+        //gets the url
+        var url   = 'https://vidanutriscience.s3-ap-southeast-1.amazonaws.com/' + key;
+        //gets the file name
+        var file_name = $('.file_input').val().split(/(\\|\/)/g).pop();
+
+        //append the entry into the table row
+        var file_row= $("<div class='col-md-2'><div class='wrapper-photo'><a class='photo thumbnail' href='#' data-id='"+url+"'><img class='img-responsive' src='"+url+"'></a></div></div>");
+
+        $('.photo-list').prepend(file_row);
+
+        //enables the button
+        progress_bar.text("Done");
+        submit_btn.removeClass("disabled");
+
+        $('.direct_upload_field').val(url);
+        $('.main_form').submit();
+
+        // If this is the first time a photo is uploaded,
+        // refresh the container to display the first uploaded photo.
+        if (!$("#gallery_modal .photosavailable").attr('class')) {
+          $('#refresh_photo_list').submit();
+        }
+      },
+      fail: function(e, data) {
+        submit_btn.removeClass("disabled");
+        progress_bar.text("Failed").css("background-color", "#d20000");
+      }
+    });
+  });
+</script>

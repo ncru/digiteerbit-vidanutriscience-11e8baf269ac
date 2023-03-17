@@ -1,0 +1,6 @@
+$("#sliders-accordion").html("<%= j (render 'sliders') %>")
+$("#slider_modal").modal("hide")
+
+$(".notice-container").html("<%= j (render 'notice') %>")
+
+$("#sliders-accordion").append("<%= j (render 'switcheryjs') %>")

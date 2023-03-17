@@ -1,0 +1,88 @@
+- title "View Inventory"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#inventories.content-page.current data-title="Inventory"
+    .content
+      .row.content-header
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          h1 View Inventory
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          p.explanation
+            | This module shows the logs for the stocks of 
+            strong #{@sku.name}.
+            
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+          =link_to admin_inventories_path, id: "add-inventory", class: "btn btn-default pull-right no-outline" do
+            i.an.an-previous
+            | Go Back        
+          a.btn.refresh-datatable.pull-right.no-outline.mr5 href="#" title=""
+            i.an.an-repeat-circle-big
+            | Refresh
+
+      table#inventories-list.table.data-table.display style="table-layout:fixed" 
+        thead
+          tr
+            th.pointer.sortable.font-bold width="15%" 
+              | Filed Date
+            th.pointer.hidden
+            th.pointer.sortable.font-bold width="30%" 
+              | Filed By
+            th.pointer.sortable.text-center.font-bold width="15%"   
+              | Qty
+            th.pointer.sortable.text-center.font-bold width="20%"   
+              | Action
+            th.pointer.sortable.text-center.font-bold width="20%"
+              | Remarks
+            
+
+    javascript:
+      $(document).ready(function() {
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        // Variables for Datatables initialization.
+        var tableId = "#inventories-list",
+            ajaxUrl = "/admin/datatables/retrieve_show_inventories?sku_id=#{@sku.id}",
+            defaultOrder = [[0, 'desc']],
+            columnDefs = [
+              { "name": "i.created_at", 
+                "data": "created_at", 
+                "targets": 0,
+                "render": function(data, type, full) {
+                  // If display or filter data is requested, format the date.
+                  if (type === 'display' || type === 'filter') {
+                    var d = new Date(data);
+                    return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                  }
+
+                  // Otherwise the data type requested (`type`) is type detection or
+                  // sorting data, for which we want to use the normal format, so just return
+                  // that, unaltered.
+                  return data;
+                }
+              },
+              { "name": "i.order_request_id", "data": "request_id", "className": "truncate", "visible": false, "targets": 1 },
+              { "name": "concat(u.first_name, ' ',u.last_name)",
+                "data": "filed_by", 
+                "className": "truncate",
+                "targets": 2,
+                "render": function(data, type, row) {
+                  return (row.request_id != "" && row.request_id != null) ? "<a class='text-underline' title='"+row.request_id+"' href='/admin/orders/"+row.request_id+"' target='_blank'>"+row.request_id+"</a>" : data;
+                 }
+              },
+              { "name": "ii.quantity", "data": "quantity", "className": "text-center", "targets": 3 },
+              { "name": "ii.action_id",
+                "className": "text-center",
+                "data": "action_id", 
+                "targets": 4,
+                "render": function(data, type, full) {
+                  return (data == 1) ? '<span class="label label-success">Added</span>' : '<span class="label label-danger">Deducted</span>';
+                }
+              },
+              { "name": "ii.remarks", "data": "remarks", "className": "text-center truncate", "targets": 5,
+                "render": function(data, type, full) {
+                  return (data != null && data != '') ? data : "--";
+                }
+              }
+            ];
+
+        generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+      });

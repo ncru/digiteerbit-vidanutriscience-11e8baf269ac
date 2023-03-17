@@ -1,0 +1,35 @@
+.modal id="dhl-cancel-pickup-modal"
+  .modal-dialog
+    .modal-content
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Update Order Status
+      =form_tag "", method: 'post', id: 'order_dhl_status_form' do |f|
+        =hidden_field_tag "dhl_service_id", nil, class: 'dhl_service_id'
+        .modal-body
+          | Update the Status of Order # 
+          strong.reference-id 
+          |  from 
+          strong.from-status 
+          |  to 
+          strong.to-status Cancelled Pickup
+          |
+          =render "/admin/dhl_modals/reminder"  
+        .modal-footer
+          
+            .row
+              .col-lg-12.col-md-12.col-sm-12.col-xs-12.text-center
+                button.btn.btn-primary.submit-dhl-modal-btn type="submit" 
+                  | Proceed
+                  i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw.hidden
+
+javascript:
+  var $min_date = "#{Date.today.strftime('%m/%d/%Y')}";
+  var $max_date = "#{(Date.today + 7.day).strftime('%m/%d/%Y')}";
+  $('.shipping_ready_date').datepicker({
+    beforeShowDay: $.datepicker.noWeekends,
+    changeYear: true,
+    dateFormat: 'yy-mm-dd',
+    minDate: '+0D',
+    maxDate: '+10D'
+  });

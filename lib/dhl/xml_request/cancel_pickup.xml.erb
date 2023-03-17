@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:CancelPURequest xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.dhl.com cancel-pickup-global-req_AP.xsd" schemaVersion="1.0">
+  <Request>
+    <ServiceHeader>
+      <MessageTime><%= DateTime.now %></MessageTime>
+      <MessageReference><%= @request_id %></MessageReference>
+      <SiteID><%= @site_id %></SiteID>
+      <Password><%= @password %></Password>
+    </ServiceHeader>
+  </Request>
+	<RegionCode>AP</RegionCode>
+	<ConfirmationNumber><%= @confirmation_number %></ConfirmationNumber>
+	<RequestorName>Vida Nutriscience Inc.</RequestorName>
+  <CountryCode><%= @country_code %></CountryCode>
+	<!-- <OriginSvcArea>KUL</OriginSvcArea> -->
+	<!-- <Reason>001</Reason> -->
+	<PickupDate><%= @pickup_date %></PickupDate>
+	<CancelTime><%= Time.now.strftime('%H:%M') %></CancelTime>
+</req:CancelPURequest>

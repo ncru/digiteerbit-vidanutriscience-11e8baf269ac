@@ -1,0 +1,52 @@
+#page-thankyou
+  .container
+    .row
+      .col-sm-8.col-sm-offset-2
+        .panel.panel-thankyou
+          .panel-body.text-center
+            .row
+              .col-sm-8.col-sm-offset-2
+                i.fa.fa-check-circle
+                h2 Thank You For Purchasing
+                p
+                  | Order Reference # is #{@order.request_id}.
+                  br
+                  br
+                  -if @order.payment_method_id == 0 #Cash on Delivery
+                    | Hi there! Your order is now being processed. One of staff member will contact your shortly to confirm your order request.
+                  -else  
+                    | You will receive an order confirmation email with details of your order.
+                .row
+                  .col-xs-10.col-xs-offset-1
+                    a.btn.btn-blue.btn-block href="/" OK
+
+#order-items data-order-items="#{@order_items.to_json}"
+
+-content_for :page_script do
+  javascript:
+    $(document).ready(function () {
+      var order_items = $('#order-items').data('order-items')
+      
+      if ('<%= if @order.present? %>') {
+        ga('require', 'ecommerce');
+        ga('ecommerce:addTransaction', {
+         'id': '#{@order.request_id}',                     // Transaction ID. Required.
+         'affiliation': 'Vida NutriScience',   // Affiliation or store name.
+         'revenue': '#{@order.amount}',               // Grand Total.
+         'shipping': '#{@order.shipping_fee}',                  // Shipping.
+         'tax': '0.0'                     // Tax.
+        });
+        $.each(order_items, function(i, order_item) {
+          ga('ecommerce:addItem', {
+            'id': '#{@order.request_id}',                     // Transaction ID. Required.
+            'name': order_item.sku_name,    // Product name. Required.
+            'sku': order_item.sku_code,                 // SKU/code.
+            'category': order_item.category,         // Category or variation.
+            'price': order_item.price,                 // Unit price.
+            'quantity': order_item.quantity                   // Quantity.
+          });
+        });
+        ga('ecommerce:send');
+      }
+    });
+    

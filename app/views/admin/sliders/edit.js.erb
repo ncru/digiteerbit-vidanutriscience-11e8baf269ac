@@ -1,0 +1,8 @@
+$("#slider_modal").html("<%= j (render 'form') %>");
+$("#slider_modal").modal("toggle");
+
+// Initialize the switchery and bootstrap tooltip 
+// manually as the elements are being loaded via ajax.
+var elem = document.querySelector('.js-switch');
+var switchery = new Switchery(elem, {secondaryColor: '#f0f1f1'});
+$('[data-toggle="tooltip"]').tooltip();

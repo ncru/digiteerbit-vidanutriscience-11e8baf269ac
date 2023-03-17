@@ -1,0 +1,64 @@
+.modal-dialog
+  .modal-content
+    =form_for [:admin, @slider], remote: true do |f|
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Edit #{@slider.title}
+      .modal-body
+        fieldset.form-horizontal.details
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="status"
+              | Status
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Flag if this Slider will be displayed in the site page or not. Only active Sliders will be displayed."
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              =f.check_box :status, :class=>"js-switch"
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="title"
+              | Title
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The title of the Slider that will be displayed on the site page."
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              =f.text_field :title, :id=>"title", :class=>"form-control capitalize", :placeholder=>"Slider Title"
+              span.error-msg.hidden
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="title"
+              | Photo
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The image to be used for this Slider. The recommended minimum thumbnail resolution is 664x610 pixels."
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              .input-group
+                span.input-group-btn
+                  a.btn.btn-success.open_gallery data-id="1" Add photo
+                =f.text_field :photo_url, :class=>"form-control thumbnail_url"
+              span.error-msg.hidden
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="title"
+              | Mobile Photo
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The image to be used for this Slider when viewed using mobile."
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              .input-group
+                span.input-group-btn
+                  a.btn.btn-success.open_gallery data-id="6" Add photo
+                =f.text_field :mobile_photo_url, :class=>"form-control mobile_thumbnail_url"
+              span.error-msg.hidden
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="external_link"
+              | Link
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="External link for the slider image when clicked. Please dont forget to prepend 'http://' to the main URL."  
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              =f.text_field :external_link, :id=>"external_link", :class=>"form-control", :placeholder=>"http://www.sampleurl.com"
+              span.error-msg.hidden
+          .form-group
+            label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="excerpt"
+              | Excerpt
+              span.help data-toggle="tooltip" data-placement="top" data-container="body" title="A short information about this Slider."
+                i.icon-question-sign &nbsp;
+            .col-lg-9.col-md-9.col-sm-9.col-xs-9
+              =f.text_area :excerpt, :id=>"excerpt", :class=>"form-control no-resize", :rows=>5
+              span.error-msg.hidden
+      .modal-footer.text-center
+        a.btn.btn-primary.save.toolbar.submit-summernote href="#"
+          | Save

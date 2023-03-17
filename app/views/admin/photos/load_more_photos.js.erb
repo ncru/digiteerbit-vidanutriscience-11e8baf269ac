@@ -1,0 +1,3 @@
+$('.photo-list').append("<%=j render(:partial => 'photos', :locals => {:photos => @photos})%>");
+$('#load_more_btn').removeClass("disabled");
+$('#load_more_btn').find('span').html("Load More Photos");

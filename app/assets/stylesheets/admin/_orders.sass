@@ -1,0 +1,153 @@
+.accordionTitle
+  background-color: rgba(0, 0, 0, 0.9)
+  border-bottom: 1px solid darken(#f0f1f1, 5%)
+  border-top: 1px solid darken(#f0f1f1, 5%)
+  &:before
+    content: ''
+    background: url("#{asset_path('plus.svg')}")
+    background-size: 100%
+    position: relative
+    display: inline-block
+    height: 15px
+    width: 15px
+    color: #44c7f4
+    font-size: 1.5em
+    font-weight: $font-bold
+    line-height: 0.5em
+    float: right
+    -webkit-transition: -webkit-transform 0.3s ease-in-out
+    -moz-transition: transform 0.3s ease-in-out
+    -o-transition: transform 0.3s ease-in-out
+    transition: transform 0.3s ease-in-out
+.accordionTitleActive, 
+.accordionTitle.is-expanded
+  background-color: rgba(0, 0, 0, 0.9)
+  &:before
+    -webkit-transform: rotate(225deg)
+    -moz-transform: rotate(225deg)
+    -ms-transform: rotate(225deg)
+    -o-transform: rotate(225deg)
+    transform: rotate(225deg)
+
+.datatable-slider
+  display: none
+  padding: 15px 8px
+
+table.dataTable tbody td.no-padding
+  padding: 0
+
+span#order-request-id
+  display: block
+  margin-top: -36px
+  margin-bottom: 36px
+  position: relative
+  font-weight: $font-thin
+  left: 5px
+
+.item-profile
+  position: relative
+  padding: 0
+  font-size: 16px
+  line-height: 22px
+  color: #3b3b3b
+  list-style-type: none
+  li
+    position: relative
+    margin: 0
+    padding: 10px 8px 8px 90px
+    border-radius: 4px
+    background: #f6f6f6
+    .item-profile-img
+      background-size: contain
+      background-position: center center
+      background-repeat: no-repeat
+      position: absolute
+      top: -5px
+      left: 0
+      z-index: 10
+      margin: 0
+      padding: 0
+      width: 80px
+      height: 80px
+      border-radius: 4px
+    h2
+      margin: 0
+      font-size: 18px
+      line-height: 22px
+      font-weight: $font-normal
+      color: #4b4b4b
+      text-shadow: -1px -1px 0 rgba(255,255,255,0.7)
+    .info
+      margin: 0
+      display: block
+      em
+        margin: 0 5px 0 0
+        font-size: 11px
+        line-height: 20px
+        font-weight: $font-normal
+        letter-spacing: 1px
+        color: #5b5b5b
+        text-transform: uppercase
+        i
+          position: relative
+          top: 2px
+          margin-right: 3px
+        img.picture
+          height: 20px
+
+.order-details-wrapper-sm
+  .content-sub-header
+    h1
+      font-size: 12px
+  .profile, .item-profile
+    font-size: 16px
+    li
+      padding: 10px 8px 8px 5px
+      background: $white
+      &.planner-img-wrapper
+        margin-bottom: 5px
+      .item-profile-img
+        width: 40px
+        height: 40px
+        &.planner-img
+          top: 0
+      h2
+        font-size: 12px
+        line-height: normal
+        position: absolute
+        left: 45px
+        top: -1px
+      .info
+        position: relative
+        top: -7px
+        left: 40px
+        max-width: calc(100% - 40px)
+        line-height: normal
+        em
+          line-height: normal
+          font-size: 8px
+          vertical-align: sub
+
+.customer-details-wrapper-sm
+  border-right: 1px dotted #8d8d8d
+  .content-sub-header
+    h1
+      font-size: 12px
+  .profile, .item-profile
+    font-size: 16px
+    li
+      padding: 10px 8px 8px 5px
+      background: $white
+      .profile-img
+        width: 40px
+        height: 40px
+      h2
+        font-size: 12px
+        line-height: normal
+        font-weight: $font-bold
+        position: absolute
+        top: -11px
+      .info
+        em
+          line-height: normal
+          font-size: 8px

@@ -1,0 +1,10 @@
+.modal id="photo_delete_modal"
+  .modal-dialog
+    .modal-content
+      .modal-header.modal-primary
+        button.close aria-hidden="true" data-dismiss="modal" type="button" &times;
+        h4.modal-title Delete Uploaded Photos
+      .modal-body
+        | Are you sure you want to delete the selected photo? (This cannot be undone!)      
+      .modal-footer.text-center
+        a.btn.btn-danger.confirm.delete-photo data-method="delete" rel="nofollow" Yes, delete photo

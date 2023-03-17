@@ -1,0 +1,85 @@
+-site_title "Product Details - #{@product.name} | Vida Nutriscience"
+
+#sec-product-banner style="background-image: url(#{@product.background_photo})"
+  .container
+    .row
+      .col-md-5
+      .col-md-5.col-md-offset-2
+        ul.breadcrumbs
+          li
+            a href="/" Home
+          li
+            a href="/shop" Shop
+          li
+            a.active href="/" =@product.name
+        .wrapper-product-details
+          .name.text-uppercase =@product.name
+          / span.badge.bg-green Instock
+          .container-rating
+            =render 'rating'
+          .price 
+            span.original-price class="#{'line-through' if @selected_sku.price_type == 1}" ₱#{format_number_with_precision(@selected_sku.price, 2)}
+            span.promo-price.color-red = (' / ₱' + format_number_with_precision(@selected_sku.promo_price, 2)) if @selected_sku.price_type == 1
+          .desc =@product.description
+          .form-group.form-group-alt
+            label.control-label.text-uppercase SKU
+            =select_tag 'sku', options_for_select(@skus.map { |sku| [sku.select_tag_name(@cart), sku.id, {'data-price': '₱'+format_number_with_precision(sku.price, 2), 'data-promoprice': format_number_with_precision(sku.promo_price || 0, 2), 'data-code': sku.code}] }, @selected_sku.id), class: 'form-control'
+            i.fa.fa-caret-down
+            .sku-data.hidden
+              =render 'sku_data'
+          .clearfix
+            .spinner.product-details.pull-left
+              =number_field_tag 'sku-quantity', 1, class: "form-control", min: 1, max: @selected_sku.get_stocks - @cart.count_sku(@selected_sku.id)
+              button.btn.up
+                i.fa.fa-caret-up
+              button.btn.down
+                i.fa.fa-caret-down
+            =button_to site_cart_items_path, form: {id: 'add-to-bag-form', class: 'shop-form'}, params: {'cart_item[quantity]': 1, 'cart_item[sku_id]': @selected_sku.id}, data: {disable_with: '<span><i class="fa fa-spin fa-circle-o-notch mr-2"></i> Adding</span>'}, class: 'btn btn-green btn-lone add-to-bag text-uppercase pull-left', disabled: @selected_sku.out_of_stock? || @selected_sku.get_stocks == @cart.count_sku(@selected_sku.id), remote: true do
+              | Add to Bag
+
+=render 'confirmation_modal'
+
+#sec-product-details
+  .container
+    .row
+      .col-md-12
+        .tab.tab-product-details
+          ul.nav.nav-tabs role="tablist" 
+            li.active role="presentation" 
+              a.text-uppercase aria-controls="tabDetails" data-toggle="tab" href="#tabDetails" role="tab" Details
+            li role="presentation" 
+              a.text-uppercase aria-controls="tabReviews" data-toggle="tab" href="#tabReviews" role="tab" Reviews
+            li role="presentation" 
+              a.text-uppercase aria-controls="tabFaqs" data-toggle="tab" href="#tabFaqs" role="tab" FAQS
+          .tab-content
+            #tabDetails.tab-pane.active.fade.in role="tabpanel"
+              =render 'tab_details'              
+            #tabReviews.tab-pane.fade role="tabpanel"
+              .text-center
+                .title.text-uppercase.title-sm.mb-10 Add A Review
+                -if !customer_signed_in?
+                  | Please 
+                  =link_to 'login', new_customer_session_path(site_return_to: request.url), class: 'link-blue'
+                  |  or 
+                  =link_to 'register', register_path(site_return_to: request.url), class: 'link-blue'
+                  |  to write a review of this item.
+                -else
+                  a.btn.btn-blue.btn-lone.text-uppercase href="#modalReview" data-toggle="modal" Review This Product
+                  =render 'modal_review'
+                  
+              .container-reviews
+                =render 'reviews'    
+            #tabFaqs.tab-pane.fade role="tabpanel"
+              =render 'tab_faqs'
+          
+=render 'recommended_items'            
+=render 'site/home/brands'
+
+#error_modal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button" X
+        .title.text-uppercase.title-sm Sorry
+      .modal-body.mb-15
+        .message 

@@ -1,0 +1,40 @@
+#active-id.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper data-id="3"
+  section#brands.content-page.current data-title="Brand"
+    .content
+      .row.content-header.mb0
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          h1 =title
+        .col-lg-12.col-md-12.col-sm-12.col-xs-12
+          p.explanation 
+            -if params[:action] == 'new' || params[:action] == 'create'
+              | Please complete the form below.
+            -else
+              | Use the form below to modify the details of 
+              strong 
+                = @brand.name
+              |.
+      #error-msg-div.alert.alert-danger.hidden
+      =form_for [:admin, @brand] do |f|
+        -if @brand.errors.any?
+          #error-msg-div.alert.alert-danger
+            ul
+              -@brand.errors.full_messages.each do |msg|
+                li =msg.html_safe
+                
+        .form-group
+          .btn-toolbar.pull-right.mb0
+            a.btn.btn-primary.save.toolbar.submit-summernote href="#"
+              | Save
+            a.btn.btn-default.cancel.toolbar href="/admin/brands"
+              | Cancel
+        ul.nav.nav-tabs.post-tab
+          li.active
+            a target="details" href="#" 
+              span.tab-title Details
+        #details.tab-content.mb50.mt30
+          =render 'brand_details',:f=>f
+
+=render '/admin/partials/generic_js'
+=render '/admin/partials/cors_modal'
+=render '/admin/partials/cors_js'
+=render '/admin/partials/delete_photo_modal'

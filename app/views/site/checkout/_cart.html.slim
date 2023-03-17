@@ -1,0 +1,37 @@
+-if @cart.cart_items.present?
+  -@cart.cart_items.each do |cart_item|
+    .wrapper-cart id="sku-#{cart_item.sku.id}"
+      .img-holder style="background-image: url(#{cart_item.sku.photo})"
+        .qty #{cart_item.quantity}
+      .name.clearfix
+        span =cart_item.sku.product.name
+        span.price.pull-right ₱#{format_number_with_precision(cart_item.sku.get_price, 2)}
+      .sku SKU: #{cart_item.sku.name}
+      .not-available.hidden
+        i.fa.fa-exclamation-triangle
+  hr
+  //.coupon
+    .row
+      .col-sm-8
+        .form-group.form-group-alt
+          input.form-control placeholder="Gift card or Discount Code" disabled="disabled"
+      .col-sm-4
+        =link_to 'Apply', '#', class: 'btn btn-lone btn-blue btn-block text-uppercase disabled', disabled: true
+
+  .order-summary
+    span.clearfix
+      | Subtotal
+      .pull-right.price ₱#{format_number_with_precision(@cart.subtotal, 2)}
+    span.clearfix
+      | Shipping
+      .pull-right.price ₱#{format_number_with_precision(@shipping_fee.present? ? @shipping_fee.to_f : 0 , 2)}
+    -if @dhl_error.present?
+      .shipping-error = "DHL: " + @dhl_error.to_s
+  .total.clearfix
+    span Total
+    .price.pull-right ₱#{format_number_with_precision((@cart.subtotal + (@shipping_fee.present? ? @shipping_fee.to_f : 0)), 2)}
+-else
+  .text-center You have no items in your shopping bag.
+  br
+  .text-center
+    a.btn.btn-green.btn-lone.text-uppercase href="/shop" Continue Shopping

@@ -1,0 +1,21 @@
+=form_for [:admin, @user] do |f|
+  -if @user.errors.any?
+    #error-msg-div.alert.alert-danger
+      ul
+        -@user.errors.full_messages.each do |msg|
+          li =msg.html_safe
+
+  .form-group
+    .btn-toolbar.pull-right.mb0
+      a.btn.btn-primary.save.toolbar.submit-summernote.no-outline href="#"
+        | Save
+      a.btn.btn-default.cancel.toolbar.no-outline href="/admin/users"
+        | Cancel
+  ul.nav.nav-tabs.post-tab
+    li.active
+      a target="details" href="#" 
+        span.tab-title Details
+  #details.tab-content.mb50.mt30
+    =render 'user_details',:f=>f
+
+=render '/admin/partials/generic_js'

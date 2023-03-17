@@ -1,0 +1,124 @@
+table#price-history-list.table.data-table.display style="table-layout:fixed; width: 100%; max-width: 100%;" 
+  thead
+    tr
+      th.pointer.sortable.font-bold width="6%"
+      th.pointer.sortable.font-bold width="22%" 
+        | Product Name
+      th.pointer.sortable.font-bold width="12%" 
+        | Start
+      th.pointer.sortable.font-bold width="12%"
+        | End
+      th.pointer.hidden
+      th.pointer.sortable.font-bold width="12%" 
+        | Reg. Price
+      th.pointer.hidden
+      th.pointer.sortable.font-bold width="12%" 
+        | Sale Price
+      th.pointer.sortable.font-bold width="12%" 
+        | Date Filed
+      th.pointer.sortable.font-bold width="12%"
+        | Filed By
+      /th.pointer data-column="actions" width="6%"
+/=render 'delete_modal'
+
+javascript:
+  $(document).on('ready', function() {
+      var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      // Variables for Datatables initialization.
+      var tableId2 = "#price-history-list",
+          ajaxUrl2 = "/admin/datatables/retreive_price_history",
+          defaultOrder2 = [[8, 'desc']],
+          columnDefs2 = [
+            { "orderable": false,
+              "name": "p.photo_url",
+              "data": "photo_url",
+              "className": "text-center",
+              "targets": 0,
+              "render": function(data, type, full) {
+                return "<img class='picture' src='"+data+"'></img>";
+              }
+            },
+            { "name": "s.name", "data": "name", "className": "truncate", "targets": 1},
+            { "name": "pu.start_date", 
+              "data": "start_date", 
+              "className": "truncate text-center", 
+              "targets": 2,
+              "render": function(data, type, full) {
+                // If display or filter data is requested, format the date.
+                if (type === 'display' || type === 'filter') {
+                  var d = new Date(data);
+                  return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                }
+
+                // Otherwise the data type requested (`type`) is type detection or
+                // sorting data, for which we want to use the normal format, so just return
+                // that, unaltered.
+                return data;
+              } 
+            },
+            { "name": "pu.end_date", 
+              "data": "end_date", 
+              "className": "truncate text-center", 
+              "targets": 3, 
+              "render": function(data, type, row) {
+                // If display or filter data is requested, format the date.
+                if (row.has_no_end_date == 1 ){
+                  return "<span style='font-size: 20px'>∞</span>"
+                }
+                else{
+                  if (type === 'display' || type === 'filter') {
+                    var d = new Date(data);
+                    return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                  }
+                  // Otherwise the data type requested (`type`) is type detection or
+                  // sorting data, for which we want to use the normal format, so just return
+                  // that, unaltered.
+                  return data;
+                }
+              }
+            },
+            { "name": "pu.has_no_end_date", "data": "has_no_end_date", "visible": false , "targets": 4 },
+            { "name": "pui.price", "data": "price", "className": "truncate", "targets": 5, "class": "text-center" },
+            { "name": "sale_type", "data": "sale_type", "visible":false, "targets": 6 },
+            { "name": "pui.promo_price", 
+              "data": "promo_price", 
+              "className": "truncate",
+              "targets": 7,
+              "class": "text-center", 
+              "render": function(data, type, row) {
+                if (row.sale_type == 1) 
+                  return "<span class='label sale'> less " + (parseFloat(row.price)-parseFloat(data)).toFixed(2) + 
+                  "</span>" +
+                  "<div class='text-danger' style='position: relative; top: -14px; line-height: 1.5;'>"+ parseFloat(data).toFixed(2) + "</div>";
+                else if (row.sale_type == 2) 
+                  return "<span class='label sale'> less " +parseInt(data) + "%"+
+                  "</span>" +
+                  "<div class='text-danger' style='position: relative; top: -14px; line-height: 1.5;'>" +([(100-parseInt(data))*parseFloat(row.price)]/100).toFixed(2)+ "</div>";
+                else
+                  return "--"
+              }
+            },
+            { "name": "pu.created_at", 
+              "data": "created_at", 
+              "className": "truncate", 
+              "targets": 8, 
+              "render": function(data, type, full) {
+                // If display or filter data is requested, format the date.
+                if (type === 'display' || type === 'filter') {
+                  var d = new Date(data);
+                  return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+                }
+
+                // Otherwise the data type requested (`type`) is type detection or
+                // sorting data, for which we want to use the normal format, so just return
+                // that, unaltered.
+                return data;
+              }
+            },
+            { "name": "CONCAT(u.first_name, ' ', u.last_name)", "data": "full_name", "className": "truncate", "targets": 9 },
+
+          ];
+
+      generateDatatable(tableId2, ajaxUrl2, columnDefs2, defaultOrder2, "#{asset_path('loading@2x.gif')}");
+  });

@@ -1,0 +1,6 @@
+$('<%= @data_id %>').find('.regular-price').val('<%= @regular_price %>');
+
+if ('<%= @regular_price %>' == 0)
+{
+  $('<%= @data_id %>').find('select.sku_id').siblings('span.error-msg').text("Invalid: No Regular Price").removeClass('hidden')
+}

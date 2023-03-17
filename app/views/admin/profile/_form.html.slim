@@ -1,0 +1,11 @@
+=form_for [:admin, @user], :multipart => true do |f|
+  .form-group
+    .btn-toolbar.pull-right.mb0
+      a.btn.btn-primary.save.toolbar.submit-summernote.no-outline href="#"
+        | Update Profile
+  ul.nav.nav-tabs.post-tab
+    li.active
+      a target="profile_details" href="#"
+        span.tab-title Modify Profile Details
+  #details.tab-content.mb50.mt30
+    =render 'profile_details',:f=>f

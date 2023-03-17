@@ -1,0 +1,6 @@
+=link_to_add_association '<i class="an an-plus-thin"></i> Add SKU'.html_safe, f, :skus, :class=>"btn btn-success add-item-btn", :data=>{"association-insertion-method" => "append", "association-insertion-node"=>".skus"}
+br
+br
+.skus
+  =f.fields_for :skus do |f|
+    =render 'sku_fields', :f=>f

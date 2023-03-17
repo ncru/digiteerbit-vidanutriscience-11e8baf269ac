@@ -1,0 +1,95 @@
+.content
+  .notice-container
+    -if notice.present?
+      .alert.alert-main.alert-success.alert-newversion
+        =notice.html_safe
+    -elsif error.present?
+      .alert.alert-main.alert-danger.alert-newversion
+        =error.html_safe
+  .row.content-header
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      h1 Logs
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12
+      p.explanation
+        | You can view all the event and changes made in the system on this module.
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.filter-area
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Module" data-columntosearch="0"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Module."
+          i.icon-question-sign &nbsp;
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for Event" data-columntosearch="1"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on Event Description."
+          i.icon-question-sign &nbsp;
+      .search-input-wrapper
+        i.an.an-search
+        input.search-input.form-control placeholder="Search for IP Address" data-columntosearch="2"
+        span.help data-toggle="tooltip" data-placement="top" title="Perform a smart search on IP Address."
+          i.icon-question-sign &nbsp;
+      a.btn.refresh-datatable.pull-right.no-outline href="#" title=""
+        i.an.an-repeat-circle-big
+        | Refresh
+  table#audittrails-list.table.data-table.display style="table-layout:fixed" 
+    thead
+      tr
+        th.pointer.sortable.font-bold width="10%" 
+          | Module
+        th.pointer.sortable.font-bold width="40%" 
+          | Event Description
+        th.pointer.sortable.font-bold width="20%" 
+          | IP Address
+        th.pointer.sortable.font-bold width="15%" 
+          | Date
+        th.pointer.sortable.font-bold width="15%" 
+          | User
+
+javascript:
+  $(document).ready(function() {
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Variables for Datatables initialization.
+    var tableId = "#audittrails-list",
+        ajaxUrl = "/admin/datatables/retrieve_audittrails",
+        defaultOrder = [[3, 'desc']],
+        columnDefs = [
+          { "name": "module", 
+            "data": "module", 
+            "className": "truncate", 
+            "targets": 0,
+            "render": function(data) {
+              return "<div class='truncate' title='"+data+"'>"+data+"</div>";
+            }
+          },
+          { "name": "event_description", 
+            "data": "event_description", 
+            "className": "truncate", 
+            "targets": 1,
+            "render": function(data) {
+              return "<div class='truncate' title='"+data+"'>"+data+"</div>";
+            }
+          },
+          { "name": "host(ip_address)", "data": "ipaddress", "className": "truncate", "targets": 2 },
+          { "name": "created_at", 
+            "data": "created_at", 
+            "targets": 3,
+            "render": function(data, type, full) {
+              // If display or filter data is requested, format the date.
+              if (type === 'display' || type === 'filter') {
+                var d = new Date(data);
+                return monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+              }
+
+              // Otherwise the data type requested (`type`) is type detection or
+              // sorting data, for which we want to use the normal format, so just return
+              // that, unaltered.
+              return data;
+            }
+          },
+          { "name": "modified_by_name", "data": "modified_by_name", "className": "truncate", "targets": 4 }
+        ];
+
+    generateDatatable(tableId, ajaxUrl, columnDefs, defaultOrder);
+  });

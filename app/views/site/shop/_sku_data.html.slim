@@ -1,0 +1,2 @@
+-@skus.each do |sku|
+  =hidden_field_tag "sku_#{sku.id}", "", class: "sku-data", data: { "available-stocks": sku.get_stocks, 'qty-in-current-cart': @cart.count_sku(sku.id) }

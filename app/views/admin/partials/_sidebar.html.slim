@@ -1,0 +1,139 @@
+#sidebar.col-lg-2.col-md-2.col-sm-2.col-xs-2
+  a.visible-phone.hide href="#"
+    i.an.an-dashboard
+    | Dashboard
+  .sidebar-fixed
+    ul.with-divider
+      li
+        a href="/admin/dashboard"
+          i.an.an-dashboard
+          span Dashboard
+      li
+        a href="/admin/sliders"
+          i.an.an-money-bill
+          span Sliders
+      li
+        a href="/admin/categories"
+          i.an.an-sliders-square
+          span Categories
+      li
+        a href="/admin/subcategories"
+          i.an.an-sliders-line
+          span Sub Categories
+      /-if current_user.is_super_admin?
+        li.submenu data-target="#maintenance"
+          a href="#"
+            i.an.an-list-squares
+            span Maintenance
+            i.small.an.an-chevron-right
+        ul#maintenance.submenu-list style="display: none;"
+          li
+            a href="/admin/maintenance/uom-labels"
+              i.an.an-sliders-line
+              span UOM Labels
+          li
+            a href="/admin/maintenance/uoms"
+              i.an.an-sliders-square
+              span UOMs
+      li
+        a href="/admin/brands"
+          i.an.an-store
+          span Brands
+      li
+        a href="/admin/products"
+          i.an.an-lipstick
+          span Products
+      li
+        a href="/admin/price-updates"
+          i.an.an-money-bill-dollar
+          span Price Updates
+      li
+        a href="/admin/product-reviews"
+          i.an.an-star
+          span Product Reviews
+      li.divider role="presentation"
+        li
+          a href="/admin/order-statuses"
+            i.an.an-cart-arrow-down
+            span Order Statuses
+        li
+          a href="/admin/orders"
+            i.an.an-card-filled
+            span Orders
+        li
+          a href="/admin/inventories"
+            i.an.an-notebook
+            span Inventory
+        li
+          a href="/admin/shipping-rates"
+            i.an.an-truck
+            span Shipping Rates
+        -if current_user.is_super_admin? || current_user.is_admin?
+          li.submenu data-target="#dhl-menu"
+            a href="#"
+              i.an.an-list-squares
+              span DHL
+          ul#dhl-menu.submenu-list style="display: none;"
+            li
+              a href="/admin/dhl-shipper-settings"
+                i.an.an-gear
+                span Shipper Settings
+            li
+              a href="/admin/dhl-products"
+                i.an.an-airplane
+                span Products
+            li
+              a href="/admin/dhl-package-types"
+                i.an.an-filebox-alt
+                span Package Types
+      li.divider role="presentation"
+      /li
+        a href="/admin/careers"
+          i.an.an-necktie-alt
+          span Careers
+      /li
+        a href="/admin/advertisements"
+          i.an.an-page-layout
+          span Advertisements
+      li
+        a href="/admin/company-details"
+          i.an.an-avatar-circle
+          span Company Details
+      li
+        a href="/admin/terms"
+          i.an.an-file-check
+          span Terms
+      li
+        a href="/admin/privacy-policy"
+          i.an.an-padlock-locked-circle
+          span Privacy Policy
+      li
+        a href="/admin/faqs"
+          i.an.an-question
+          span FAQs
+      li.divider role="presentation"
+
+      li
+        a href="/admin/messages"
+          i.an.an-mail
+          span Messages
+      li
+        a href="/admin/photos"
+          i.an.an-upload-cloud
+          span Uploaded Photos
+      -if current_user.is_super_admin? || current_user.is_admin?
+        li
+          a href="/admin/users"
+            i.an.an-users
+            span Users
+      -if current_user.is_super_admin?
+        li
+          a href="/admin/roles"
+            i.an.an-profile
+            span Roles
+      -if current_user.is_super_admin? || current_user.is_admin?
+        li
+          a href="/admin/audittrails"
+            i.an.an-file
+            span Logs
+    .sidebar-footer-links

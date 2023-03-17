@@ -1,0 +1,13 @@
+a.btn.btn-success.open_gallery data-id="4"
+  i.an.an-image-alt-1
+  | Upload / Select Photo
+br
+br
+.row.photo-table
+  -if object.photos.present?
+    -object.photos.each_with_index do |photo,index|
+      .col-md-4 id="#{index}"
+        input.hidden name="post_photos[]" value="#{photo}"
+        img.thumbnail.img-responsive src="#{photo}"
+        a.btn.btn-success.btn-remove-sm.toggle-delete-photoslider-modal data-type='photoslider' data-parentid="#{index}"
+          i.an.an-cross-thin

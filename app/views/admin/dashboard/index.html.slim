@@ -1,0 +1,25 @@
+- title "Dashboard"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#dashboard.content-page.current data-title="Dashboard"
+    .notice-container
+      -if notice.present?
+        .alert.alert-main.alert-success.alert-newversion
+          =notice.html_safe
+      -elsif error.present?
+        .alert.alert-main.alert-danger.alert-newversion
+          =error.html_safe
+    .row.content-header
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12
+        h1 Dashboard
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12
+        p.explanation
+          | You can view all available metrics from the system on this module.
+    .row
+      =render '/admin/dashboard/stat_boxes'
+    .row
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12
+        .col-recent-items.col-recent-changes
+          =render '/admin/dashboard/recent_changes'
+        .col-recent-items.col-recent-messages
+           =render '/admin/dashboard/latest_messages'
+        /p under construction

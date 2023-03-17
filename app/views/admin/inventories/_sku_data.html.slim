@@ -1,0 +1,5 @@
+-if @skus.present?
+  .row
+    .col-md-12
+      -@skus.each do |sku|
+        input type="hidden" id="sku_#{sku.id}" data-stocks="#{sku.get_stocks}"

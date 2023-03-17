@@ -1,0 +1,23 @@
+-site_title "Cart | Vida Nutriscience"
+
+.page-cart
+  .container
+    .title.title-sm.text-center.text-uppercase.mb-30 Shopping Cart
+    table.table-cart
+      thead
+        th.data-image
+        th Product Description
+        th.text-center Unit Price
+        th.text-center Qty
+        th.text-center Subtotal
+        th.data-remove
+      tbody
+        =render 'cart_tbody'
+    br
+    .clearfix
+      a.btn.btn-gray.btn-lone.text-uppercase.btn-con href="/shop"
+        | Shop More
+      span.container-cart-checkout-btn
+        =render 'checkout_btn'
+          
+            

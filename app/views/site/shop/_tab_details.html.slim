@@ -1,0 +1,22 @@
+-if @product.long_description.present?
+  p =@product.long_description
+  .hr
+-if @product.size.present?
+  span.text-title.text-uppercase Size
+  p =@product.size
+  br
+-if @product.dimensions.present?
+  span.text-title.text-uppercase Product Dimensions
+  p =@product.dimensions
+  br
+-if @product.weight.present?
+  span.text-title.text-uppercase Weight
+  p =@product.weight
+  br
+-if @product.ingredients.present?
+  span.text-title.text-uppercase Ingredients
+  p =@product.ingredients
+-if @product.policy.present?
+  .hr
+  span.text-title.text-uppercase Shipping and Return Policy
+  p =@product.policy

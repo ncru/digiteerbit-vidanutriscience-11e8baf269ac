@@ -1,0 +1,22 @@
+-if @skus.present?
+  .row
+    -@skus.each do |sku|
+      .col-sm-4
+        .wrapper-product.product-inner
+          -if sku.new?
+            .product-status.new NEW
+          .product-holder style="background-image: url(#{sku.photo})"
+          .border-up
+          .border-down
+          .product-info
+            .price 
+              span class="#{'line-through' if sku.price_type == 1}" ₱#{format_number_with_precision(sku.price, 2)}
+              -if sku.price_type == 1
+                span.color-red 
+                  |  / ₱#{format_number_with_precision(sku.promo_price, 2)}
+            .name =sku.name
+            .text-center
+              a.btn href="/shop/#{sku.slug}?sku=#{sku.id}" View Item
+-else
+  .note.text-center
+    | It appears there are no products available.

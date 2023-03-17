@@ -1,0 +1,6 @@
+=link_to_add_association '<i class="an an-plus-thin"></i> Add FAQ'.html_safe, f, :product_faqs, :class=>"btn btn-success add-item-btn", :data=>{"association-insertion-method" => "append", "association-insertion-node"=>".product_faqs"}
+br
+br
+.product_faqs
+  =f.fields_for :product_faqs do |f|
+    =render 'product_faq_fields', :f=>f

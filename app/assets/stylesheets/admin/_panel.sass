@@ -1,0 +1,58 @@
+.panel
+  border-radius: 2px !important
+  -webkit-box-shadow: none
+  box-shadow: none
+  margin-bottom: 20px
+  background-color: $white
+  border: 1px solid transparent
+  border-radius: 4px
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05)
+  box-shadow: 0 1px 1px rgba(0,0,0,.05)
+
+  .panel-heading
+    border-color: #e8ecf3
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    padding: 13px 15px
+    border-color: #f5f5f5
+    font-size: 18px
+    border-bottom: 1px solid #ddd
+    h4
+      margin-bottom: 7px
+
+  .panel-body
+    padding: 15px
+
+  &.with-footer
+    margin-bottom: 0px
+    border-bottom-left-radius: 0px !important
+    border-bottom-right-radius: 0px !important
+
+  &.center
+    position: fixed
+    top: 20%
+    left: 50%
+    width: 100%
+    max-width: 400px
+    margin: 0 0 0 -200px
+    border-radius: 2px
+
+  ul
+    list-style: none
+    margin-left: 0px
+    padding-left: 0px
+    a
+      font-weight: bold
+      color: #333
+      &.active
+        li
+          background-color: #ddd
+        &:hover li
+          background-color: #ddd
+      &:hover
+        text-decoration: none
+        li
+          background-color: #F0F0F0
+      li
+        padding: 5px
+        

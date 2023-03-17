@@ -1,0 +1,27 @@
+-site_title "FAQs | Vida Nutriscience"
+
+#page-about
+  .bar.text-center
+    | FAQs
+  .container
+    .row
+      .col-sm-10.col-sm-offset-1
+        .container-about.container-faq
+          #accordionFAQs.panel-group
+            -if @faqs.present?
+              -@faqs.each_with_index do |faq, i|
+                .panel.panel-default
+                  .panel-heading
+                    a.data-dynamic data-parent="#accordionFAQs" data-toggle="collapse" href="#collapseQ#{i}" 
+                      .text-title.text-uppercase
+                        =faq.question.html_safe
+                      i.fa.fa-angle-down
+                  .panel-collapse.collapse.collapse-filter id="collapseQ#{i}"
+                    .panel-content.data-dynamic-alt
+                      span =faq.answer.html_safe
+            -else
+              .panel.panel-default
+                .panel-heading
+                  a data-parent="#accordionFAQs"
+                    span.text-title.text-uppercase No available FAQs.
+              

@@ -1,0 +1,75 @@
+table
+  table-layout: fixed
+  word-wrap: break-word
+  &.table
+    margin-top: 10px
+    tr
+      td
+        vertical-align: middle
+        img
+          max-width: 100%
+          max-height: 25px
+          min-height: 20px
+        .label
+          font-size: 100%
+          font-weight: $font-normal
+          &.featured, &.new, &.sale
+            font-size: 8px
+            font-weight: $font-normal
+            position: relative
+            top: -10px
+          &.sale
+            background-color: $red
+  .pointer
+    cursor: pointer
+
+.sortable
+  .sort-arrow
+    font-size: 10px
+    padding-left: 5px
+
+.actions
+  text-align: right
+  ul, li
+    margin: 0
+    padding: 0
+    list-style: none
+  a
+    background: #f1f1f1
+    border-radius: 3px
+    width: 34px
+    display: block
+    text-align: center
+    cursor: pointer
+    padding: 10px 0 4px 0
+    i
+      font-size: 14px
+      display: inline-block
+      margin: 0
+    &.delete-action
+      color: #d9534f
+  ul.inline-list
+    display: inline-block
+    margin-right: 5px
+
+.table tr:hover td, table tr:hover td
+  background: #fafafa
+
+
+.list-review
+  i.fa-user
+    +square(40px)
+    background: #F0F0F0
+    text-align: center
+    line-height: 40px
+    font-size: 20px
+    border-radius: 100%
+    color: #9ba4af
+  .rating
+    padding: 0
+    margin-top: -8px
+    i
+      line-height: 18px
+      font-size: 18px
+      color: $yellow
+      margin-right: 2px

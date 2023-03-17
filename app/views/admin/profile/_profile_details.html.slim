@@ -1,0 +1,70 @@
+fieldset.form-horizontal.details
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="profile_photo" 
+      | Profile Photo
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Choose your Profile Photo."  
+        i.icon-question-sign &nbsp;
+    =render '/admin/partials/photo_field',:f=>f
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="first_name" 
+      | First Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Your First Name."  
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :first_name, :id=>"first_name", :class=>"form-control required"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="last_name" 
+      | Last Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Your Last Name."  
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :last_name, :id=>"last_name", :class=>"form-control required"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="middle_name" 
+      | Middle Name
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Your Middle Name."  
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :middle_name, :id=>"middle_name", :class=>"form-control"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="address1" 
+      | Home Address
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The Home Address of the user."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :address1, :id=>"address1", :class=>"form-control capitalize", :placeholder=>"Your Home Address", :maxlength=>"100"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="phone" 
+      | Phone (Landline)
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The telephone number for the user."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :phone, :id=>"phone", :class=>"form-control", :placeholder=>"Your Phone Number", :maxlength=>"12"
+      span.error-msg.hidden
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="mobile" 
+      | Phone (Mobile)
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="The mobile number for the user."
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.text_field :mobile, :id=>"mobile", :class=>"form-control", :placeholder=>"Your Mobile Number", :maxlength=>"12"
+      span.error-msg.hidden
+  .form-group
+    label.info-label.col-lg-12.col-md-12.col-sm-12.col-xs-12 for="" 
+      hr
+      | If you change your password, you will be asked to login again.
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="password" 
+      | Password
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Enter details here if you want to change your current password."  
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.password_field :password, :id=>"password", autocomplete: "off", :class=>"form-control"
+  .form-group
+    label.control-label.col-lg-3.col-md-3.col-sm-3.col-xs-3 for="password_confirmation" 
+      | Confirm Password
+      span.help data-toggle="tooltip" data-placement="top" data-container="body" title="Enter details here if you want to change your current password."  
+        i.icon-question-sign &nbsp;
+    .col-lg-6.col-md-6.col-sm-6.col-xs-6
+      =f.password_field :password_confirmation, :id=>"password_confirmation", autocomplete: "off", :class=>"form-control"

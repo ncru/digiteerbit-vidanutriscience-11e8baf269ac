@@ -1,0 +1,7 @@
+- title "Careers"
+.col-lg-10.col-md-10.col-sm-10.col-xs-10.wrapper
+  section#careers.content-page.current data-title="Careers"
+    -if @careers.present?
+      =render 'content'
+    -else
+      =render 'starter_template'

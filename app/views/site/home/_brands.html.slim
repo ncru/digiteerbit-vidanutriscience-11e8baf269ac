@@ -1,0 +1,15 @@
+-if @brands.present?
+  #home-brand
+    .container
+      .title.text-center.mb-30.text-uppercase Shop By Brand
+      .row.row-height.vmiddle
+        -@brands.each_slice(2).with_index do |brands, index|
+          -brands.each do |brand|
+            .col-xs-6.col-sm-3.col-height
+              a.wrapper-brand href="/brands/#{brand.slug}"
+                =image_tag(brand.photo_url)
+                .side-first
+                .side-last
+          .visible-xs
+            .clearfix
+            br

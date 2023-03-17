@@ -1,0 +1,7 @@
+.modal id="gallery_modal"
+  .modal-dialog
+    .modal-content
+      -if @photos.present?
+        = render '/admin/partials/photosavailable'
+      -else
+        = render '/admin/partials/photosunavailable'

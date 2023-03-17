@@ -1,0 +1,7 @@
+AWS.config(access_key_id: ENV["AWS_ROR_ACCESS_KEY_ID"],
+          secret_access_key: ENV["AWS_ROR_ACCESS_KEY_SECRET"],
+          s3_host_alias: "https://vidanutriscience.s3-ap-southeast-1.amazonaws.com",
+          s3_host_name: "s3.amazonaws.com",
+          path: "images/:id.:extension")
+
+S3_BUCKET = AWS::S3.new.buckets["vidanutriscience"]

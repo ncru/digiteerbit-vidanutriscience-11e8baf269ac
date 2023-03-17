@@ -1,0 +1,39 @@
+header.admin-header
+  nav.navbar.navbar-default role="navigation" 
+    .container.header-container
+      .navbar-header
+        h1.navbar-brand
+          a href="#"
+            span Sunnies
+      #navbar-collapse.collapse.navbar-collapse
+        / .main-search.search-input-wrapper
+        /   i.an.an-search
+        /   span.twitter-typeahead style="position: relative; display: inline-block; direction: ltr;"
+        /     input.form-control.js-predictive.tt-hint autocomplete="off" readonly="" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(240, 241, 241);" tabindex="-1" type="text"
+        /     input.form-control.js-predictive.tt-input autocomplete="off" dir="auto" placeholder="Search" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" type="text"
+        ul.nav.navbar-nav.navbar-right
+          li
+            a.documentation href="#" 
+              i.an.an-book-alt-1
+              |Documentation
+          li.dropdown
+            span.btn-dro.btn-username data-target="#" data-toggle="dropdown" role="button"
+              -if !current_user.photo_file_name.nil?
+                a.picture.avatar href="#" style="background-image: url(#{current_user.photo.url})"
+              -else
+                a.picture.avatar href="#" style="background-image: url(#{asset_path('avatar.svg')})"
+              span.username-text.truncate =current_user.first_name 
+              | &nbsp;
+              span.username-text.truncate =current_user.last_name
+              i.an.an-chevron-down
+            ul.dropdown-menu.topbar.animated aria-labelledby="dLabel" role="menu" 
+              li role="presentation" 
+                a href="/admin/profile" role="menuitem" tabindex="-1"
+                  i.an.an-gear
+                  |Account Settings
+              li.divider role="presentation" 
+              li role="presentation"
+                a href="/admin/logout" role="menuitem" data-method="delete" rel="nofollow" 
+                  i.an.an-user-cross-alt-2
+                  |Logout
+

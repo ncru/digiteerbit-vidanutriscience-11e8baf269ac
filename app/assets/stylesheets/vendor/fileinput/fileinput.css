@@ -1,0 +1,63 @@
+.btn-file {
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+}
+.btn-file>input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+}
+.fileinput {
+    margin-bottom: 0;
+    display: inline-block;
+}
+.fileinput .uneditable-input {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    cursor: text;
+}
+.fileinput .thumbnail {
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 5px;
+    vertical-align: middle;
+    text-align: center;
+}
+.fileinput .thumbnail>img {
+    max-height: 100%
+}
+.fileinput .btn {
+    vertical-align: middle;
+}
+i.fileinput-exists {
+    display: inline-block;
+    padding-right: 10px;
+}
+.fileinput-exists .fileinput-new, .fileinput-new .fileinput-exists {
+    display: none;
+}
+.fileinput-inline .fileinput-controls {
+    display: inline;
+}
+.fileinput .uneditable-input {
+    white-space: nowrap;
+}
+.fileinput-new .input-group .btn-file {
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+.fileinput-new .input-group .btn-file.btn-xs, .fileinput-new .input-group .btn-file.btn-sm {
+    border-radius: 0px;
+}
+.fileinput-new .input-group .btn-file.btn-lg {
+    border-radius: 0px;
+}

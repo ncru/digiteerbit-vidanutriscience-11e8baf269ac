@@ -1,0 +1,27 @@
+/*
+ *= require_self
+ *= require jquery-ui
+ *= require switchery
+ */
+
+// Reset stylesheet
+@import 'vendor/reset/reset';
+
+// Third party stylesheet
+@import 'vendor/bootstrap/bootstrap';
+@import 'vendor/bootstrap/dataTables';
+@import 'vendor/anfont/anfont';
+@import 'vendor/blufont/blufont';
+@import 'vendor/fileinput/fileinput';
+@import 'vendor/datepicker/datepicker';
+@import 'vendor/summernote/summernote';
+@import 'vendor/tags/tags';
+@import 'vendor/chosen/chosen';
+@import 'vendor/highcharts/highcharts';
+@import 'vendor/proxima-nova/proxima-nova';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+// Admin stylesheet
+@import 'site/mixins';
+@import 'admin/base';
